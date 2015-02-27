@@ -1,0 +1,20 @@
+<h4>{{user.firstName}} {{user.lastName}} ({{user.role}})</h4>
+<fieldset>
+    <label ng-repeat="role in roles">
+        <input type="radio" name="roles" ng-checked="user.role == role.title" ng-click="setUserRole(role.title)">
+        {{role.title}}<br>
+    </label>
+</fieldset>
+<br><br>
+<a ng-click="setUserRole(user.role)">Сбросить права</a>
+<hr>
+<label>
+    Домашняя директория:<br>
+    <input type="text" placeholder="Путь" ng-model="user.path" ng-value="user.path" ng-keyup="setUserPath($event)"
+           ng-blur="setUserPath($event)">
+</label>
+<br>
+<label ng-repeat="userGrant in user.userRoles">
+    <input type="checkbox" ng-checked="userGrant.checked" ng-model="userGrant.checked" ng-click="setUserGrant()">
+    {{userGrant.title}}<br>
+</label>

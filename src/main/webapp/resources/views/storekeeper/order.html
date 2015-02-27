@@ -1,0 +1,71 @@
+<hgroup>
+    <h2>Заказ клиента №{{order.number}} от {{order.date}}
+        <button>Печать</button>
+        <button ng-hide="order.status != 100" class="success" ng-click="closeOrder()">Выдать</button>
+    </h2>
+    <progress value="{{order.status}}" max="100"></progress>
+    <h4>Заказ выполнен на {{order.status}}%</h4>
+    <span><small>Время создания заказа {{order.time}}</small></span>
+</hgroup>
+
+<h3>Склад</h3>
+<table class="border horizontal hover">
+    <tr>
+        <th>№</th>
+        <th>Код</th>
+        <th>Товар (услуга/работа)</th>
+        <th>Количество</th>
+        <th>Комментарий</th>
+        <th>Статус</th>
+    </tr>
+    <tr ng-repeat="item in order.info"
+        ng-class="item.ready ? 'success' : item.ready != undefined ? 'danger' : 'warning'">
+        <td>{{$index + 1}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.comment}}</td>
+        <td>
+            <button open-modal="changeStatus" ng-click="setSelectedItem(item)">Изменить</button>
+        </td>
+    </tr>
+</table>
+
+<section class="panel" ng-if="order.info.description">
+    <section>
+        <p>{{order.info.description}}</p>
+    </section>
+</section>
+
+<section data-modal="changeStatus">
+    <header>
+        Вы действительно хотети изменить статус позиции в заказе №{{order.number}}?
+    </header>
+    <section ng-show="selectedItem.ready">
+        <form name="statusChange" novalidate>
+               <textarea placeholder="Причина изменения статуса на не готовый"
+                         ng-model="reasonStatus"
+                         required
+                         style="width: 100%"></textarea>
+        </form>
+    </section>
+    <footer>
+        <button close-modal="changeStatus">ЗАКРЫТЬ</button>
+        <button close-modal="changeStatus"
+                ng-hide="selectedItem.ready" class="success"
+                ng-click="setItemStatus(true, '')">
+            НАЙДЕНО
+        </button>
+        <button close-modal="changeStatus"
+                ng-hide="selectedItem.ready != undefined" class="danger"
+                ng-click="setItemStatus(false, '')">
+            НЕ НАЙДЕНО
+        </button>
+        <button close-modal="changeStatus"
+                ng-hide="!selectedItem.ready" class="warning"
+                ng-click="setItemStatus(undefined, reasonStatus)"
+                ng-disabled="statusChange.$invalid">
+            ОК
+        </button>
+    </footer>
+</section>

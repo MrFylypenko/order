@@ -29,6 +29,7 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Thumbnails
+order.iml
 ._*
 
 # Files that might appear on external disk
@@ -41,3 +42,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.idea/
+target/
+out/
+classes/artifacts/

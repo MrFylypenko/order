@@ -1,0 +1,89 @@
+<section class="row">
+    <section class="column">
+        <nav class="main inverse">
+            <ul>
+                <li class="nohover">Администратор</li>
+            </ul>
+            <ul data-float="right">
+                <li open-modal="new-user" style="cursor: pointer">Новый пользователь</li>
+                <li><a href="/#logout">Выход</a></li>
+            </ul>
+        </nav>
+    </section>
+</section>
+<section class="row">
+    <section class="column laptop-6">
+        <h2>Пользователи</h2>
+    </section>
+    <section class="column laptop-4">
+        <h2>Группы</h2>
+    </section>
+</section>
+<section class="row" ng-init="getRoles()">
+    <section class="column laptop-3" ng-init="getUsers()">
+        <ng-include src="'resources/views/admin/users.html'"></ng-include>
+    </section>
+    <section class="column laptop-3">
+        <ng-include src="'resources/views/admin/user.html'"></ng-include>
+    </section>
+    <section class="column laptop-4">
+        <ng-include src="'resources/views/admin/group.html'"></ng-include>
+    </section>
+</section>
+
+<section class="row" ng-init="getSetting()">
+    <section class="column laptop-10">
+        <h2>Общие настройки</h2>
+        <label>
+            <input type="checkbox" ng-model="setting.printDefault" ng-checked="setting.printDefault" ng-click="setSetting()">
+            Автоматическая печать документов при создании заказа
+        </label><br>
+        <label>
+            <input type="checkbox" ng-model="setting.uploadDefault" ng-checked="setting.uploadDefault" ng-click="setSetting()">
+            Использование домашней директории для загрузки файлов
+        </label>
+    </section>
+</section>
+
+<section data-modal="new-user">
+    <header>
+        Новый пользователь
+    </header>
+    <section>
+        <form name="newUser" novalidate data-float="center">
+            <fieldset class="vertical">
+                <label>Логин
+                    <input type="text" ng-model="userNew.username" placeholder="Логин" required>
+                </label>
+                <label>Пароль
+                    <input type="password" ng-model="userNew.password" placeholder="Пароль" required>
+                </label>
+               <!-- <label>Email
+                    <input type="email" ng-model="userNew.email" placeholder="Email" required>
+                </label>-->
+                <select ng-model="userNew.role" name="role">
+                    <option value="" disabled>Должность</option>
+                    <option value="manager">Менеджер</option>
+                    <option value="warehouse">Кладовщик</option>
+                    <option value="laboratory">Колеровщик</option>
+                </select>
+            </fieldset>
+            <fieldset class="vertical">
+                <label>Имя
+                    <input type="text" ng-model="userNew.firstName" placeholder="Имя" required>
+                </label>
+                <label>Фамилия
+                    <input type="text" ng-model="userNew.lastName" placeholder="Фамилия" required>
+                </label>
+                <label>Домашняя папка
+                    <input type="text" ng-model="userNew.path" placeholder="Домашняя папка" required>
+                </label>
+            </fieldset>
+        </form>
+    </section>
+    <footer>
+        <button close-modal="new-user">Закрыть</button>
+        <button close-modal="new-user" class="success"
+                ng-disabled="newUser.$invalid" ng-click="createUser()">Создать</button>
+    </footer>
+</section>

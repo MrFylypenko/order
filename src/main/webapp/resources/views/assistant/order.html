@@ -1,0 +1,116 @@
+<hgroup>
+    <h2>Заказ клиента №{{order.number}} от {{order.date}}
+        <button>Печать</button>
+    </h2>
+    <progress value="{{order.status}}" max="100"></progress>
+    <h4>Заказ выполнен на {{order.status}}%</h4>
+    <span><small>Время создания заказа {{order.time}}</small></span>
+</hgroup>
+<h3>Лаборатория</h3>
+<table class="border horizontal hover">
+    <tr>
+        <th>№</th>
+        <th>Код</th>
+        <th>Товар (услуга/работа)</th>
+        <th>Количество</th>
+        <th>Комментарий</th>
+        <th>Статус</th>
+    </tr>
+    <tr ng-repeat="item in order.info"
+        ng-class="item.type != 'component' ? item.ready ? 'success' : item.ready != undefined ? 'danger' : 'warning' : ''">
+        <td>
+            <small ng-show="item.type == 'component'">#</small>
+            <span ng-show="item.type != 'component'">{{item.index}}</span>
+        </td>
+        <td>
+            <small ng-show="item.type == 'component'">{{item.code}}</small>
+            <span ng-show="item.type != 'component'">{{item.code}}</span>
+        </td>
+        <td>
+            <small ng-show="item.type == 'component'">{{item.title}}</small>
+            <span ng-show="item.type != 'component'">{{item.title}}</span>
+        </td>
+        <td>
+            <small ng-show="item.type == 'component'">{{item.quantity}}</small>
+            <span ng-show="item.type != 'component'">{{item.quantity}}</span>
+        </td>
+        <td>
+            <small ng-show="item.type == 'component'">{{item.comment}}</small>
+            <span ng-show="item.type != 'component'">{{item.comment}}</span>
+        </td>
+        <td>
+            <button ng-hide="item.type == 'component'"
+                    open-modal="changeStatus"
+                    ng-click="setSelectedItem(item)">
+                <span ng-show="item.ready == undefined">Изменить</span>
+                <span ng-show="item.ready">Готово</span>
+                <span ng-show="item.ready == false">Не&nbsp;готово</span>
+            </button>
+            <button ng-show="item.type == 'component'"
+                    open-modal="showOrdersByComponent"
+                    ng-click="getOrdersByItem(item)">Показать</button>
+        </td>
+    </tr>
+</table>
+
+<section class="panel" ng-if="order.info.description">
+    <section>
+        <p>{{order.info.description}}</p>
+    </section>
+</section>
+
+<section data-modal="changeStatus">
+    <header>
+        Вы действительно хотети изменить статус позиции в заказе №{{order.number}}?
+    </header>
+    <section ng-show="selectedItem.ready">
+        <form name="statusChange" novalidate>
+               <textarea placeholder="Причина изменения статуса на не готовый"
+                         ng-model="reasonStatus"
+                         required
+                         style="width: 100%"></textarea>
+        </form>
+    </section>
+    <footer>
+        <button close-modal="changeStatus">ЗАКРЫТЬ</button>
+        <button close-modal="changeStatus"
+                ng-hide="selectedItem.ready" class="success"
+                ng-click="setItemStatus(true, '')">
+            НАЙДЕНО
+        </button>
+        <button close-modal="changeStatus"
+                ng-hide="selectedItem.ready != undefined" class="danger"
+                ng-click="setItemStatus(false, '')">
+            НЕ НАЙДЕНО
+        </button>
+        <button close-modal="changeStatus"
+                ng-hide="!selectedItem.ready" class="warning"
+                ng-click="setItemStatus(undefined, reasonStatus)"
+                ng-disabled="statusChange.$invalid">
+            ОК
+        </button>
+    </footer>
+</section>
+
+<section data-modal="showOrdersByComponent">
+    <header>
+        {{selectedItem.title}}
+    </header>
+    <section>
+        <table class="border hover">
+            <tr>
+                <th>Номер заказа</th>
+                <th>Дата заказа</th>
+                <th>Количество</th>
+            </tr>
+            <tr ng-repeat="item in ordersByItem">
+                <td>{{item.number}} <a href="" ng-click="getAssistantOrderById(0, item.number)" close-modal="showOrdersByComponent">открыть...</a></td>
+                <td>{{item.datetime}}</td>
+                <td>{{item.quantity}}</td>
+            </tr>
+        </table>
+    </section>
+    <footer>
+        <button close-modal="showOrdersByComponent">ЗАКРЫТЬ</button>
+    </footer>
+</section>

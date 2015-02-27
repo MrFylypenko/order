@@ -1,0 +1,8 @@
+<section ng-repeat="role in roles">
+    <h4>{{role.title}}</h4>
+    <fieldset>
+        <label ng-repeat="role in role.roles">
+            <input type="checkbox" ng-checked="roleGrant.checked" ng-model="roleGrant.checked" ng-click="setUsersGrant(role)">{{role.title}}<br>
+        </label>
+    </fieldset>
+</section>

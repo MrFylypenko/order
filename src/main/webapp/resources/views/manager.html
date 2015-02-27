@@ -1,0 +1,54 @@
+<section class="row">
+    <section class="column">
+        <nav class="main inverse">
+            <ul>
+                <li class="nohover">{{manager.name}} (Менеджер)</li>
+            </ul>
+            <ul data-float="right">
+                <li open-modal="new-order" style="cursor: pointer">Новый заказ</li>
+                <li ng-show="manager.recipe">
+                    <a href="">Рецепты</a>
+                </li>
+                <li ng-show="manager.density">
+                    <a href="#/density">Формулы</a>
+                </li>
+                <li><a href="/#logout">Выход</a></li>
+            </ul>
+        </nav>
+    </section>
+</section>
+<section class="row">
+    <section class="column laptop-4">
+        <div class="tab">
+            <ul class="control" ng-init="deferred = false">
+                <li nk-tab="tab1" class="active" ng-click="deferred = false">Текущие
+                </li>
+                <li nk-tab="tab2" class="warning" ng-click="deferred = true">Отложенные
+                    <span ng-if="quantityDefferedOrders > 0" class="round warning">{{quantityDefferedOrders}}</span>
+                </li>
+            </ul>
+            <section class="content">
+                <section data-tab="tab1" class="active" ng-include="'resources/views/manager/orders.html'"></section>
+                <section data-tab="tab2" ng-include="'resources/views/manager/orders.html'"></section>
+            </section>
+        </div>
+    </section>
+    <section class="column laptop-6" ng-include="'resources/views/manager/order.html'">
+    </section>
+</section>
+
+<section data-modal="new-order">
+    <header>
+        Новый заказ
+    </header>
+    <section>
+        <form name="newOrder" novalidate data-float="center">
+            <textarea style="width: 100%" required placeholder="Комментарий"></textarea>
+            <input type="file" required>
+        </form>
+    </section>
+    <footer>
+        <button close-modal="new-order">Закрыть</button>
+        <button class="success" ng-disabled="newOrder.$invalid" ng-click="createOrder()">Создать</button>
+    </footer>
+</section>

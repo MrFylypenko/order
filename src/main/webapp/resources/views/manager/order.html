@@ -1,0 +1,92 @@
+<hgroup>
+    <h2>Заказ клиента №{{order.number}} от {{order.date}}
+        <button ng-if="order.deferred == false" open-modal="cancelOrder">Отложить</button>
+        <button ng-if="order.deferred == true" open-modal="backOrder">Вернуть</button>
+    </h2>
+    <progress value="{{order.status}}" max="100"></progress>
+    <h4>Заказ выполнен на {{order.status}}%</h4>
+    <span><small>Время создания заказа {{order.time}}</small></span>
+</hgroup>
+
+<h3>Лаборатория</h3>
+<table class="border horizontal hover">
+    <tr>
+        <th>№</th>
+        <th>Код</th>
+        <th>Товар (услуга/работа)</th>
+        <th>Количество</th>
+        <th>Комментарий</th>
+        <th ng-if="!order.deffered">Статус</th>
+    </tr>
+    <tr ng-repeat="item in order.info" ng-if="item.category == 'laboratory'" ng-class="item.ready ? 'success' : 'warning'">
+        <td ng-init="item.index = $index">{{item.index + 1}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.comment}} {{$index}}</td>
+        <td ng-if="item.ready && !order.deffered">Готово</td>
+        <td ng-if="!item.ready && !order.deffered">
+            <button open-modal="cancelItem" ng-click="setSelectedItem(item)">Отложить</button>
+        </td>
+    </tr>
+</table>
+
+
+
+<h3>Склад</h3>
+<table class="border horizontal hover">
+    <tr>
+        <th>№</th>
+        <th>Код</th>
+        <th>Товар (услуга/работа)</th>
+        <th>Количество</th>
+        <th>Комментарий</th>
+        <th ng-if="!order.deffered">Статус</th>
+    </tr>
+    <tr ng-repeat="item in order.info" ng-if="item.category == 'warehouse'" ng-class="item.ready ? 'success' : 'warning'">
+        <td ng-init="item.index = $index">{{item.index + 1}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.comment}}</td>
+        <td ng-if="item.ready && !order.deffered">Готово</td>
+        <td ng-if="!item.ready && !order.deffered">
+            <button open-modal="cancelItem" ng-click="setSelectedItem(item)">Отложить</button>
+        </td>
+    </tr>
+</table>
+<section class="panel" ng-if="order.info.description">
+    <section>
+        <p>{{order.info.description}}</p>
+    </section>
+</section>
+
+<section data-modal="cancelOrder" class="danger">
+    <header>
+        Вы действительно хотети отложить заказ №{{order.number}}?
+    </header>
+    <footer>
+        <button close-modal="cancelOrder">Отмена</button>
+        <button close-modal="cancelOrder" ng-click="setDeffered(true)">ОК</button>
+    </footer>
+</section>
+
+<section data-modal="cancelItem">
+    <header>
+        Вы действительно хотети отложить позицию заказа №{{order.number}}?
+    </header>
+    <footer>
+        <button close-modal="cancelItem">Отмена</button>
+        <button close-modal="cancelItem" ng-click="setDifferedItem()">ОК</button>
+    </footer>
+</section>
+
+<section data-modal="backOrder" class="danger">
+    <header>
+        Вы действительно хотети вернуть заказ №{{order.number}}?
+    </header>
+    <footer>
+        <button close-modal="backOrder">Отмена</button>
+        <button close-modal="backOrder" ng-click="setDeffered(false)">ОК</button>
+    </footer>
+</section>

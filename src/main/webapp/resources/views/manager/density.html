@@ -1,0 +1,51 @@
+<section class="row">
+    <section class="column">
+        <nav class="main inverse">
+            <ul>
+                <li class="nohover">{{manager.name}} (Менеджер)</li>
+            </ul>
+            <ul data-float="right">
+                <li open-modal="new-density" style="cursor: pointer">Добавить формулу</li>
+                <li ng-show="manager.recipe">
+                    <a href="">Рецепты</a>
+                </li>
+                <li ng-show="manager.density">
+                    <a href="#/manager">Главное окно</a>
+                </li>
+                <li><a href="/#logout">Выход</a></li>
+            </ul>
+        </nav>
+    </section>
+</section>
+<section class="row">
+    <section class="column">
+        <h2>Формулы</h2>
+
+        <table ng-init="getDensity()" class="strip hover">
+            <tr>
+                <th>Компонент</th>
+                <th>Исходная еденица измерения</th>
+                <th>Коэффициент</th>
+                <th>Получаемая еденица измерения</th>
+            </tr>
+            <tr ng-repeat="item in density">
+                <td>{{item.component}}</td>
+                <td>{{item.source}}</td>
+                <td open-modal="factorEdit" ng-click="setSelectedDensity(item)">{{item.factor}}</td>
+                <td>{{item.result}}</td>
+            </tr>
+        </table>
+    </section>
+</section>
+
+
+<section data-modal="factorEdit">
+    <section>
+        <!--TODO input теряет фокус и вообщен он неадекватен и не так!-->
+        <form data-float="center" style="margin-bottom: 0">
+            <input placeholder="Коэффициент" ng-value="selectedDensity.factor">
+            <input type="button" value="Сохранить" close-modal="factorEdit">
+            <input type="button" value="Отмена" close-modal="factorEdit">
+        </form>
+    </section>
+</section>

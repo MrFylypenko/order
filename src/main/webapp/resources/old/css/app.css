@@ -1,0 +1,55 @@
+body{
+    font: serif;
+}
+
+.block-search {
+    height: 380px;
+    overflow-y: scroll;
+}
+
+.block-search2 {
+    height: 380px;
+}
+
+.block-searched {
+    height: 380px;
+    overflow-y: scroll;
+}
+
+.block-searched2 {
+    height: 380px;
+}
+
+.type-info {
+    float: left;
+}
+
+.searched-col1 {
+    width: 80px;
+}
+
+.searched-col2 {
+    width: 480px !important;
+}
+
+.searched-col3 {
+    width: 50px !important;
+}
+
+.searched-col4 {
+    width: 50px !important;
+}
+
+.searched-col5 {
+    width: 50px !important;
+}
+.searched-input {
+    width: 50px !important;
+}
+.additemdiv{
+    height: 280px;
+}
+
+.activeMain a{
+    background: #00CED1 !important;
+}

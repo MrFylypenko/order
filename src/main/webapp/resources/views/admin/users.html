@@ -1,0 +1,10 @@
+<table class="border horizontal hover">
+    <tr>
+        <th>Пользователь</th>
+        <th>Группа</th>
+    </tr>
+    <tr ng-repeat="user in users" ng-click="setUser($index)">
+        <td>{{user.firstName}} {{user.lastName}}</td>
+        <td>{{user.role}}</td>
+    </tr>
+</table>
