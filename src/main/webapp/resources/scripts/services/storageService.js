@@ -14,8 +14,10 @@ function $storage(http) {
     };
 
     this.getSetting = function (callback) {
-        http.post('_data/admin/setting.json').success(callback);
+        http.get('admin/getsettings').success(callback);
     };
+
+    //admin/updatesettings
 
     this.setUserRole = function (user) {
         http.post("admin/updateuserroles", user).success(function (data) {

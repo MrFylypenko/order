@@ -2,6 +2,7 @@ package com.bonvio.service.admin;
 
 import java.util.List;
 
+import com.bonvio.model.admin.Settings;
 import com.bonvio.model.admin.User;
 
 public interface UserService {
@@ -19,6 +20,8 @@ public interface UserService {
     public void updateUserRoles(User user);
 
     public void createUser (User user);
+
+
 
    /* public void testDBF ();*/
 }

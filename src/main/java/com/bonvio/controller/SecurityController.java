@@ -1,7 +1,9 @@
 package com.bonvio.controller;
 
 import com.bonvio.model.admin.Groups;
+import com.bonvio.model.admin.Settings;
 import com.bonvio.service.admin.MyUserDetailsService;
+import com.bonvio.service.admin.SettingsService;
 import com.bonvio.service.admin.UserRoleService;
 import com.bonvio.service.admin.UserService;
 import com.bonvio.model.admin.Role;
@@ -37,6 +39,10 @@ public class SecurityController {
 
     @Autowired
     private SessionRegistry sessionRegistry;
+
+
+    @Autowired
+    SettingsService settingsService;
 
 
     @Autowired
@@ -82,8 +88,6 @@ public class SecurityController {
 
         //sessionRegistry.registerNewSession();
 
-
-
     String g;
 
 
@@ -116,5 +120,21 @@ public class SecurityController {
         userRoleService.updateRole(role);
         return "1";
     }
+
+
+    @RequestMapping(value = "/getsettings", method = RequestMethod.GET)
+    @ResponseBody
+    public Settings getSettings () {
+        return settingsService.getSettings();
+    }
+
+    @RequestMapping(value = "/updatesettings", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateSettings (@RequestBody Settings settings) {
+        settingsService.updateSettings(settings);
+        return "1";
+    }
+
+
 
 }

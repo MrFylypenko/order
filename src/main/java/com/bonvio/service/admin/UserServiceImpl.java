@@ -3,6 +3,8 @@ package com.bonvio.service.admin;
 import java.util.List;
 
 
+import com.bonvio.dao.admin.SettingsDao;
+import com.bonvio.model.admin.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserDao userDao;
+
 
 	@Override
 	public List<User> getAllUsers() {
@@ -54,6 +57,8 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
         userDao.createUser(user);
     }
+
+
 
 
 }

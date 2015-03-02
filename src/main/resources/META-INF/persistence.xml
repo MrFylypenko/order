@@ -31,6 +31,7 @@
         <class>com.bonvio.model.order.CommonOrder</class>
         <class>com.bonvio.model.order.ItemCommonOrder</class>
         <class>com.bonvio.model.density.Density</class>
+        <class>com.bonvio.model.admin.Settings</class>
 
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
@@ -38,15 +39,15 @@
             <property name="hibernate.connection.characterEncoding"
                       value="utf8"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://192.168.50.17:3306/order" />
+            <!--<property name="hibernate.connection.url" value="jdbc:mysql://192.168.50.17:3306/order" />
             <property name="hibernate.connection.username" value="springsite" />
-            <property name="hibernate.connection.password" value="springsite" />
+            <property name="hibernate.connection.password" value="springsite" />-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
 
-           <!-- <property name="hibernate.connection.url" value="jdbc:mysql://localhost/order"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost/order"/>
             <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="root"/>-->
+            <property name="hibernate.connection.password" value="root"/>
 
 
             <property name="hibernate.hbm2ddl.auto" value="update"/>
