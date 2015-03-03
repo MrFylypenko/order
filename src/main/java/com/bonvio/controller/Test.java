@@ -2,6 +2,7 @@ package com.bonvio.controller;
 
 import org.joda.time.DateTime;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,28 +18,11 @@ public class Test {
 
     public static void main(String ar []) {
 
+        String path = "C:\\testfolder\\OpenDocumen.xls";
 
+        File file = new File(path);
+        System.out.println("file.exists = "+file.exists() + ", path = "  + path);
 
-
-        Locale.setDefault(Locale.US);
-
-        DateTime dt = new DateTime();
-        Date d = new Date();
-
-
-
-        System.out.println("" + d.getTime() + " \n " + dt.getMillis() + "    " + TimeZone.getDefault());
-        System.out.println("" + d + "  \n" + dt + "    " );
-
-       /* for(int i = 0; i < TimeZone.getAvailableIDs().length; i++){
-            System.out.println(""+TimeZone.getAvailableIDs()[i] );
-        }*/
-
-
-
-        DateFormat df = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
-        df.setTimeZone(TimeZone.getTimeZone("EAT"));
-        System.out.println(df.format(d));
 
 
     }

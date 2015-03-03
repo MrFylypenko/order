@@ -6,7 +6,7 @@ function $storage(http) {
      ADMIN
      */
     this.getUsers = function (callback) {
-        http.post('admin/getusers').success(callback);
+        http.get('admin/getusers').success(callback);
     };
 
     this.getRoles = function (callback) {

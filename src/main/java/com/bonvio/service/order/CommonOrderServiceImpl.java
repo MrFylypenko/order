@@ -4,6 +4,7 @@ import com.bonvio.dao.order.CommonOrderDao;
 import com.bonvio.dao.order.ItemCommonOrderDao;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
+import com.bonvio.service.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,10 @@ public class CommonOrderServiceImpl implements CommonOrderService{
     ItemCommonOrderDao itemCommonOrderDao;
 
 
+    @Autowired
+    ExcelService excelService;
+
+
     @Override
     public CommonOrder getCommonOrderById(int idCommonOrder) {
         return commonOrderDao.getCommonOrderById(idCommonOrder);
@@ -30,6 +35,8 @@ public class CommonOrderServiceImpl implements CommonOrderService{
 
     @Override
     public List<CommonOrder> getAllCommonOrders() {
+        excelService.runCheckingFolder();
+        System.out.println("отдал заказы");
         return commonOrderDao.getAllCommonOrders();
     }
 

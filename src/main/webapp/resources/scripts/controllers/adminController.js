@@ -14,6 +14,7 @@ function adminController(scope, storage, http) {
      */
     scope.getUsers = storage.getUsers(function (data) {
         scope.users = data;
+        console.log(scope.users.length);
         scope.setUser(0);
 
     });

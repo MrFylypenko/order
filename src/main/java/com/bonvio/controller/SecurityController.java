@@ -72,10 +72,24 @@ public class SecurityController {
     }
 
 
-    @RequestMapping(value = "/getusers", method = RequestMethod.POST)
+    @RequestMapping(value = "/getusers", method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUsers() {
-        return userService.getAllUsers();
+        List<User> users = userService.getAllUsers();
+        for (int i = 0; i < users.size(); i++){
+            users.get(i).toString();
+        }
+
+
+        return users;
+    }
+
+
+    @RequestMapping(value = "/getusers2", method = RequestMethod.GET)
+    //@ResponseBody
+    public List<User> getdUsers() {
+        List<User> users = userService.getAllUsers();
+        return users;
     }
 
     @RequestMapping(value = "/updateuserroles", method = RequestMethod.POST)

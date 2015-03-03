@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bonvio.model.admin.User;
 
 @Repository
-
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
@@ -43,8 +42,10 @@ public class UserDaoImpl implements UserDao {
     public List<User> getAllUsers() {
 
         @SuppressWarnings("unchecked")
-        List<User> result = entityManager.createNamedQuery("selectAllUsers")
-                .getResultList();
+        //List<User> result = entityManager.createNamedQuery("selectAllUsers").getResultList();
+        List<User> result = entityManager.createNativeQuery("select * from users", User.class).getResultList();
+        //System.out.println("result = "+ result.size());
+
         return result;
     }
 

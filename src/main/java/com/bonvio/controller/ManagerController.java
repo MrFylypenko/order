@@ -20,7 +20,6 @@ public class ManagerController {
     @Autowired
     CommonOrderService commonOrderService;
 
-
     @RequestMapping(value = "/getallcommonorders", method = RequestMethod.GET)
     @ResponseBody
     public List<CommonOrder> getAllCommonOrders() {
