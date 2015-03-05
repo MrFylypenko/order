@@ -2,14 +2,13 @@ package com.bonvio.service;
 
 import com.bonvio.model.admin.User;
 import com.bonvio.model.order.CommonOrder;
+import com.bonvio.model.order.ItemCommonOrder;
 import com.bonvio.service.admin.UserService;
 import com.bonvio.service.order.CommonOrderService;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +57,7 @@ public class ExcelService {
                     for (String stringFile : userFileNames) {
 
                         //commonOrders.add();
-                        CommonOrder commonOrder = commonOrder(stringFile);
+                        CommonOrder commonOrder = null;//commonOrder(stringFile);
                         if (commonOrder != null)
                             commonOrderService.saveCommonOrder(commonOrder);
                     }
@@ -124,11 +123,11 @@ public class ExcelService {
         }
     }
 
+/*
 
     public CommonOrder commonOrder(String inputFileName) {
 
-
-        CommonOrder commonOrder = null;
+        CommonOrder commonOrder = new CommonOrder();
 
         try {
 
@@ -144,67 +143,145 @@ public class ExcelService {
             HSSFSheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();
+
+            //get number order
+            //получения номера заказа и его описания
+            int checkOrderDate = 0;
             while (rowIterator.hasNext()) {
+                if (checkOrderDate != 0) {
+                    break;
+                }
                 Row row = rowIterator.next();
-
                 Iterator<Cell> cellIterator = row.cellIterator();
-
-                System.out.print(cellIterator.next().getStringCellValue() + "   ");
-                System.out.print(cellIterator.next().getStringCellValue() + "   ");
-                System.out.print("numeric = "+cellIterator.next().getNumericCellValue() + "   ");
-
-
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                        if (cell.getStringCellValue().contains("Заказ")) {
+                            commonOrder.setDate(cell.getStringCellValue());
+                            checkOrderDate++;
+                            break;
+                        }
+                    }
+                }
             }
 
 
+            //получение Заказчика
+            int checkOrderCustomer = 0;
+            boolean hasCustomer = false;
+            while (rowIterator.hasNext()) {
+                if (checkOrderCustomer != 0) {
+                    break;
+                }
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+
+                        if (hasCustomer) {
+                            commonOrder.setCustomer(cell.getStringCellValue());
+                            checkOrderCustomer++;
+                            break;
+                        }
+
+                        if (cell.getStringCellValue().contains("Заказчик")) {
+                            hasCustomer = true;
+                        }
+                    }
+                }
+            }
 
 
+            //опредление нахождения позиций заказа
+            int checkPositions = 0;
 
+            int itemCode = 0;
+            int itemTitle = 0;
+            int itemQuantity = 0;
 
-
-
-
-           /*
-            //Create Workbook instance holding reference to .xlsx file
-            HSSFWorkbook workbook = new HSSFWorkbook(file);
-
-            //Get first/desired sheet from the workbook
-            HSSFSheet sheet = workbook.getSheetAt(0);
-
-            //Iterate through each rows one by one
-            Iterator<Row> rowIterator = sheet.iterator();
 
             while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
-                //For each row, iterate through all the columns
-                Iterator<Cell> cellIterator = row.cellIterator();
-
-
-                while (cellIterator.hasNext()) {
-
-                    Cell cell = cellIterator.next();
-                    System.out.print("  "+cell.getStringCellValue());
-
-
-                    commonOrder.setCustomer(cell.getStringCellValue());
-                    cell = cellIterator.next();
-                    commonOrder.setDate(cell.getStringCellValue());
-                    cell = cellIterator.next();
-                    System.out.println(commonOrder);
-                    commonOrder.setNumber((int) cell.getNumericCellValue());
-                    cell = cellIterator.next();
-                    commonOrder.setPriority((int) cell.getNumericCellValue());
-                    System.out.println(commonOrder);
-
-
-                    //break;
-
+                if (checkPositions != 0) {
+                    break;
                 }
 
-                //break;
+                int numberCells = 0;
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
 
+                        if (cell.getStringCellValue().contains("Код")) {
+                            itemCode = numberCells;
+                        }
+                        if (cell.getStringCellValue().contains("Товары")) {
+                            itemTitle = numberCells;
+                        }
+                        if (cell.getStringCellValue().contains("Количес")) {
+                            itemQuantity = numberCells;
+                            checkPositions++;
+                            rowIterator.hasNext();
+                            break;
+                        }
+                    }
+
+                    numberCells++;
+                }
             }
-            file.close();*/
+
+
+            int checkItems = 0;
+
+
+            //поиск и добавление товаров
+            while (rowIterator.hasNext()) {
+                if (checkItems != 0) {
+                    break;
+                }
+
+                ItemCommonOrder itemCommonOrder = new ItemCommonOrder();
+
+                int numberCells = 0;
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+
+                        if (numberCells == itemCode) {
+                            itemCommonOrder.setCode(cell.getStringCellValue());
+                        }
+                        if (numberCells == itemTitle) {
+                            itemCommonOrder.setTitle(cell.getStringCellValue());
+                        }
+                        if (numberCells == itemQuantity) {
+                            itemCommonOrder.setQuantity(cell.getStringCellValue());
+                        }
+                        if (numberCells > itemQuantity) {
+                            itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
+                            commonOrder.getItems().add(itemCommonOrder);
+                            break;
+                        }
+                    }
+
+                    if ((cell.getCellType() != HSSFCell.CELL_TYPE_STRING) &   (numberCells == itemCode)){
+                        checkItems++;
+                    }
+
+                    numberCells++;
+                }
+            }
+
+            try{
+            file.close();
+            } catch (Exception e) {
+                System.out.println("не удалось закрыть файловый поток");
+                e.printStackTrace();
+            }
+
+
 
             if (inputFile.delete()) {
                 System.out.println(inputFile.getName() + " is deleted!");
@@ -219,5 +296,6 @@ public class ExcelService {
         return commonOrder;
     }
 
+*/
 
 }

@@ -29,6 +29,20 @@ public class CommonOrder {
     @OneToMany(mappedBy = "commonOrder")
     private List <ItemCommonOrder> items = new ArrayList<ItemCommonOrder>();
 
+    @Override
+    public String toString() {
+        return "CommonOrder{" +
+                "id=" + id +
+                ", customer='" + customer + '\'' +
+                ", date='" + date + '\'' +
+                ", number=" + number +
+                ", status=" + status +
+                ", priority=" + priority +
+                ", deferred=" + deferred +
+                ", items=" + items +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
