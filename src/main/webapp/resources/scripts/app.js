@@ -24,7 +24,7 @@ function configuration(routeProvider) {
             controller:  'densityController'
         }).
         otherwise({
-            templateUrl: 'resources/views/admin.html',
-            controller:  'adminController'
+            templateUrl: 'resources/views/login.html',
+            controller: 'loginController'
         });
 }

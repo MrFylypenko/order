@@ -2,7 +2,14 @@
     <h4>{{role.title}}</h4>
     <fieldset>
         <label ng-repeat="role in role.roles">
-            <input type="checkbox" ng-checked="roleGrant.checked" ng-model="roleGrant.checked" ng-click="setUsersGrant(role)">{{role.title}}<br>
+            <input type="checkbox"
+                   ng-checked="roleGrant.checked"
+                   ng-model="roleGrant.checked"
+                   ng-click="setUsersGrant(role)">{{role.title}}<br>
+            <a open-modal="test">БАН</a>
         </label>
     </fieldset>
+</section>
+<section data-modal="test">
+    БАНАНА
 </section>

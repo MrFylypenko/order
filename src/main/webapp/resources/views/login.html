@@ -1,0 +1,13 @@
+<form style="
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 200px;
+  height: 200px;
+" novalidate="novalidate" name="loginForm">
+    <fieldset class="group vertical">
+        <input type="text" placeholder="Логин" ng-model="username" required="">
+        <input type="password" placeholder="Пароль" ng-model="password" required="">
+        <input type="button" class="primary" value="Войти" ng-click="login()" ng-disabled="loginForm.$invalid">
+    </fieldset>
+</form>
