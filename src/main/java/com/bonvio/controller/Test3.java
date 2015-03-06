@@ -1,5 +1,7 @@
 package com.bonvio.controller;
 
+import com.bonvio.model.order.CommonOrder;
+import com.bonvio.service.ExcelService;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
@@ -14,7 +16,7 @@ import java.io.IOException;
  */
 public class Test3 {
 
-    private String inputFile;
+    /*private String inputFile;
 
     public void setInputFile(String inputFile) {
         this.inputFile = inputFile;
@@ -48,12 +50,15 @@ public class Test3 {
         } catch (BiffException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static void main(String[] args) throws IOException {
-        Test3 test = new Test3();
-        test.setInputFile("C:\\testfolder\\Заказ 1463.xls");
-        test.read();
+
+
+        ExcelService test = new ExcelService ();
+        CommonOrder commonOrder = test.commonOrder("C:\\testfolder\\Заказ 1454.xls");
+        System.out.println("="+ commonOrder);
+
     }
 
 

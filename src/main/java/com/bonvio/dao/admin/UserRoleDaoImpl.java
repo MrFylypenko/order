@@ -38,6 +38,8 @@ public class UserRoleDaoImpl implements UserRoleDao{
 
     @Override
     public void updateRole(Role role) {
+        Role role2 = entityManager.find(Role.class, role.getId());
+        role.setGroups(role2.getGroups());
         entityManager.merge(role);
     }
 

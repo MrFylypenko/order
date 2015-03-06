@@ -3,7 +3,7 @@ package com.bonvio.controller;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
 import com.bonvio.service.ExcelService;
-import org.apache.poi.hssf.model.Workbook;
+
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -11,6 +11,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.DateTime;
 
 import java.io.File;
@@ -32,10 +34,7 @@ public class Test {
     public static void main(String ar[]) {
 
 
-        try{
-
-
-
+      /*  try{
 
             InputStream input = new FileInputStream("C:\\testfolder\\Заказ 1454.xls");
             POIFSFileSystem fs = new POIFSFileSystem (input);
@@ -58,40 +57,21 @@ public class Test {
             System.out.println(cell.getStringCellValue());
 
 
-            for (Iterator ro = sheet1.rowIterator(); ro.hasNext();){
-                row1 = (HSSFRow) ro.next();//pour chaque ligne du fichier
-
-                Iterator cellIterator = row1.cellIterator();
-
-
-
-
-
-                cell1 = row1.getCell((short)1);// à la colonne 0
-                //si on trouve une chaine
-                if(cell1.getCellType()==1){
-
-                    System.out.println("Date: "+cell1.getStringCellValue());
-                }
-            }
-
-
-
         }catch (Exception e){e.printStackTrace();}
 
 
 
 
         ExcelService excelService = new ExcelService();
+*/
 
-
-        //CommonOrder commonOrder = commonOrder("C:\\testfolder\\Заказ 1454.xls");
-        //System.out.println(commonOrder);
+        CommonOrder commonOrder = commonOrder("C:\\testfolder\\Заказ 1454.xls");
+        System.out.println(commonOrder);
 
 
     }
 
-/*
+
     public static CommonOrder commonOrder(String inputFileName) {
 
         CommonOrder commonOrder = new CommonOrder();
@@ -255,9 +235,9 @@ public class Test {
             }
 
 
-           *//* if (inputFile.delete()) {
+            /*if (inputFile.delete()) {
                 System.out.println(inputFile.getName() + " is deleted!");
-            }*//*
+            }*/
 
         } catch (Exception e) {
             System.out.println("не удалось сделать заказ...((");
@@ -266,6 +246,6 @@ public class Test {
 
 
         return commonOrder;
-    }*/
+    }
 
 }
