@@ -30,7 +30,7 @@ public class ItemCommonOrder {
 
     @Override
     public String toString() {
-        return "ItemCommonOrder{" +
+        return "\nItemCommonOrder{" +
                 "id=" + id +
                 ", code='" + code + '\'' +
                 ", title='" + title + '\'' +
@@ -40,7 +40,7 @@ public class ItemCommonOrder {
                 ", ready=" + ready +
                 ", deferred=" + deferred +
                 /*", commonOrder=" + commonOrder +*/
-                '}';
+                "}";
     }
 
     public int getId() {

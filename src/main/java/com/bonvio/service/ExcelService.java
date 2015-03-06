@@ -9,6 +9,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -123,7 +125,6 @@ public class ExcelService {
         }
     }
 
-/*
 
     public CommonOrder commonOrder(String inputFileName) {
 
@@ -178,6 +179,7 @@ public class ExcelService {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                        System.out.println("zakaz"+ cell.getStringCellValue());
 
                         if (hasCustomer) {
                             commonOrder.setCustomer(cell.getStringCellValue());
@@ -213,6 +215,8 @@ public class ExcelService {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
 
+                        System.out.println("position = "+ cell.getStringCellValue());
+
                         if (cell.getStringCellValue().contains("Код")) {
                             itemCode = numberCells;
                         }
@@ -235,6 +239,9 @@ public class ExcelService {
             int checkItems = 0;
 
 
+            System.out.println("itemCode ="+ itemCode + " itemTitle = "+ itemTitle + " itemQuantity = " + itemQuantity);
+
+
             //поиск и добавление товаров
             while (rowIterator.hasNext()) {
                 if (checkItems != 0) {
@@ -246,9 +253,12 @@ public class ExcelService {
                 int numberCells = 0;
                 Row row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
+                System.out.println("поиск item");
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+
+                        System.out.println("item = "+ cell.getStringCellValue());
 
                         if (numberCells == itemCode) {
                             itemCommonOrder.setCode(cell.getStringCellValue());
@@ -256,9 +266,9 @@ public class ExcelService {
                         if (numberCells == itemTitle) {
                             itemCommonOrder.setTitle(cell.getStringCellValue());
                         }
-                        if (numberCells == itemQuantity) {
+                        /*if (numberCells == itemQuantity) {
                             itemCommonOrder.setQuantity(cell.getStringCellValue());
-                        }
+                        }*/
                         if (numberCells > itemQuantity) {
                             itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
                             commonOrder.getItems().add(itemCommonOrder);
@@ -266,9 +276,16 @@ public class ExcelService {
                         }
                     }
 
-                    if ((cell.getCellType() != HSSFCell.CELL_TYPE_STRING) &   (numberCells == itemCode)){
-                        checkItems++;
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC & (numberCells == itemQuantity)) {
+                        itemCommonOrder.setQuantity(" " + cell.getNumericCellValue());
+
                     }
+
+
+
+                   /* if ((cell.getCellType() != HSSFCell.CELL_TYPE_STRING) &   (numberCells == itemCode)){
+                        checkItems++;
+                    }*/
 
                     numberCells++;
                 }
@@ -283,9 +300,9 @@ public class ExcelService {
 
 
 
-            if (inputFile.delete()) {
+           /* if (inputFile.delete()) {
                 System.out.println(inputFile.getName() + " is deleted!");
-            }
+            }*/
 
         } catch (Exception e) {
             System.out.println("не удалось сделать заказ...((");
@@ -296,6 +313,5 @@ public class ExcelService {
         return commonOrder;
     }
 
-*/
 
 }

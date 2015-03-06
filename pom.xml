@@ -107,11 +107,11 @@
             <version>2.6.12</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>3.0.2-FINAL</version>
-        </dependency>
+        </dependency>-->
 
 
 
