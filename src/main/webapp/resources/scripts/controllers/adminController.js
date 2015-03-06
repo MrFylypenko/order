@@ -88,14 +88,16 @@ function adminController(scope, storage, http) {
      * @param roleGrant
      */
     scope.setUsersGrant = function (roleGrant) {
-        angular.forEach(scope.users, function (user) {
-            angular.forEach(user.grants, function (grant) {
-                if (grant.title == roleGrant.title) {
-                    grant.checked = roleGrant.checked;
-                }
+        //if (confirm('Точно установить?')) {
+            angular.forEach(scope.users, function (user) {
+                angular.forEach(user.grants, function (grant) {
+                    if (grant.title == roleGrant.title) {
+                        grant.checked = roleGrant.checked;
+                    }
+                });
             });
-        });
-        storage.setUserGrant(roleGrant);
+            storage.setUserGrant(roleGrant);
+        //}
     };
 
     scope.setting = {};

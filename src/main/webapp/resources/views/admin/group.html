@@ -3,13 +3,16 @@
     <fieldset>
         <label ng-repeat="role in role.roles">
             <input type="checkbox"
-                   ng-checked="roleGrant.checked"
-                   ng-model="roleGrant.checked"
-                   ng-click="setUsersGrant(role)">{{role.title}}<br>
-            <a open-modal="test">БАН</a>
+                   ng-checked="role.checked"
+                   ng-model="role.checked"
+                   ng-click="setUsersGrant(role)"
+                   open-modal="test">{{role.title}}<br>
+            {{role}}
         </label>
     </fieldset>
 </section>
 <section data-modal="test">
-    БАНАНА
+    <header>
+        Точно изменить права?
+    </header>
 </section>

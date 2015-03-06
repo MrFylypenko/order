@@ -30,8 +30,10 @@ function $storage(http) {
     //updategrouprole
 
     this.setUserGrant = function (roleGrant) {
-        console.log('123');
         console.log(roleGrant);
+        //http.post('admin/updategrouprole', roleGrant).success(function (data) {
+        //    console.log(data);
+        //});
     };
 
     this.setSetting = function (setting) {
