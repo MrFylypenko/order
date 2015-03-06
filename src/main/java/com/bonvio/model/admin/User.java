@@ -25,7 +25,7 @@ public class User {
                 Set<UserRole> userRoles) {
         this.username = username;
         this.password = password;
-        //this.enabled = enabled;
+//        this.enabled = enabled;
         this.userRoles = userRoles;
     }
 

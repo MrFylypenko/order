@@ -19,6 +19,10 @@ function configuration(routeProvider) {
             templateUrl: 'resources/views/assistant.html',
             controller:  'assistantController'
         })
+        .when('/recipe', {
+            templateUrl: 'resources/views/manager/recipe.html',
+            controller:  'recipeController'
+        })
         .when('/density', {
             templateUrl: 'resources/views/manager/density.html',
             controller:  'densityController'

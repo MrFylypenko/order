@@ -85,9 +85,9 @@ function adminController(scope, storage, http) {
 
     /**
      * установка грантов для всех пользователей
-     * @param roleGrant
      */
-    scope.setUsersGrant = function (roleGrant) {
+    scope.setUsersGrant = function () {
+        var roleGrant = scope.currentRole;
         //if (confirm('Точно установить?')) {
             angular.forEach(scope.users, function (user) {
                 angular.forEach(user.grants, function (grant) {
@@ -112,13 +112,29 @@ function adminController(scope, storage, http) {
 
     scope.userNew = {};
     scope.createUser = function () {
-
-        //TODO добавить в поле юзера userRoles права из json и после этого отправить на сервер
-
-
         console.log(scope.userNew);
     };
+
+    scope.currentRole = {};
+    scope.setCurrentUsersGrant = function (role) {
+        scope.currentRole = role;
+    };
+
+    scope.cancelUsersGrant = function () {
+        scope.currentRole.checked = !scope.currentRole.checked;
+    };
+
+
+    scope.modal = {};
+    scope.setModalParam = function (title, data, action) {
+        scope.modal.title = title;
+        scope.modal.action = action;
+        scope.userNew = data != null ? data : {};
+    };
+
+    scope.updateUser = function () {
+        var user = scope.userNew || scope.user;
+        storage.updateUser(user);
+    }
+
 }
-
-
-//

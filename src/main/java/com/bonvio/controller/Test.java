@@ -89,7 +89,7 @@ public class Test {
 
             HSSFSheet sheet = workbook.getSheetAt(0);
 
-            Iterator<Row> rowIterator = sheet.iterator();
+            Iterator<Row> rowIterator = sheet.rowIterator();
 
             System.out.println("work");
 

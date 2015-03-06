@@ -73,5 +73,5 @@ function managerController(scope, storage, interval) {
 
     scope.componentStatus = function (status) {
         console.log(status);
-    }
+    };
 }

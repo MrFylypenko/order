@@ -5,7 +5,7 @@
                 <li class="nohover">Администратор</li>
             </ul>
             <ul data-float="right">
-                <li open-modal="new-user" style="cursor: pointer">Новый пользователь</li>
+                <li open-modal="new-user" ng-click="setModalParam('Новый пользователь', null, 'create')" style="cursor: pointer">Новый пользователь</li>
                 <li><a href="/#logout">Выход</a></li>
             </ul>
         </nav>
@@ -47,7 +47,7 @@
 
 <section data-modal="new-user">
     <header>
-        Новый пользователь
+        {{modal.title}}
     </header>
     <section>
         <form name="newUser" novalidate data-float="center">
@@ -61,7 +61,7 @@
                <!-- <label>Email
                     <input type="email" ng-model="userNew.email" placeholder="Email" required>
                 </label>-->
-                <select ng-model="userNew.role" name="role">
+                <select ng-show="modal.action == 'create'" ng-model="userNew.role" name="role">
                     <option value="" disabled>Должность</option>
                     <option value="manager">Менеджер</option>
                     <option value="warehouse">Кладовщик</option>
@@ -75,7 +75,7 @@
                 <label>Фамилия
                     <input type="text" ng-model="userNew.lastName" placeholder="Фамилия" required>
                 </label>
-                <label>Домашняя папка
+                <label ng-show="modal.action == 'create'">Домашняя папка
                     <input type="text" ng-model="userNew.path" placeholder="Домашняя папка" required>
                 </label>
             </fieldset>
@@ -83,7 +83,11 @@
     </section>
     <footer>
         <button close-modal="new-user">Закрыть</button>
-        <button close-modal="new-user" class="success"
-                ng-disabled="newUser.$invalid" ng-click="createUser()">Создать</button>
+        <button ng-if="modal.action == 'create'"
+                close-modal="new-user"
+                class="success" ng-disabled="newUser.$invalid" ng-click="createUser()">Создать</button>
+        <button ng-if="modal.action == 'update'"
+                close-modal="new-user"
+                class="success" ng-disabled="newUser.$invalid" ng-click="updateUser()">Сохранить</button>
     </footer>
 </section>

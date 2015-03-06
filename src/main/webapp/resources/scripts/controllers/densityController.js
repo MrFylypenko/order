@@ -18,4 +18,8 @@ function densityController(scope, storage) {
     scope.setSelectedDensity = function (density) {
         scope.selectedDensity = density;
     };
+
+    scope.setDensity = function() {
+        storage.setDensity(scope.selectedDensity);
+    };
 }

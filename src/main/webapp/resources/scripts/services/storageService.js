@@ -27,13 +27,17 @@ function $storage(http) {
         });
     };
 
+    this.updateUser = function (user) {
+        console.log(user);
+    };
+
     //updategrouprole
 
     this.setUserGrant = function (roleGrant) {
         console.log(roleGrant);
-        //http.post('admin/updategrouprole', roleGrant).success(function (data) {
-        //    console.log(data);
-        //});
+        http.post('admin/updategrouprole', roleGrant).success(function (data) {
+            console.log(data);
+        });
     };
 
     this.setSetting = function (setting) {
@@ -64,12 +68,15 @@ function $storage(http) {
         http.get('manager/getitemscommonordersbycommonorderid/' + orderId).success(callback);
     };
 
-
     this.setDifferedItem = function (item, callback) {
 
         http.post('manager/updateitemcommonorder', item).success(callback);
 
         console.log(item);
+    };
+
+    this.setDensity = function (density) {
+        console.log(density);
     };
 
     /*
@@ -126,5 +133,12 @@ function $storage(http) {
      */
     this.getDensity = function (callback) {
         http.get('density/getalldensiteis').success(callback);
+    };
+
+    /*
+    RECIPE
+    */
+    this.getRecipes = function (callback) {
+        http.post('/resources/_data/recipe.json').success(callback);
     };
 }

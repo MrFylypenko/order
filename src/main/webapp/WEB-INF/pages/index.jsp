@@ -25,11 +25,12 @@
     <link rel="stylesheet" href="resources/styles/default.css">
 
     <script src="resources/scripts/controllers/adminController.js"></script>
-    <script src="resources/scripts/controllers/maganerController.js"></script>
+    <script src="resources/scripts/controllers/managerController.js"></script>
     <script src="resources/scripts/controllers/loginController.js"></script>
     <script src="resources/scripts/controllers/storekeeperController.js"></script>
     <script src="resources/scripts/controllers/assistantController.js"></script>
     <script src="resources/scripts/controllers/densityController.js"></script>
+    <script src="resources/scripts/controllers/recipeController.js"></script>
     <script src="resources/scripts/services/storageService.js"></script>
     <script src="resources/scripts/services/loginService.js"></script>
 </head>

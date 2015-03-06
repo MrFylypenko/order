@@ -5,9 +5,9 @@
             <input type="checkbox"
                    ng-checked="role.checked"
                    ng-model="role.checked"
-                   ng-click="setUsersGrant(role)"
+                   ng-click="setCurrentUsersGrant(role)"
                    open-modal="test">{{role.title}}<br>
-            {{role}}
+            <!--{{role}}-->
         </label>
     </fieldset>
 </section>
@@ -15,4 +15,8 @@
     <header>
         Точно изменить права?
     </header>
+    <footer>
+        <button class="danger" ng-click="setUsersGrant()" close-modal="test">АГА</button>
+        <button close-modal="test" ng-click="cancelUsersGrant()">ОТМЕНА</button>
+    </footer>
 </section>

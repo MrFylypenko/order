@@ -143,7 +143,7 @@ public class ExcelService {
 
             HSSFSheet sheet = workbook.getSheetAt(0);
 
-            Iterator<Row> rowIterator = sheet.iterator();
+            Iterator<Row> rowIterator = sheet.rowIterator();
 
             //get number order
             //получения номера заказа и его описания
