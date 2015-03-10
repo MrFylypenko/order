@@ -27,9 +27,9 @@ function recipeController(scope, storage) {
             },
             {
                 "id": 2,
-                "title": "Редкий банана",
-                "quantity": 50,
-                "recipeId": 4
+                "title": "Банана",
+                "quantity": 10,
+                "recipeId": 1
             },
             {
                 "id": 3,
@@ -38,6 +38,36 @@ function recipeController(scope, storage) {
                 "recipeId": 4
             }
         ];
+        scope.addComponent = function () {
+            console.log('121');
+        };
+
+
+        scope.recipes1 = [
+            {
+                "title": "Банана-пирог",
+                "components": [
+                    {
+                        "title": "Банана1"
+                    },
+                    {
+                        "title": "Банана2"
+                    }
+                ]
+            },
+            {
+                "title": "Банана-пирог2",
+                "components": [
+                    {
+                        "title": "Банана21"
+                    },
+                    {
+                        "title": "Банана22"
+                    }
+                ]
+            }
+        ];
+
         //storage.getRecipes(function (data) {
         //    scope.recipes = data;
         //});
