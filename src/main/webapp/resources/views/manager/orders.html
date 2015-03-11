@@ -1,4 +1,5 @@
-<table class="border hover horizontal" ng-init="getOrders()">
+<table class="border hover horizontal scrollable" ng-init="getOrders()">
+    <thead>
     <tr>
         <th ng-click="orderByField='customer'; reverseSort = !reverseSort">
             Клиент
@@ -25,6 +26,8 @@
 					</span>
         </th>
     </tr>
+    </thead>
+    <tbody>
     <tr ng-repeat="order in orders | orderBy:orderByField:reverseSort | filter: query" ng-click="getOrderById($index, order.id)"
         ng-class="order.status == 100 ? 'success' : order.status <= 25 ? 'danger' : 'warning'" ng-show="deferred == order.deferred">
         <td>{{order.customer}}</td>
@@ -32,4 +35,5 @@
         <td>{{order.date}}</td>
         <td>{{order.status}}%</td>
     </tr>
+    </tbody>
 </table>
