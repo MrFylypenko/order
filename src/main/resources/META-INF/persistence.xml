@@ -32,6 +32,9 @@
         <class>com.bonvio.model.order.ItemCommonOrder</class>
         <class>com.bonvio.model.density.Density</class>
         <class>com.bonvio.model.admin.Settings</class>
+        <class>com.bonvio.model.formula.Recipe</class>
+        <class>com.bonvio.model.formula.Component</class>
+
 
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
