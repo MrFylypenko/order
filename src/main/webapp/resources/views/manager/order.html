@@ -25,9 +25,10 @@
         <td>{{item.quantity}}</td>
         <td>{{item.comment}} {{$index}}</td>
         <td ng-if="item.ready && !order.deffered">Готово</td>
-        <td ng-if="!item.ready && !order.deffered">
+        <td ng-if="order.deferred == false">
             <button open-modal="cancelItem" ng-click="setSelectedItem(item)">Отложить</button>
         </td>
+        <td ng-if="order.deferred == true"></td>
     </tr>
 </table>
 
@@ -50,9 +51,10 @@
         <td>{{item.quantity}}</td>
         <td>{{item.comment}}</td>
         <td ng-if="item.ready && !order.deffered">Готово</td>
-        <td ng-if="!item.ready && !order.deffered">
+        <td ng-if="order.deferred == false">
             <button open-modal="cancelItem" ng-click="setSelectedItem(item)">Отложить</button>
         </td>
+        <td ng-if="order.deferred == true"></td>
     </tr>
 </table>
 <section class="panel" ng-if="order.info.description">

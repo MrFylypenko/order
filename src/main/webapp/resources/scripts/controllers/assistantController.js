@@ -16,7 +16,7 @@ function assistantController(scope, storage, interval) {
     scope.orders = [];
     scope.getAssistantOrders = storage.getAssistantOrders(function (data) {
         scope.orders = data;
-        scope.getAssistantOrderById(0, 1234);
+        //scope.getAssistantOrderById(0, 1234);
     });
 
     scope.order = {};

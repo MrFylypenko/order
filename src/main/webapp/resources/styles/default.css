@@ -69,3 +69,15 @@ progress::-moz-progress-bar {
 .round.danger {
   background: red;
 }
+
+
+.no-margin {
+    margin: 0;
+}
+.no-padding {
+    padding: 0;
+}
+.no-border {
+    border: 0;
+    border-radius: 0;
+}

@@ -31,6 +31,7 @@
     <script src="resources/scripts/controllers/assistantController.js"></script>
     <script src="resources/scripts/controllers/densityController.js"></script>
     <script src="resources/scripts/controllers/recipeController.js"></script>
+    <script src="resources/scripts/services/recipeService.js"></script>
     <script src="resources/scripts/services/storageService.js"></script>
     <script src="resources/scripts/services/loginService.js"></script>
 </head>

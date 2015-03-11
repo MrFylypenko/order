@@ -90,7 +90,7 @@ function $storage(http) {
         http.get('storekeeper/getallcommonorders').success(callback);
     };
     this.getStorekeeperOrderById = function (orderId, callback) {
-        http.get('storekeeper/getitemscommonordersbycommonorderid/' + orderId).success(callback);
+        http.get('storekeeper/getItemsCommonOrdersByCommonOrderId/' + orderId).success(callback);
     };
 
     this.setItemStatus = function (item) {

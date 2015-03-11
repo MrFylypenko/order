@@ -11,7 +11,7 @@ function configuration(routeProvider) {
             templateUrl: 'resources/views/manager.html',
             controller:  'managerController'
         })
-        .when('/keep', {
+        .when('/storekeeper', {
             templateUrl: 'resources/views/storekeeper.html',
             controller:  'storekeeperController'
         })

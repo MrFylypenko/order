@@ -26,7 +26,7 @@
         </th>
     </tr>
     <tr ng-repeat="order in orders | orderBy:orderByField:reverseSort | filter: query"
-        ng-click="getAssistantOrderById($index, order.number)"
+        ng-click="getAssistantOrderById($index, order.id)"
         ng-class="order.status == 100 ? 'success' : order.status <= 25 ? 'danger' : 'warning'">
         <td>{{order.customer}}</td>
         <td>{{order.number}}</td>
