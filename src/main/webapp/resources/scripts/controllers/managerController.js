@@ -2,11 +2,30 @@ angular.module('app').controller('managerController', managerController);
 
 managerController.$inject = ['$scope', '$storage', '$interval'];
 function managerController(scope, storage, interval) {
-    interval(function () {
+
+    scope.setSelectedOrder = function (index, order) {
+        scope.selectedOrder = order;
+        scope.selectedIndex = index;
+        scope.selectedOrderBackup = angular.copy(order);
+    };
+
+    scope.updatePriority = function () {
+        storage.setOrderPriority(scope.selectedOrder);
+    };
+    scope.cancelPriority = function () {
         storage.getOrders(function (data) {
             scope.orders = data;
         });
-    }, 10000); // 10 sec
+    };
+
+    scope.orderByField = 'priority';
+    scope.reverseSort = false;
+
+    /*interval(function () {
+        storage.getOrders(function (data) {
+            scope.orders = data;
+        });
+    }, 10000); // 10 sec*/
 
     scope.manager = {};
     scope.getManagerInfo = storage.getManagerInfo(function (data) {
@@ -19,10 +38,10 @@ function managerController(scope, storage, interval) {
     scope.getOrders = storage.getOrders(function (data) {
         angular.forEach(data, function(order) {
             scope.orders.push(order);
-            if (order.deffered) {
+            if (order.deferred) {
                 scope.quantityDefferedOrders++;
             }
-            console.log(scope.orders);
+            //console.log(scope.orders);
         });
         scope.getOrderById(0, scope.orders[0].id);
     });

@@ -79,6 +79,10 @@ function $storage(http) {
         console.log(density);
     };
 
+    this.setOrderPriority = function (order) {
+        console.log(order);
+    };
+
     /*
      STOREKEEPER
      */

@@ -71,8 +71,8 @@ progress::-moz-progress-bar {
 }
 
 .scrollable {
-    background: red;
-    height: 200px !important;
+    overflow: auto;
+    height: 600px;
 }
 
 
