@@ -5,6 +5,7 @@ import com.bonvio.model.order.ItemCommonOrder;
 import com.bonvio.service.ExcelService;
 
 
+import com.bonvio.service.order.CommonOrderServiceImpl;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -59,13 +60,21 @@ public class Test {
 
         }catch (Exception e){e.printStackTrace();}
 
-
+*/
 
 
         ExcelService excelService = new ExcelService();
-*/
 
-        CommonOrder commonOrder = commonOrder("C:\\testfolder\\Заказ 1454.xls");
+
+        CommonOrder commonOrder = excelService.commonOrder("C:\\testfolder\\Заказ 1453 - копия.xls");
+
+
+
+        CommonOrderServiceImpl commonOrderService = new CommonOrderServiceImpl();
+
+        commonOrderService.saveCommonOrder(commonOrder);
+
+                //commonOrder("C:\\testfolder\\Заказ 1465.xls");
         System.out.println(commonOrder);
 
 

@@ -23,7 +23,29 @@ public class ItemCommonOrderDaoImpl implements  ItemCommonOrderDao{
 
     @Override
     public void saveItemCommonOrder(ItemCommonOrder itemCommonOrder) {
+
+
+
+
+
         entityManager.persist(itemCommonOrder);
+        System.out.println(itemCommonOrder);
+
+/*
+        for (int i = 0; i < itemCommonOrder.getComponents().size(); i++){
+            itemCommonOrder.getComponents().get(i).setItemCommonOrder(itemCommonOrder);
+        }*/
+
+
+
+        for(int i = 0; i < itemCommonOrder.getComponents().size(); i++){
+
+            itemCommonOrder.getComponents().get(i).setItemCommonOrder(itemCommonOrder);
+
+            entityManager.persist(itemCommonOrder.getComponents().get(i));
+
+        }
+
     }
 
     @Override

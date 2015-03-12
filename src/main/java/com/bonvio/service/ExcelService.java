@@ -52,15 +52,22 @@ public class ExcelService {
 
                     for (User user : userList) {
                         String[] strings = listFile(user.getPath(), ".xls");
+
+
                         userFileNames.addAll(Arrays.asList(strings));
                     }
 
-                    List<CommonOrder> commonOrders = new ArrayList<CommonOrder>();
+                    //List<CommonOrder> commonOrders = new ArrayList<CommonOrder>();
                     for (String stringFile : userFileNames) {
 
+                        System.out.println(stringFile);
+
                         //commonOrders.add();
-                        CommonOrder commonOrder = null;//commonOrder(stringFile);
-                        if (commonOrder != null)
+                        CommonOrder commonOrder = commonOrder(stringFile);
+                        if (commonOrder.getCustomer().length() > 0)
+
+                            System.out.println(commonOrder);
+
                             commonOrderService.saveCommonOrder(commonOrder);
                     }
 
@@ -130,13 +137,16 @@ public class ExcelService {
 
         CommonOrder commonOrder = new CommonOrder();
 
+        FileInputStream file = null;
+
+
         try {
 
             System.out.println(" commonOrder inputFileName = " + inputFileName);
 
             File inputFile = new File(inputFileName);
 
-            FileInputStream file = new FileInputStream(inputFile);
+            file = new FileInputStream(inputFile);
 
 
             HSSFWorkbook workbook = new HSSFWorkbook(file);
@@ -179,7 +189,7 @@ public class ExcelService {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
-                        System.out.println("zakaz"+ cell.getStringCellValue());
+                        System.out.println("zakaz" + cell.getStringCellValue());
 
                         if (hasCustomer) {
                             commonOrder.setCustomer(cell.getStringCellValue());
@@ -215,7 +225,7 @@ public class ExcelService {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
 
-                        System.out.println("position = "+ cell.getStringCellValue());
+                        System.out.println("position = " + cell.getStringCellValue());
 
                         if (cell.getStringCellValue().contains("Код")) {
                             itemCode = numberCells;
@@ -239,7 +249,7 @@ public class ExcelService {
             int checkItems = 0;
 
 
-            System.out.println("itemCode ="+ itemCode + " itemTitle = "+ itemTitle + " itemQuantity = " + itemQuantity);
+            System.out.println("itemCode =" + itemCode + " itemTitle = " + itemTitle + " itemQuantity = " + itemQuantity);
 
 
             //поиск и добавление товаров
@@ -258,7 +268,7 @@ public class ExcelService {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
 
-                        System.out.println("item = "+ cell.getStringCellValue());
+                        System.out.println("item = " + cell.getStringCellValue());
 
                         if (numberCells == itemCode) {
                             itemCommonOrder.setCode(cell.getStringCellValue());
@@ -290,9 +300,8 @@ public class ExcelService {
                     numberCells++;
                 }
             }
-
-            try{
-            file.close();
+            try {
+                file.close();
             } catch (Exception e) {
                 System.out.println("не удалось закрыть файловый поток");
                 e.printStackTrace();
@@ -300,11 +309,20 @@ public class ExcelService {
 
 
 
-           /* if (inputFile.delete()) {
+
+            if (inputFile.delete()) {
                 System.out.println(inputFile.getName() + " is deleted!");
-            }*/
+            }
 
         } catch (Exception e) {
+
+            try {
+                file.close();
+            } catch (Exception e1) {
+                System.out.println("не удалось закрыть файловый поток");
+                e1.printStackTrace();
+            }
+
             System.out.println("не удалось сделать заказ...((");
             e.printStackTrace();
         }

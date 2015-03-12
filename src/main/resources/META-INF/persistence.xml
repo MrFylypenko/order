@@ -6,7 +6,7 @@
     <!-- <persistence-unit name="H2test" transaction-type="RESOURCE_LOCAL">
          <provider>org.hibernate.ejb.HibernatePersistence</provider>
          <class>com.bonvio.model.Waybill</class>
-         <class>com.bonvio.model.Item</class>
+         <class>com.bonvio.model.item.Item</class>
          <class>com.bonvio.model.admin.User</class>
          <class>com.bonvio.model.admin.UserRole</class>
          <class>com.bonvio.model.Folders</class>
@@ -34,8 +34,8 @@
         <class>com.bonvio.model.admin.Settings</class>
         <class>com.bonvio.model.formula.Recipe</class>
         <class>com.bonvio.model.formula.Component</class>
-
-
+        <class>com.bonvio.model.item.Item</class>
+        <class>com.bonvio.model.item.Component</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>

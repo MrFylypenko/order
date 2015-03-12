@@ -4,6 +4,8 @@ import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ivan on 24.02.2015.
@@ -28,6 +30,35 @@ public class ItemCommonOrder {
     @ManyToOne
     private CommonOrder commonOrder;
 
+
+    //start Testing object
+
+    @ManyToOne
+    private ItemCommonOrder itemCommonOrder;
+
+    @OneToMany (mappedBy = "itemCommonOrder")
+    private List<ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
+
+
+    public ItemCommonOrder getItemCommonOrder() {
+        return itemCommonOrder;
+    }
+
+    public void setItemCommonOrder(ItemCommonOrder itemCommonOrder) {
+        this.itemCommonOrder = itemCommonOrder;
+    }
+
+    public List<ItemCommonOrder> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<ItemCommonOrder> components) {
+        this.components = components;
+    }
+
+//end Testing object
+
+
     @Override
     public String toString() {
         return "\nItemCommonOrder{" +
@@ -39,8 +70,10 @@ public class ItemCommonOrder {
                 ", comment='" + comment + '\'' +
                 ", ready=" + ready +
                 ", deferred=" + deferred +
-                /*", commonOrder=" + commonOrder +*/
-                "}";
+
+                ", itemCommonOrder=" + itemCommonOrder.getId() +
+                ", components=" + components.size() +
+                '}';
     }
 
     public int getId() {

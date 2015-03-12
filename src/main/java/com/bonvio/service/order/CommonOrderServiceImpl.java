@@ -43,10 +43,14 @@ public class CommonOrderServiceImpl implements CommonOrderService{
     @Override
     @Transactional
     public void saveCommonOrder(CommonOrder commonOrder) {
+
         commonOrderDao.saveCommonOrder(commonOrder);
+
         for (int i = 0; i < commonOrder.getItems().size(); i++){
+
             commonOrder.getItems().get(i).setCommonOrder(commonOrder);
             itemCommonOrderDao.saveItemCommonOrder(commonOrder.getItems().get(i));
+
         }
     }
 
