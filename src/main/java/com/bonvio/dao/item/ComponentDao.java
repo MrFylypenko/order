@@ -1,12 +1,11 @@
-package com.bonvio.dao.formula;
+package com.bonvio.dao.item;
 
-import com.bonvio.model.formula.Component;
-import com.bonvio.model.formula.Recipe;
+import com.bonvio.model.item.Component;
 
 import java.util.List;
 
 /**
- * Created by Ivan on 10.03.2015.
+ * Created by Ivan on 13.03.2015.
  */
 public interface ComponentDao {
 

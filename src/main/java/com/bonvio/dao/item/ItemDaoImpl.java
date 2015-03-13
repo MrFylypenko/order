@@ -36,7 +36,7 @@ public class ItemDaoImpl implements ItemDao {
         for (int i = 0; i < queryArray.length; i++) {
             query += queryArray[i] + "%";
         }
-        query += "' ";//LIMIT 30
+        query += "' AND type <> 'recipe'";//LIMIT 30
 
         @SuppressWarnings("unchecked")
         List<Item> items = entityManager.createNativeQuery(query, Item.class).getResultList();
@@ -47,7 +47,6 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public void saveItem(Item item) {
         entityManager.persist(item);
-
     }
 
 

@@ -1,6 +1,11 @@
 package com.bonvio.model.item;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ivan on 12.03.2015.
@@ -21,7 +26,22 @@ public class Component {
     private String measure;
 
     @ManyToOne
+    private Item parentItem;
+
+    /// Test
+    @ManyToOne
     private Item item;
+
+
+    @Override
+    public String toString() {
+        return "Component{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", measure='" + measure + '\'' +
+                //", item=" + item +
+                '}';
+    }
 
     public int getId() {
         return id;
@@ -45,6 +65,15 @@ public class Component {
 
     public void setMeasure(String measure) {
         this.measure = measure;
+    }
+
+    @JsonBackReference
+    public Item getParentItem() {
+        return parentItem;
+    }
+
+    public void setParentItem(Item parentItem) {
+        this.parentItem = parentItem;
     }
 
     public Item getItem() {

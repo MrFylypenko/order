@@ -1,5 +1,9 @@
 package com.bonvio.model.item;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +41,30 @@ public class Item {
 
     double quantity;
 
-    @OneToMany (mappedBy = "item", fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "parentItem", fetch = FetchType.EAGER)
     List <Component> components = new ArrayList<Component>();
 
+    //Test
+    @OneToMany (mappedBy = "item", fetch = FetchType.EAGER)
+    List <Component> involving = new ArrayList<Component>();
+
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                ", name='" + name + '\'' +
+                ", warehouse=" + warehouse +
+                ", laboratory=" + laboratory +
+                ", measure='" + measure + '\'' +
+                ", username='" + username + '\'' +
+                ", density=" + density +
+                ", type='" + type + '\'' +
+                ", quantity=" + quantity +
+                ", components=" + components +
+                '}';
+    }
 
     public String getUsername() {
         return username;
@@ -121,6 +146,7 @@ public class Item {
         this.quantity = quantity;
     }
 
+    @JsonManagedReference
     public List<Component> getComponents() {
         return components;
     }
@@ -129,4 +155,12 @@ public class Item {
         this.components = components;
     }
 
+    @JsonIgnore
+    public List<Component> getInvolving() {
+        return involving;
+    }
+
+    public void setInvolving(List<Component> involving) {
+        this.involving = involving;
+    }
 }

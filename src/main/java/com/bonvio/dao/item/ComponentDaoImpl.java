@@ -1,6 +1,6 @@
-package com.bonvio.dao.formula;
+package com.bonvio.dao.item;
 
-import com.bonvio.model.formula.Component;
+import com.bonvio.model.item.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,10 +8,11 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * Created by Ivan on 10.03.2015.
+ * Created by Ivan on 13.03.2015.
  */
 @Repository
-public class ComponentDaoImpl implements ComponentDao {
+public class ComponentDaoImpl implements ComponentDao{
+
 
     @PersistenceContext
     private EntityManager entityManager;

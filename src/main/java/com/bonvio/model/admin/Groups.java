@@ -10,6 +10,7 @@ import java.util.Set;
  * Created by Ivan on 16.02.2015.
  */
 @Entity
+@Table (name = "groups")
 public class Groups {
 
     public Groups() {

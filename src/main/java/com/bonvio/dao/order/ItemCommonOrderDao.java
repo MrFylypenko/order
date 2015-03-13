@@ -16,5 +16,4 @@ public interface ItemCommonOrderDao {
     public void deleteItemCommonOrder (ItemCommonOrder itemCommonOrder);
 
 
-
 }
