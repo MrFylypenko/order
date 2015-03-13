@@ -38,6 +38,8 @@ public class ItemController {
     @RequestMapping(value = "/updateitem", method = RequestMethod.POST)
     @ResponseBody
     public Item updateItem(@RequestBody Item item) {
+
+        //TODO обновлять вместе с содержимыми компонентами
         itemService.updateItem(item);
         return item;
     }
@@ -47,6 +49,9 @@ public class ItemController {
     public List<Item> getItemsByExpression(@PathVariable ("expression") String expression) {
         return itemService.getItemsByExpression(expression);
     }
+
+
+    //TODO сделать удаление только рецепта   deleteitem/{id}
 
     @RequestMapping(value = "/addcomponent/{iditem}", method = RequestMethod.POST)
     @ResponseBody
@@ -68,6 +73,10 @@ public class ItemController {
         itemService.removeComponent(idComponent);
         return "1";
     }
+
+
+
+
 
 
 

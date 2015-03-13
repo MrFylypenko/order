@@ -53,7 +53,7 @@
 
 
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <!--<property name="hibernate.show_sql" value="true"/>-->
 
 
             <property name="hibernate.c3p0.acquire_increment" value="3"/>

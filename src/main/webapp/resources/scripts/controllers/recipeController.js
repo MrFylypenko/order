@@ -24,8 +24,9 @@ function recipeController(scope, recipe, interval) {
             scope.selectedRecipe.components = [];
         }
 
-        if (scope.component.title != undefined && scope.component.quantity != undefined) {
-            scope.selectedRecipe.components.push(scope.component);
+        if (scope.component.name != undefined && scope.component.name != undefined) {
+            scope.component.item = scope.component;
+            scope.selectedRecipe.components.push(scope.component.item);
             scope.component = {};
         }
     };
@@ -72,63 +73,23 @@ function recipeController(scope, recipe, interval) {
 
     scope.components = [];
     scope.getComponents = function (exp) {
-        scope.components = [
-            {
-                'title': 'Банана'
-            },
-            {
-                'title': 'Папая'
-            },
-            {
-                'title': 'Граната'
-            },
-            {
-                'title': 'Ждамшут'
-            },
-            {
-                'title': 'Рафшан'
-            }
-        ];
-        /*recipe.getComponents(exp, function (data) {
+        console.log(exp);
+
+
+
+        recipe.getComponents(exp, function (data) {
             scope.components = data;
-        });*/
+        });
     };
 
     scope.recipes = [];
     scope.getRecipes = function () {
-        scope.recipes = [
-            {
-                "id": 1,
-                "title": "Банана-пирог",
-                "components": [
-                    {
-                        "id": 2,
-                        "title": "Банана",
-                        "quantity": 10
-                    },
-                    {
-                        "id": 3,
-                        "title": "Яблоко",
-                        "quantity": 20
-                    }
-                ]
-            },
-            {
-                "id": 4,
-                "title": "Банана-пирог синий",
-                "components": [
-                    {
-                        "id": 5,
-                        "title": "Банана",
-                        "quantity": 30
-                    },
-                    {
-                        "id": 6,
-                        "title": "Папая",
-                        "quantity": 50
-                    }
-                ]
-            }
-        ];
+
+        recipe.getRecipes(function (data) {
+            scope.recipes = data;
+        });
+
+
+
     };
 }

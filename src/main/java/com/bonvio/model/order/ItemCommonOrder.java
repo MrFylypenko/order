@@ -36,7 +36,7 @@ public class ItemCommonOrder {
     @ManyToOne
     private ItemCommonOrder itemCommonOrder;
 
-    @OneToMany (mappedBy = "itemCommonOrder")
+    @OneToMany (mappedBy = "itemCommonOrder", fetch = FetchType.EAGER)
     private List<ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
 
 
@@ -71,7 +71,7 @@ public class ItemCommonOrder {
                 ", ready=" + ready +
                 ", deferred=" + deferred +
 
-                ", itemCommonOrder=" + itemCommonOrder.getId() +
+                //", itemCommonOrder=" + itemCommonOrder.getId() +
                 ", components=" + components.size() +
                 '}';
     }

@@ -29,10 +29,10 @@
                 <th>Получаемая еденица измерения</th>
             </tr>
             <tr ng-repeat="item in density">
-                <td>{{item.component}}</td>
+                <td>{{item.name}}</td>
                 <td>{{item.source}}</td>
-                <td open-modal="factorEdit" ng-click="setSelectedDensity(item)">{{item.factor}}</td>
-                <td>{{item.result}}</td>
+                <td open-modal="factorEdit" ng-click="setSelectedDensity(item)">{{item.density}}</td>
+                <td>{{item.measure}}</td>
             </tr>
         </table>
     </section>
@@ -46,7 +46,7 @@
             <fieldset class="vertical">
                 <label>
                     <span>Название</span>
-                    <input placeholder="Название" ng-model="selectedDensity.component">
+                    <input placeholder="Название" ng-model="selectedDensity.name">
                 </label>
                 <label>
                     <span>Исходное измерение</span>
@@ -56,11 +56,11 @@
             <fieldset class="vertical">
                 <label>
                     <span>Коэффициент</span>
-                    <input placeholder="Коэффициент" ng-model="selectedDensity.factor">
+                    <input placeholder="Коэффициент" ng-model="selectedDensity.density">
                 </label>
                 <label>
                     <span>Получаемое измерение</span>
-                    <input placeholder="Получаемое измерение" ng-model="selectedDensity.result">
+                    <input placeholder="Получаемое измерение" ng-model="selectedDensity.measure">
                 </label>
             </fieldset>
         </form>

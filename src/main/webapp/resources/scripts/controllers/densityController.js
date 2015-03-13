@@ -16,10 +16,17 @@ function densityController(scope, storage) {
 
     scope.selectedDensity = {};
     scope.setSelectedDensity = function (density) {
+        scope.selectedAction = 'update';
         scope.selectedDensity = density;
     };
 
     scope.setDensity = function() {
-        storage.setDensity(scope.selectedDensity);
+        if (scope.selectedAction == 'update') {
+            storage.setDensity(scope.selectedDensity);
+            scope.selectedAction = '';
+        } else {
+            storage.newDensity(scope.selectedDensity);
+            scope.density.push(scope.selectedDensity);
+        }
     };
 }

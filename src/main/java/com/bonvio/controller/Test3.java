@@ -2,6 +2,8 @@ package com.bonvio.controller;
 
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.service.ExcelService;
+import com.bonvio.service.order.CommonOrderService;
+import com.bonvio.service.order.CommonOrderServiceImpl;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
@@ -56,8 +58,11 @@ public class Test3 {
 
 
         ExcelService test = new ExcelService ();
-        CommonOrder commonOrder = test.commonOrder("C:\\testfolder\\Заказ 1454.xls");
+        CommonOrder commonOrder = test.commonOrder("C:\\testfolder\\Заказ 1340.xls");
         System.out.println("="+ commonOrder);
+        CommonOrderService commonOrderService = new CommonOrderServiceImpl();
+        commonOrderService.saveCommonOrder(commonOrder);
+
 
     }
 

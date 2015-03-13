@@ -25,6 +25,7 @@ public class Component {
     private double quantity;
     private String measure;
 
+
     @ManyToOne
     private Item parentItem;
 
@@ -83,4 +84,6 @@ public class Component {
     public void setItem(Item item) {
         this.item = item;
     }
+
+
 }

@@ -31,6 +31,8 @@ public class Item {
 
     double laboratory;
 
+    private String source;
+
     String measure;
 
     String username;
@@ -40,6 +42,7 @@ public class Item {
     String type;
 
     double quantity;
+
 
     @OneToMany (mappedBy = "parentItem", fetch = FetchType.EAGER)
     List <Component> components = new ArrayList<Component>();
@@ -162,5 +165,13 @@ public class Item {
 
     public void setInvolving(List<Component> involving) {
         this.involving = involving;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

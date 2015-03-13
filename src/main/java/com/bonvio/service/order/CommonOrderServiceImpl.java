@@ -46,6 +46,8 @@ public class CommonOrderServiceImpl implements CommonOrderService{
 
         commonOrderDao.saveCommonOrder(commonOrder);
 
+        System.out.println(commonOrder.getItems().size());
+
         for (int i = 0; i < commonOrder.getItems().size(); i++){
 
             commonOrder.getItems().get(i).setCommonOrder(commonOrder);

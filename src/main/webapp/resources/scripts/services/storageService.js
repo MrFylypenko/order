@@ -75,9 +75,7 @@ function $storage(http) {
         console.log(item);
     };
 
-    this.setDensity = function (density) {
-        console.log(density);
-    };
+
 
     this.setOrderPriority = function (order) {
         console.log(order);
@@ -136,7 +134,26 @@ function $storage(http) {
      DENSITY
      */
     this.getDensity = function (callback) {
-        http.get('density/getalldensiteis').success(callback);
+        http.get('item/getallitems').success(callback);
+    };
+
+    this.setDensity = function (density) {
+        http.post('item/updateitem', density).success(function (){
+                console.log("ok");        }
+            );
+
+        //console.log(density);
+    };
+
+    this.newDensity = function (density) {
+
+        http.post('item/additem', density).success(function (){
+                console.log("ok");        }
+        );
+
+
+        console.log('create');
+        console.log(density);
     };
 
     /*

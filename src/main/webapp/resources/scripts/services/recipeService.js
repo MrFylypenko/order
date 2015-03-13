@@ -4,42 +4,41 @@ angular.module('app')
 recipeService.$inject = ['$http'];
 function recipeService(http) {
     this.getRecipes = function (callback) {
-        //http.post('').success(callback).error(function () {
-        //    console.log('Ошибка обратобки запроса getRecipes');
-        //});
+
+        http.get('item/getallitems').success(callback).error(function () {
+            console.log('Ошибка обратобки запроса getRecipes');
+        });
     };
 
     this.getComponents = function (exp, callback) {
-        //http.post('' + exp).success(callback).error(function () {
-        //    console.log('Ошибка обратобки запроса getComponents');
-        //});
+        http.get('item/getitemsbyexpression/' + exp).success(callback).error(function () {
+            console.log('Ошибка обратобки запроса getComponents');
+        });
     };
 
     this.addRecipe = function (recipe) {
-        console.log(recipe);
-        //http.post('', recipe).error(function () {
-        //    console.log('Ошибка обратобки запроса addRecipe');
-        //});
+        http.post('item/additem', recipe).error(function () {
+            console.log('Ошибка обратобки запроса addRecipe');
+        });
     };
 
     this.removeRecipe = function (recipeId) {
-        console.log(recipeId);
-        //http.post('' + recipeId).error(function () {
-        //    console.log('Ошибка обратобки запроса removeRecipe');
-        //});
+        http.post('item/deleteitem/' + recipeId).error(function () {
+            console.log('Ошибка обратобки запроса removeRecipe');
+        });
     };
 
     this.removeComponent = function (componentId) {
-        console.log(componentId);
-        //http.post('' + recipeId).error(function () {
-        //    console.log('Ошибка обратобки запроса removeComponent');
-        //});
+        //console.log(componentId);
+        http.post('item/removecomponent/' + componentId).error(function () {
+            console.log('Ошибка обратобки запроса removeComponent');
+        });
     };
 
     this.updateRecipe = function (recipeId, recipe) {
-        console.log(recipeId, recipe);
-        //http.post('' + recipeId, recipe).error(function () {
-        //    console.log('Ошибка обратобки запроса updateRecipe');
-        //});
+        //console.log(recipeId, recipe);
+        http.post('item/updateitem' , recipe).error(function () {
+            console.log('Ошибка обратобки запроса updateRecipe');
+        });
     };
 }

@@ -24,7 +24,7 @@
         <table ng-init="getRecipes()" class="hover border horizontal">
             <tr ng-repeat-start="recipe in recipes" class="success" ng-init="recipeIndex = $index">
                 <td colspan="2">
-                    <b>{{recipe.title}}</b>
+                    <b>{{recipe.name}}</b>
                 </td>
                 <td>
                     <a href="" open-modal="recipeModal" ng-click="setSelectedRecipe(recipe)">Редактировать рецепт</a> |
@@ -35,7 +35,7 @@
             </tr>
             <tr ng-repeat-end="" ng-repeat="component in recipe.components" class="warning">
                 <td>
-                    <i>{{component.title}}</i>
+                    <i>{{component.item.name}}</i>
                 </td>
                 <td>
                     <i>{{component.quantity}}г</i>
@@ -53,13 +53,13 @@
 
 <section data-modal="recipeModal">
     <header ng-if="currentAction == 'update'">
-        Редактировать рецепт <b>"{{selectedRecipe.title}}"</b>
+        Редактировать рецепт <b>"{{selectedRecipe.name}}"</b>
     </header>
     <header ng-if="currentAction == 'create'">
         Добавить рецепт
     </header>
     <section>
-        <input type="text" ng-model="selectedRecipe.title" placeholder="Название рецепта" class="column">
+        <input type="text" ng-model="selectedRecipe.name" placeholder="Название рецепта" class="column">
         <table class="border">
             <tr>
                 <th>Название компонента</th>
@@ -67,7 +67,7 @@
                 <th>{{action}}</th>
             </tr>
             <tr ng-repeat="component in selectedRecipe.components">
-                <td>{{component.title}}</td>
+                <td>{{component.item.name}}</td>
                 <td width="120">{{component.quantity}}</td>
                 <td class="no-padding" width="20">
                     <input type="button" value="-"
@@ -80,9 +80,9 @@
                 <td class="no-padding">
                     <input type="text" placeholder="Начните вводить имя компонента" list="component"
                            class="no-margin no-border column"
-                           ng-model="component.title" ng-keydown="getComponents(component.title)">
-                    <datalist id="component" ng-init="getComponents(component.title)">
-                        <option ng-repeat="component in components">{{component.title}}</option>
+                           ng-model="component.name" ng-keyup="getComponents(component.name)">
+                    <datalist id="component" ng-init="getComponents(component.name)">
+                        <option ng-repeat="component in components">{{component.name}}</option>
                     </datalist>
                 </td>
                 <td class="no-padding" width="120">
@@ -101,7 +101,7 @@
     </footer>
     <footer ng-if="currentAction == 'create'">
         <input type="button" value="Добавить" close-modal="recipeModal"
-               ng-disabled="selectedRecipe.title == undefined || selectedRecipe.title == ''"
+               ng-disabled="selectedRecipe.name == undefined || selectedRecipe.name == ''"
                ng-click="addRecipe()">
     </footer>
 </section>

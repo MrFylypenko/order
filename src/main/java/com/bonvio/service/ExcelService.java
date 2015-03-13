@@ -53,7 +53,6 @@ public class ExcelService {
                     for (User user : userList) {
                         String[] strings = listFile(user.getPath(), ".xls");
 
-
                         userFileNames.addAll(Arrays.asList(strings));
                     }
 
@@ -249,7 +248,7 @@ public class ExcelService {
             int checkItems = 0;
 
 
-            System.out.println("itemCode =" + itemCode + " itemTitle = " + itemTitle + " itemQuantity = " + itemQuantity);
+           // System.out.println("itemCode =" + itemCode + " itemTitle = " + itemTitle + " itemQuantity = " + itemQuantity);
 
 
             //поиск и добавление товаров
@@ -263,12 +262,12 @@ public class ExcelService {
                 int numberCells = 0;
                 Row row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
-                System.out.println("поиск item");
+                //System.out.println("поиск item");
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
 
-                        System.out.println("item = " + cell.getStringCellValue());
+                        System.out.print("item = " + cell.getStringCellValue());
 
                         if (numberCells == itemCode) {
                             itemCommonOrder.setCode(cell.getStringCellValue());
@@ -281,6 +280,7 @@ public class ExcelService {
                         }*/
                         if (numberCells > itemQuantity) {
                             itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
+                            itemCommonOrder.setCategory("warehouse");
                             commonOrder.getItems().add(itemCommonOrder);
                             break;
                         }
