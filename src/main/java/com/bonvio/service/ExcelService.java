@@ -1,5 +1,7 @@
 package com.bonvio.service;
 
+import com.bonvio.dao.classes.RecipeComponentTemplate;
+import com.bonvio.dao.classes.RecipeTemplate;
 import com.bonvio.model.admin.User;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
@@ -67,7 +69,7 @@ public class ExcelService {
 
                             System.out.println(commonOrder);
 
-                            commonOrderService.saveCommonOrder(commonOrder);
+                        commonOrderService.saveCommonOrder(commonOrder);
                     }
 
                     System.out.println("делаю запрос № " + k++);
@@ -248,7 +250,7 @@ public class ExcelService {
             int checkItems = 0;
 
 
-           // System.out.println("itemCode =" + itemCode + " itemTitle = " + itemTitle + " itemQuantity = " + itemQuantity);
+            // System.out.println("itemCode =" + itemCode + " itemTitle = " + itemTitle + " itemQuantity = " + itemQuantity);
 
 
             //поиск и добавление товаров
@@ -308,8 +310,6 @@ public class ExcelService {
             }
 
 
-
-
             if (inputFile.delete()) {
                 System.out.println(inputFile.getName() + " is deleted!");
             }
@@ -329,6 +329,120 @@ public class ExcelService {
 
 
         return commonOrder;
+    }
+
+
+    public List<RecipeTemplate> getRecipeTemplate(String inputFileName) {
+
+
+
+        List<RecipeTemplate> recipeTemplates = new ArrayList<RecipeTemplate>();
+
+
+        FileInputStream file = null;
+
+        try {
+
+            System.out.println(" recipeTemplate inputFileName = " + inputFileName);
+
+            File inputFile = new File(inputFileName);
+
+            file = new FileInputStream(inputFile);
+
+
+            HSSFWorkbook workbook = new HSSFWorkbook(file);
+
+            HSSFSheet sheet = workbook.getSheetAt(0);
+
+            Iterator<Row> rowIterator = sheet.rowIterator();
+
+            // получение списка рецептов
+
+
+            RecipeTemplate recipeTemplate = new RecipeTemplate();
+
+            RecipeComponentTemplate recipeComponentTemplate = new RecipeComponentTemplate();
+
+
+            while (rowIterator.hasNext()) {
+
+                //System.out.println("выполняется метод2");
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+
+                int indexName = 1;
+                int indexPercent = 2;
+                int indexQuantity = 3;
+
+                String name = new String();
+                String percent = new String();
+                double quantity = 0;
+
+
+                int indexCell = 0;
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    System.out.print(" indexCell=" + indexCell + " " + cell.getCellType() );
+
+
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                         System.out.print("cellString={" + cell.getStringCellValue() + "} ");
+
+                        if (indexCell == indexName) {
+                            name = cell.getStringCellValue();
+                        }
+                        if (indexCell == indexPercent) {
+                            percent = cell.getStringCellValue();
+                        }
+                    }
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+                        System.out.println("cellNum={" + cell.getNumericCellValue() + "}");
+                        if (indexCell == indexQuantity) {
+                            quantity = cell.getNumericCellValue();
+                        }
+                    }
+                    indexCell++;
+
+                }
+
+
+                System.out.println( );
+
+                if (percent.length() > 1 & name.length() > 1){
+                    recipeTemplate = new RecipeTemplate();
+                    recipeTemplate.setName(name);
+                    recipeTemplate.setPercent(percent);
+                    recipeTemplate.setQuantity(quantity);
+                }
+
+                if (percent.length() == 0 & name.length() > 1){
+                    recipeComponentTemplate = new RecipeComponentTemplate();
+                    recipeComponentTemplate.setName(name);
+                    recipeComponentTemplate.setQuantity(quantity);
+                    recipeTemplate.getComponents().add(recipeComponentTemplate);
+                }
+
+                if (percent.length() == 0 & name.length() == 0){
+                    recipeTemplates.add(recipeTemplate);
+                }
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                file.close();
+            } catch (Exception e) {
+                System.out.println("не удалось закрыть файловый поток");
+                e.printStackTrace();
+            }
+        }
+
+
+        return recipeTemplates;
     }
 
 
