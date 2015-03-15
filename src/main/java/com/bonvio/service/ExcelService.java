@@ -394,6 +394,8 @@ public class ExcelService {
                         }
                         if (indexCell == indexPercent) {
                             percent = cell.getStringCellValue();
+
+
                         }
                     }
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
