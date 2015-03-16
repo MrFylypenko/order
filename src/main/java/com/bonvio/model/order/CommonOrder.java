@@ -27,7 +27,7 @@ public class CommonOrder {
     private boolean deferred;
 
     @OneToMany(mappedBy = "commonOrder")
-    private List <ItemCommonOrder> items = new ArrayList<ItemCommonOrder>();
+    private List <ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
 
     @Override
     public String toString() {
@@ -39,7 +39,7 @@ public class CommonOrder {
                 ", status=" + status +
                 ", priority=" + priority +
                 ", deferred=" + deferred +
-                ", items=" + items +
+                ", components=" + components +
                 '}';
     }
 
@@ -99,13 +99,14 @@ public class CommonOrder {
         this.deferred = deferred;
     }
 
+
     @JsonIgnore
     @JsonManagedReference
-    public List<ItemCommonOrder> getItems() {
-        return items;
+    public List<ItemCommonOrder> getComponents() {
+        return components;
     }
 
-    public void setItems(List<ItemCommonOrder> items) {
-        this.items = items;
+    public void setComponents(List<ItemCommonOrder> components) {
+        this.components = components;
     }
 }

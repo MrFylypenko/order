@@ -38,7 +38,28 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public void updateItem(Item item) {
-        itemDao.updateItem(item);
+
+        Item found = itemDao.getItemById(item.getId());
+        for(int i = 0; i < found.getComponents().size(); i++){
+            Component component = new Component();
+            component.setId(found.getComponents().get(i).getId());
+            componentDao.deleteComponent(component);
+        }
+
+        for(int i = 0; i< item.getComponents().size(); i++){
+
+            item.getComponents().get(i).setParentItem(found);
+
+            Component component = new Component();
+            component.setQuantity(item.getComponents().get(i).getQuantity());
+            component.setMeasure(item.getComponents().get(i).getMeasure());
+            component.setParentItem(found);
+            component.setItem(item.getComponents().get(i).getItem());
+
+            componentDao.saveComponent(component);
+        }
+
+        //itemDao.updateItem(item);
     }
 
     @Override

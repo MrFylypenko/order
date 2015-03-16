@@ -30,7 +30,6 @@
         <class>com.bonvio.model.admin.Groups</class>
         <class>com.bonvio.model.order.CommonOrder</class>
         <class>com.bonvio.model.order.ItemCommonOrder</class>
-        <class>com.bonvio.model.density.Density</class>
         <class>com.bonvio.model.admin.Settings</class>
 
         <class>com.bonvio.model.item.Item</class>

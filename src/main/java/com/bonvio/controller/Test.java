@@ -224,7 +224,7 @@ public class Test {
                         }
                         if (numberCells > itemQuantity) {
                             //itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
-                            commonOrder.getItems().add(itemCommonOrder);
+                            commonOrder.getComponents().add(itemCommonOrder);
                             break;
                         }
                     }

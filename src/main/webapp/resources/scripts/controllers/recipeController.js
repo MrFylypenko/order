@@ -2,6 +2,15 @@ angular.module('app').controller('recipeController', recipeController);
 
 recipeController.$inject = ['$scope', '$recipe', '$interval'];
 function recipeController(scope, recipe, interval) {
+    var $scope = scope;
+
+    $scope.items = [
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'blah' }
+    ];
+
+
     interval(function () {
         scope.getRecipes();
     }, 5000); // 10 sec
@@ -19,15 +28,18 @@ function recipeController(scope, recipe, interval) {
 
     scope.component = {};
     /* добавление компонента */
-    scope.addComponent = function () {
+    scope.addComponent = function (newComponent) {
         if (scope.selectedRecipe.components == undefined) {
             scope.selectedRecipe.components = [];
         }
 
-        if (scope.component.name != undefined && scope.component.name != undefined) {
-            scope.component.item = scope.component;
-            scope.selectedRecipe.components.push(scope.component.item);
-            scope.component = {};
+        if (newComponent.name != undefined) {
+            newComponent = {};
+            newComponent.measure = scope.selectedItem.measure;
+            newComponent.quantity = scope.selectedItem.quantity;
+            newComponent.item = scope.selectedItem;
+            scope.selectedRecipe.components.push(newComponent);
+            scope.selectedItem = {};
         }
     };
     /* удаление компонента */
@@ -36,8 +48,8 @@ function recipeController(scope, recipe, interval) {
     };
 
     /* добавление рецепта */
-    scope.addRecipe = function () {
-        if (scope.selectedRecipe.title != undefined) {
+    scope.addRecipe = function (selectedRecipe) {
+        if (scope.selectedRecipe.name != undefined) {
             scope.recipes.push(scope.selectedRecipe);
             recipe.addRecipe(scope.selectedRecipe);
             scope.selectedRecipe = {};
@@ -70,9 +82,15 @@ function recipeController(scope, recipe, interval) {
         eval(scope.confirm);
     };
 
+    scope.setCurrentComponent = function (component) {
+        console.log('BANANA');
+        console.log(component);
+    };
+
 
     scope.components = [];
     scope.getComponents = function (exp) {
+        console.log('123');
         console.log(exp);
 
 
