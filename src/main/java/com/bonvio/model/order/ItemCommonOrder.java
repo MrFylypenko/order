@@ -1,5 +1,6 @@
 package com.bonvio.model.order;
 
+import com.bonvio.model.item.Item;
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -21,17 +22,18 @@ public class ItemCommonOrder {
     private int id;
     private String code;
     private String title;
-    private String quantity;
+    private double quantity;
     private String category;
     private String comment;
     private boolean ready;
     private boolean deferred;
+    private String measure;
 
     @ManyToOne
     private CommonOrder commonOrder;
 
-
-    //start Testing object
+    @ManyToOne
+    private Item item;
 
     @ManyToOne
     private ItemCommonOrder itemCommonOrder;
@@ -100,11 +102,11 @@ public class ItemCommonOrder {
         this.title = title;
     }
 
-    public String getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
@@ -140,6 +142,14 @@ public class ItemCommonOrder {
         this.deferred = deferred;
     }
 
+    public String getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(String measure) {
+        this.measure = measure;
+    }
+
     @JsonIgnore
     @JsonBackReference
     public CommonOrder getCommonOrder() {
@@ -148,5 +158,13 @@ public class ItemCommonOrder {
 
     public void setCommonOrder(CommonOrder commonOrder) {
         this.commonOrder = commonOrder;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

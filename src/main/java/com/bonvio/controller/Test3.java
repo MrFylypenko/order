@@ -1,6 +1,6 @@
 package com.bonvio.controller;
 
-import com.bonvio.dao.classes.RecipeTemplate;
+import com.bonvio.model.classes.RecipeTemplate;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.service.ExcelService;
 import com.bonvio.service.order.CommonOrderService;

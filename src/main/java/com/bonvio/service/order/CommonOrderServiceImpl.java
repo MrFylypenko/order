@@ -1,14 +1,18 @@
 package com.bonvio.service.order;
 
+import com.bonvio.dao.item.ItemDao;
 import com.bonvio.dao.order.CommonOrderDao;
 import com.bonvio.dao.order.ItemCommonOrderDao;
+import com.bonvio.model.item.Item;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
 import com.bonvio.service.ExcelService;
+import com.bonvio.service.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +27,12 @@ public class CommonOrderServiceImpl implements CommonOrderService{
     @Autowired
     ItemCommonOrderDao itemCommonOrderDao;
 
-
     @Autowired
     ExcelService excelService;
+
+    @Autowired
+    ItemDao itemDao;
+
 
 
     @Override
@@ -48,12 +55,57 @@ public class CommonOrderServiceImpl implements CommonOrderService{
 
         System.out.println(commonOrder.getItems().size());
 
-        for (int i = 0; i < commonOrder.getItems().size(); i++){
+        List<CommonOrder > commonOrders = new ArrayList<CommonOrder>();
 
+
+        for (int i = 0; i < commonOrder.getItems().size(); i++){
             commonOrder.getItems().get(i).setCommonOrder(commonOrder);
             itemCommonOrderDao.saveItemCommonOrder(commonOrder.getItems().get(i));
+        }
+
+
+       /* for (int i = 0; i < commonOrder.getItems().size(); i++){
+
+            Item item =  itemDao.getItemByName(commonOrder.getItems().get(i).getTitle());
+
+
+
+            ItemCommonOrder itemCommonOrder = new ItemCommonOrder();
+            itemCommonOrder.setCode(commonOrder.getItems().get(i).getCode());
+
+            //TODO проверить чего куда
+
+            itemCommonOrder.setQuantity(commonOrder.getItems().get(i).getQuantity());
+
+            itemCommonOrder.setCategory(commonOrder.getItems().get(i).getCategory());
+
+
+
+
+            itemCommonOrder.setComment(commonOrder.getItems().get(i).getComment());
+
+
+            commonOrders
+
 
         }
+
+
+
+
+        //save
+        itemCommonOrder.setCommonOrder(commonOrder);
+        itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);*/
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override

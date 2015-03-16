@@ -1,8 +1,8 @@
 package com.bonvio.service;
 
-import com.bonvio.dao.classes.RecipeComponentTemplate;
-import com.bonvio.dao.classes.RecipeTemplate;
 import com.bonvio.model.admin.User;
+import com.bonvio.model.classes.RecipeComponentTemplate;
+import com.bonvio.model.classes.RecipeTemplate;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
 import com.bonvio.service.admin.UserService;
@@ -67,7 +67,7 @@ public class ExcelService {
                         CommonOrder commonOrder = commonOrder(stringFile);
                         if (commonOrder.getCustomer().length() > 0)
 
-                            System.out.println(commonOrder);
+                            //System.out.println(commonOrder);
 
                         commonOrderService.saveCommonOrder(commonOrder);
                     }
@@ -281,15 +281,16 @@ public class ExcelService {
                             itemCommonOrder.setQuantity(cell.getStringCellValue());
                         }*/
                         if (numberCells > itemQuantity) {
-                            itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
-                            itemCommonOrder.setCategory("warehouse");
+                            itemCommonOrder.setMeasure(cell.getStringCellValue());
+                            //itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
+                            itemCommonOrder.setCategory("original");
                             commonOrder.getItems().add(itemCommonOrder);
                             break;
                         }
                     }
 
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC & (numberCells == itemQuantity)) {
-                        itemCommonOrder.setQuantity(" " + cell.getNumericCellValue());
+                        itemCommonOrder.setQuantity(cell.getNumericCellValue());
 
                     }
 

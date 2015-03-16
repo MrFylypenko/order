@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,5 +64,17 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public List<String> getCategoriesStrings() {
         return entityManager.createNativeQuery("SELECT category FROM item GROUP BY category").getResultList();
+    }
+
+    @Override
+    public Item getItemByName(String itemName) {
+        List<Item> items = new ArrayList<Item>();
+        items.addAll(entityManager.createNativeQuery("select * from item where name =:itemName", Item.class).setParameter("itemName", itemName).getResultList());
+
+        if(items.size()>0){
+            return items.get(0);
+        }
+
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.bonvio.model.item;
 
+import com.bonvio.model.order.ItemCommonOrder;
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonManagedReference;
@@ -42,6 +43,10 @@ public class Item {
     String type;
 
     double quantity;
+
+
+    @OneToMany (mappedBy = "item")
+    List<ItemCommonOrder> itemCommonOrders = new ArrayList<ItemCommonOrder>();
 
 
     @OneToMany (mappedBy = "parentItem", fetch = FetchType.EAGER)
@@ -173,5 +178,14 @@ public class Item {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    @JsonIgnore
+    public List<ItemCommonOrder> getItemCommonOrders() {
+        return itemCommonOrders;
+    }
+
+    public void setItemCommonOrders(List<ItemCommonOrder> itemCommonOrders) {
+        this.itemCommonOrders = itemCommonOrders;
     }
 }

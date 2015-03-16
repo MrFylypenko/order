@@ -210,6 +210,7 @@ public class Test {
                 Iterator<Cell> cellIterator = row.cellIterator();
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
+
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
 
                         if (numberCells == itemCode) {
@@ -219,10 +220,10 @@ public class Test {
                             itemCommonOrder.setTitle(cell.getStringCellValue());
                         }
                         if (numberCells == itemQuantity) {
-                            itemCommonOrder.setQuantity(cell.getStringCellValue());
+                            //itemCommonOrder.setQuantity(cell.getStringCellValue());
                         }
                         if (numberCells > itemQuantity) {
-                            itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
+                            //itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
                             commonOrder.getItems().add(itemCommonOrder);
                             break;
                         }

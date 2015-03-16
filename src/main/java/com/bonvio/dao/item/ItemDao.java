@@ -22,5 +22,7 @@ public interface ItemDao {
 
     public List<String> getCategoriesStrings();
 
+    public Item getItemByName (String itemName);
+
 
 }
