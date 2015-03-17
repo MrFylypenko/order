@@ -1,10 +1,13 @@
 package com.bonvio.service;
 
+import com.bonvio.dao.admin.SettingsDao;
+import com.bonvio.model.admin.Settings;
 import com.bonvio.model.admin.User;
 import com.bonvio.model.classes.RecipeComponentTemplate;
 import com.bonvio.model.classes.RecipeTemplate;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
+import com.bonvio.service.admin.SettingsService;
 import com.bonvio.service.admin.UserService;
 import com.bonvio.service.order.CommonOrderService;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -30,16 +33,16 @@ import java.util.List;
 @Service
 public class ExcelService {
 
-    public static int check = 0;
-
     @Autowired
     UserService userService;
 
     @Autowired
     CommonOrderService commonOrderService;
 
-    static int k = 0;
+    @Autowired
+    SettingsService settingsDao;
 
+    static int k = 0;
 
     public void runCheckingFolder() {
 
@@ -47,44 +50,42 @@ public class ExcelService {
             k++;
 
             while (true) {
+
                 try {
                     Thread.sleep(10000);
-                    List<User> userList = userService.getAllUsers();
-                    List<String> userFileNames = new ArrayList<String>();
 
-                    for (User user : userList) {
-                        String[] strings = listFile(user.getPath(), ".xls");
+                    Settings settings = settingsDao.getSettings();
 
-                        userFileNames.addAll(Arrays.asList(strings));
+                    System.out.println("settings.isUploadDefault()" + settings.isUploadDefault());
+
+                    if (settings.isUploadDefault()) {
+
+                        List<User> userList = userService.getAllUsers();
+                        List<String> userFileNames = new ArrayList<String>();
+
+                        for (User user : userList) {
+                            String[] strings = listFile(user.getPath(), ".xls");
+                            userFileNames.addAll(Arrays.asList(strings));
+                        }
+
+                        for (String stringFile : userFileNames) {
+
+                            CommonOrder commonOrder = commonOrder(stringFile);
+                            if (commonOrder.getCustomer().length() > 0)
+
+                                commonOrderService.saveCommonOrder(commonOrder);
+                        }
+
+                        System.out.println("делаю запрос № " + k++);
                     }
-
-                    //List<CommonOrder> commonOrders = new ArrayList<CommonOrder>();
-                    for (String stringFile : userFileNames) {
-
-                        System.out.println(stringFile);
-
-                        //commonOrders.add();
-                        CommonOrder commonOrder = commonOrder(stringFile);
-                        if (commonOrder.getCustomer().length() > 0)
-
-                            //System.out.println(commonOrder);
-
-                        commonOrderService.saveCommonOrder(commonOrder);
-                    }
-
-                    System.out.println("делаю запрос № " + k++);
 
                 } catch (InterruptedException e) {
                     System.out.println("Упс, ошибка");
                     e.printStackTrace();
-                    break;
+                    //break;
                 }
-
-                //break;
-
             }
         }
-
 
     }
 

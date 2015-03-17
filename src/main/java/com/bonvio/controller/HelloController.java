@@ -5,6 +5,8 @@ import com.bonvio.service.admin.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +21,38 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/")
 public class HelloController {
 
-
     @Autowired
     UserService userService;
+
+    @RequestMapping(value = "/redirect",method = RequestMethod.GET)
+    public String redirect () {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User user = userService.findByUserName( authentication.getName());
+        if(user.getRole().equals("Админ")){
+            return "redirect:/#/admin";
+        }
+        if(user.getRole().equals("Кладовщик")){
+            return "redirect:/#/admin";
+        }
+        if(user.getRole().equals("Колеровщик")){
+            return "redirect:/#/assistant";
+        }
+        if(user.getRole().equals("Менеджер")){
+            return "redirect:/#/admin";
+        }
+
+        return "redirect:/";
+    }
+
+
 
     @RequestMapping(value = "/getuser",method = RequestMethod.GET)
     @ResponseBody
     public User getUser () {
+
+
         userService.getAllUsers().get(0);
         return userService.getAllUsers().get(0);
     }

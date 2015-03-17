@@ -20,17 +20,16 @@ import java.util.List;
 public class FolderService {
 
 
+    ExcelService excelService = new ExcelService();
+
+
     public FolderService() {
+
         System.out.println("ну создался сервис...");
 
-        if(ExcelService.check == 0){
-           /* Thread thread = new Thread(new ExcelService ());
-            thread.start();*/
-            ExcelService.check = 1;
-        }
 
 
-        // addingOrders();
+
     }
 
 

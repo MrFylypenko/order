@@ -38,12 +38,10 @@ public class SecurityController {
     UserService userService;
 
     @Autowired
-    private SessionRegistry sessionRegistry;
-
+    SessionRegistry sessionRegistry;
 
     @Autowired
     SettingsService settingsService;
-
 
     @Autowired
     MyUserDetailsService myUserDetailsService;
@@ -102,7 +100,7 @@ public class SecurityController {
 
         //sessionRegistry.registerNewSession();
 
-    String g;
+   /* String g;
 
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -114,7 +112,7 @@ public class SecurityController {
 
         Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(),auth.getCredentials(),authorities);
         SecurityContextHolder.getContext().setAuthentication(newAuth);
-
+*/
 
 
 
@@ -134,7 +132,6 @@ public class SecurityController {
         userRoleService.updateRole(role);
         return "1";
     }
-
 
     @RequestMapping(value = "/getsettings", method = RequestMethod.GET)
     @ResponseBody

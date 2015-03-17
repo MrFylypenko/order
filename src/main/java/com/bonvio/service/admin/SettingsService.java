@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by Vano on 02.03.2015.
  */
-@Service
+
 public interface SettingsService {
 
     public Settings getSettings ();

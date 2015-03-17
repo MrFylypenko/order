@@ -15,12 +15,15 @@
         <!--<intercept-url pattern="/add" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/waybill" access="hasRole('ROLE_USER')" />
 
-        <intercept-url pattern="/" access="isAuthenticated()" />-->
+
+        manager
 		
-		<!--<intercept-url pattern="/taskdelete/*" access="hasRole('ROLE_USER')" />-->
+		<intercept-url pattern="/taskdelete/*" access="hasRole('ROLE_USER')" />-->
+        <intercept-url pattern="/admin/*" access="isAuthenticated()" />
+
 		<anonymous username="guest" granted-authority="hasRole('ROLE_ANONYMOUS')" />
 
-		<form-login login-page="/login" default-target-url="/"
+		<form-login login-page="/login" default-target-url="/redirect"
 			authentication-failure-url="/login?error=true" />
 		<logout logout-url="/logout" logout-success-url="/" />
 

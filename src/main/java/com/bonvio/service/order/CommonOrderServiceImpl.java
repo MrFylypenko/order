@@ -43,7 +43,7 @@ public class CommonOrderServiceImpl implements CommonOrderService {
     @Override
     public List<CommonOrder> getAllCommonOrders() {
         excelService.runCheckingFolder();
-        System.out.println("отдал заказы");
+        //System.out.println("отдал заказы");
         return commonOrderDao.getAllCommonOrders();
     }
 
