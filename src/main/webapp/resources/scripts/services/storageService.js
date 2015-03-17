@@ -37,14 +37,18 @@ function $storage(http) {
     };
 
     this.updateUser = function (user) {
-        console.log(user);
+        http.post('admin/updateuser', user).error(function () {
+            console.log('ошибка редактирования ногово пользователя');
+        });
     };
 
     //updategrouprole
 
     this.setUserGrant = function (roleGrant) {
+        console.log('---');
         console.log(roleGrant);
-        http.post('admin/updategrouprole', roleGrant).success(function (data) {
+        console.log('---');
+        http.post('admin/updateuserrole', roleGrant).success(function (data) {
             console.log(data);
         });
     };

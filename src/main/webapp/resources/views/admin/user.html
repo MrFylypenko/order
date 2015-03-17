@@ -15,7 +15,7 @@
 </label>
 <br>
 <label ng-repeat="userGrant in user.userRoles">
-    <input type="checkbox" ng-checked="userGrant.checked" ng-model="userGrant.checked" ng-click="setUserGrant()">
+    <input type="checkbox" ng-checked="userGrant.checked" ng-model="userGrant.checked" ng-click="setUserGrant(userGrant)">
     {{userGrant.title}}<br>
 </label>
 <button open-modal="new-user" ng-click="setModalParam('Редактировать пользователя', user, 'update')">Редактировать</button>
