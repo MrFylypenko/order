@@ -44,15 +44,15 @@
         <th>Комментарий</th>
         <th ng-if="!order.deffered">Статус</th>
     </tr>
-    <tr ng-repeat="item in order.info" ng-if="item.category == 'warehouse'" ng-class="item.ready ? 'success' : 'warning'">
+    <tr ng-repeat="item in order.info" ng-if="item.category == 'warehouse'" ng-class="item.ready ? 'success' : 'warning'" ng-show="order.deferred == false">
         <td ng-init="item.index = $index">{{item.index + 1}}</td>
         <td>{{item.code}}</td>
         <td>{{item.title}}</td>
         <td>{{item.quantity}}</td>
         <td>{{item.comment}}</td>
-        <td ng-if="item.ready && !order.deffered">Готово</td>
+        <td ng-if="item.ready && !order.deferred">Готово</td>
         <td ng-if="order.deferred == false">
-            <button open-modal="cancelItem" ng-click="setSelectedItem(item)">Отложить</button>
+            <button open-modal="cancelItem" ng-click="setSelectedItem(item)">Отложить {{order.deferred}}</button>
         </td>
         <td ng-if="order.deferred == true"></td>
     </tr>

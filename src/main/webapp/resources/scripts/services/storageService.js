@@ -130,9 +130,11 @@ function $storage(http) {
     };
 
     this.setItemStatus = function (item) {
+        // TODO вот пункт заказа и надо ссылку для смены его статуса ичане патинабизон
         console.log(item);
     };
 
+    // TODO вот сюда надо ссылку переходя по которой заказ будет выдан
     this.setOrderStatus = function (orderId) {
         console.log(orderId);
     };

@@ -70,7 +70,7 @@ function adminController(scope, storage, http) {
     };
 
     /**
-     * установка пользовательских грантов
+     * установка пользовательских гранто1в
      */
     scope.setUserGrant = function (roleGrant) {
         storage.setUserGrant(roleGrant);

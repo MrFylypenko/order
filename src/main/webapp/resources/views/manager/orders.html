@@ -35,7 +35,7 @@
         <tr ng-repeat="order in orders | orderBy:orderByField:reverseSort | filter: query"
             ng-click="getOrderById($index, order.id)"
             ng-class="order.status == 100 ? 'success' : order.status <= 25 ? 'danger' : 'warning'"
-            ng-show="deferred == order.deferred">
+            ng-if="deferred == order.deferred">
             <td style="width: 20px;" open-modal="priority" ng-click="setSelectedOrder($index, order)">
                 <span style="cursor: pointer; pointer-events: none">{{order.priority}}</span>
             </td>
