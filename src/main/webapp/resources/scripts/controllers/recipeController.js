@@ -4,10 +4,13 @@ recipeController.$inject = ['$scope', '$recipe', '$interval'];
 function recipeController(scope, recipe, interval) {
     scope.exp1 = 'a';
 
-
-    interval(function () {
-        scope.getRecipes();
-    }, 5000); // 10 sec
+    /*interval(function () {
+        scope.getRecipes = function (exp1) {
+            recipe.getRecipes(exp1, function (data) {
+                scope.recipes = data;
+            });
+        };
+    }, 5000); // 10 sec*/
 
     scope.selectedRecipe = {};
     scope.setSelectedRecipe = function (recipe) {

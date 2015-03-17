@@ -112,7 +112,14 @@ function adminController(scope, storage, http) {
 
     scope.userNew = {};
     scope.createUser = function () {
-        console.log(scope.userNew);
+        angular.forEach(scope.roles, function (element) {
+            if (scope.userNew.role == element.title) {
+                scope.userNew.userRoles = element.roles;
+            }
+        });
+
+        //console.log(scope.roles);
+        storage.createUser(scope.userNew);
     };
 
     scope.currentRole = {};

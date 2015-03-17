@@ -22,7 +22,7 @@
 <section class="row">
     <section class="column">
         <h2>Рецепты</h2>
-        <input type="text" placeholder="Начните вводить имя рецепта" ng-model="exp1" class="column">
+        <input type="text" placeholder="Начните вводить имя рецепта" ng-model="exp1" ng-keyup="getRecipes(exp1)" class="column">
 
         <table ng-show="exp1" ng-init="getRecipes(exp1)" class="hover border horizontal">
             <tr ng-repeat-start="recipe in recipes" class="success" ng-init="recipeIndex = $index">

@@ -20,7 +20,7 @@
 <section class="row">
     <section class="column">
         <h2>Формулы</h2>
-        <input type="text" placeholder="Начните вводить название формулы" ng-model="exp1" class="column">
+        <input type="text" placeholder="Начните вводить название формулы" ng-model="exp1" class="column" ng-keyup="getDensity(exp1)">
 
         <table ng-init="getDensity(exp1)" class="strip hover">
             <tr>

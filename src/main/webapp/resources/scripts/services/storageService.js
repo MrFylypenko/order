@@ -5,6 +5,15 @@ function $storage(http) {
     /*
      ADMIN
      */
+    this.createUser = function (user) {
+        http.post('admin/createuser', user).error(function () {
+            console.log('ошибка добавления ногово пользователя');
+        });
+    };
+
+
+
+
     this.getUsers = function (callback) {
         http.get('admin/getusers').success(callback);
     };
@@ -133,7 +142,7 @@ function $storage(http) {
      DENSITY
      */
     this.getDensity = function (exp1, callback) {
-        http.get('item/getallitems/' + exp1).success(callback);
+        http.get('item/getitemsbyexpression/' + exp1).success(callback);
     };
 
     this.setDensity = function (density) {

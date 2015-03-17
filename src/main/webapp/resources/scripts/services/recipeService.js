@@ -4,8 +4,7 @@ angular.module('app')
 recipeService.$inject = ['$http'];
 function recipeService(http) {
     this.getRecipes = function (exp1, callback) {
-
-        http.get('item/getallitems/' + exp1).success(callback).error(function () {
+        http.get('recipe/getrecipesbyexpression/' + exp1).success(callback).error(function () {
             console.log('Ошибка обратобки запроса getRecipes');
         });
     };
