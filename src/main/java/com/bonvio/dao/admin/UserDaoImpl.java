@@ -77,6 +77,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUserRole(UserRole userRole) {
+        UserRole userRoleFound = entityManager.find(UserRole.class, userRole.getId());
+        userRole.setUser(userRoleFound.getUser());
         entityManager.merge(userRole);
     }
 
