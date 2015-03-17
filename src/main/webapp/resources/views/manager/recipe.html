@@ -24,7 +24,7 @@
         <h2>Рецепты</h2>
         <input type="text" placeholder="Начните вводить имя рецепта" ng-model="exp1" class="column">
 
-        <table ng-init="getRecipes(exp1)" class="hover border horizontal">
+        <table ng-show="exp1" ng-init="getRecipes(exp1)" class="hover border horizontal">
             <tr ng-repeat-start="recipe in recipes" class="success" ng-init="recipeIndex = $index">
                 <td colspan="2">
                     <b>{{recipe.name}}</b>

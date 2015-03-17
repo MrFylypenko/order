@@ -2,13 +2,7 @@ angular.module('app').controller('recipeController', recipeController);
 
 recipeController.$inject = ['$scope', '$recipe', '$interval'];
 function recipeController(scope, recipe, interval) {
-    var $scope = scope;
-
-    $scope.items = [
-        { id: 1, name: 'foo' },
-        { id: 2, name: 'bar' },
-        { id: 3, name: 'blah' }
-    ];
+    scope.exp1 = 'a';
 
 
     interval(function () {
@@ -36,7 +30,7 @@ function recipeController(scope, recipe, interval) {
         if (newComponent.name != undefined) {
             newComponent = {};
             newComponent.measure = scope.selectedItem.measure;
-            newComponent.quantity = scope.selectedItem.quantity;
+            newComponent.quantity = scope.component.quantity;
             newComponent.item = scope.selectedItem;
             scope.selectedRecipe.components.push(newComponent);
             scope.selectedItem = {};
@@ -58,7 +52,6 @@ function recipeController(scope, recipe, interval) {
 
     /* редактирование рецепта */
     scope.updateRecipe = function () {
-        console.log(scope.recipes);
         recipe.updateRecipe(scope.selectedRecipe.id, scope.selectedRecipe);
     };
 
@@ -83,17 +76,12 @@ function recipeController(scope, recipe, interval) {
     };
 
     scope.setCurrentComponent = function (component) {
-        console.log('BANANA');
         console.log(component);
     };
 
 
     scope.components = [];
     scope.getComponents = function (exp) {
-        console.log('123');
-        console.log(exp);
-
-
         recipe.getComponents(exp, function (data) {
             scope.components = data;
         });
