@@ -79,9 +79,13 @@ function $storage(http) {
     };
 
     this.setDifferedItem = function (item, callback) {
-        console.log(item);
-
+        item.info = null;
+        delete item.info;
         http.post('manager/updatecommonorder', item).success(callback);
+    };
+
+    this.setDifferedItemOne = function (item, callback) {
+        http.post('manager/updateitemcommonorder', item).success(callback);
     };
 
 

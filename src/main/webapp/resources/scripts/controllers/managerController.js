@@ -81,6 +81,12 @@ function managerController(scope, storage, interval) {
         });
     };
 
+    scope.setDifferedItemOne = function(item) {
+        console.log(item);
+        delete item.index;
+        storage.setDifferedItemOne(item);
+    };
+
     scope.createOrder = function () {
         console.log('БАНАНА ИЩЕЕЕЕЕ');
     };
