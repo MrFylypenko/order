@@ -36,6 +36,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<Item> getAllRecipes() {
+        return null;
+    }
+
+    @Override
+    public List<Item> getRecipesByExpression(String expression) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public void updateItem(Item item) {
 

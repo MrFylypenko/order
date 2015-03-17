@@ -41,7 +41,7 @@ public class ItemController {
     public Item updateItem(@RequestBody Item item) {
 
 
-        //TODO обновлять вместе с содержимыми компонентами
+
         itemService.updateItem(item);
         return item;
     }
@@ -75,11 +75,6 @@ public class ItemController {
         itemService.removeComponent(idComponent);
         return "1";
     }
-
-
-
-
-
 
 
 }

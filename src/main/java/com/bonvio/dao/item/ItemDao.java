@@ -14,7 +14,11 @@ public interface ItemDao {
 
 	public Item getItemById(long id);
 
-	public List<Item> getItemByExpression(String query);
+    public List<Item> getAllRecipes();
+
+    public List<Item> getRecipesByExpression(String expression);
+
+    public List<Item> getItemByExpression(String query);
 
 	public void saveItem(Item item);
 
@@ -24,5 +28,5 @@ public interface ItemDao {
 
     public Item getItemByName (String itemName);
 
-
+    public Item getRecipeByName (String recipeName);
 }

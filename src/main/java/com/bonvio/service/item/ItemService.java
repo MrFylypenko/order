@@ -15,6 +15,10 @@ public interface ItemService {
 
     public List<Item> getItemsByExpression(String expression);
 
+    public List<Item> getAllRecipes();
+
+    public List<Item> getRecipesByExpression(String expression);
+
     public void updateItem(Item item);
 
     public void removeItem(int id);
