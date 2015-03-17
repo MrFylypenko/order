@@ -20,8 +20,9 @@
 <section class="row">
     <section class="column">
         <h2>Формулы</h2>
+        <input type="text" placeholder="Начните вводить название формулы" ng-model="exp1" class="column">
 
-        <table ng-init="getDensity()" class="strip hover">
+        <table ng-init="getDensity(exp1)" class="strip hover">
             <tr>
                 <th>Компонент</th>
                 <th>Исходная еденица измерения</th>

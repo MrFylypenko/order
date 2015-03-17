@@ -8,8 +8,8 @@ function densityController(scope, storage) {
     });
 
     scope.density = [];
-    scope.getDensity = function () {
-        storage.getDensity(function (data) {
+    scope.getDensity = function (exp1) {
+        storage.getDensity(exp1, function (data) {
             scope.density = data;
         });
     };

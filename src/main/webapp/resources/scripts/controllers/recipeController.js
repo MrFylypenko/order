@@ -76,20 +76,15 @@ function recipeController(scope, recipe, interval) {
         console.log(exp);
 
 
-
         recipe.getComponents(exp, function (data) {
             scope.components = data;
         });
     };
 
     scope.recipes = [];
-    scope.getRecipes = function () {
-
-        recipe.getRecipes(function (data) {
+    scope.getRecipes = function (exp1) {
+        recipe.getRecipes(exp1, function (data) {
             scope.recipes = data;
         });
-
-
-
     };
 }
