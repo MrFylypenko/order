@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bonvio.dao.admin.SettingsDao;
 import com.bonvio.model.admin.Settings;
+import com.bonvio.model.admin.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUserRoles(User user) {
         userDao.updateUserRoles(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUserRole(UserRole userRole) {
+        userDao.updateUserRole(userRole);
     }
 
     @Override

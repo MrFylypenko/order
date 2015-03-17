@@ -1,13 +1,10 @@
 package com.bonvio.controller;
 
-import com.bonvio.model.admin.Groups;
-import com.bonvio.model.admin.Settings;
+import com.bonvio.model.admin.*;
 import com.bonvio.service.admin.MyUserDetailsService;
 import com.bonvio.service.admin.SettingsService;
 import com.bonvio.service.admin.UserRoleService;
 import com.bonvio.service.admin.UserService;
-import com.bonvio.model.admin.Role;
-import com.bonvio.model.admin.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -55,7 +52,6 @@ public class SecurityController {
     }
 
 
-
     @RequestMapping(value = "/getroles", method = RequestMethod.GET)
     @ResponseBody
     public List<Role> getRoles() {
@@ -74,7 +70,7 @@ public class SecurityController {
     @ResponseBody
     public List<User> getUsers() {
         List<User> users = userService.getAllUsers();
-        for (int i = 0; i < users.size(); i++){
+        for (int i = 0; i < users.size(); i++) {
             users.get(i).toString();
         }
 
@@ -115,9 +111,17 @@ public class SecurityController {
 */
 
 
-
         return "1";
     }
+
+    @RequestMapping(value = "/updateuserrole", method = RequestMethod.POST)
+    @ResponseBody
+    public String changeUserRole(@RequestBody UserRole userRole) {
+
+        userService.updateUserRole(userRole);
+        return "1";
+    }
+
 
     @RequestMapping(value = "/createuser", method = RequestMethod.POST)
     @ResponseBody
@@ -128,33 +132,31 @@ public class SecurityController {
 
     @RequestMapping(value = "/updategrouprole", method = RequestMethod.POST)
     @ResponseBody
-    public String updateGroupRoles (@RequestBody Role role) {
+    public String updateGroupRoles(@RequestBody Role role) {
         userRoleService.updateRole(role);
         return "1";
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
     @ResponseBody
-    public String updateUser (@RequestBody User user) {
+    public String updateUser(@RequestBody User user) {
         userService.updateUser(user);
         return "1";
     }
 
 
-
     @RequestMapping(value = "/getsettings", method = RequestMethod.GET)
     @ResponseBody
-    public Settings getSettings () {
+    public Settings getSettings() {
         return settingsService.getSettings();
     }
 
     @RequestMapping(value = "/updatesettings", method = RequestMethod.POST)
     @ResponseBody
-    public String updateSettings (@RequestBody Settings settings) {
+    public String updateSettings(@RequestBody Settings settings) {
         settingsService.updateSettings(settings);
         return "1";
     }
-
 
 
 }

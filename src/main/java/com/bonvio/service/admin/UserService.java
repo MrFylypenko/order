@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bonvio.model.admin.Settings;
 import com.bonvio.model.admin.User;
+import com.bonvio.model.admin.UserRole;
 
 public interface UserService {
 	
@@ -18,6 +19,8 @@ public interface UserService {
     public void updateUser(User user);
 
     public void updateUserRoles(User user);
+
+    public void updateUserRole(UserRole user);
 
     public void createUser (User user);
 

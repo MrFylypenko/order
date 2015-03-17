@@ -76,6 +76,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void updateUserRole(UserRole userRole) {
+        entityManager.merge(userRole);
+    }
+
+    @Override
     public void createUser(User user) {
 
         System.out.println(user);
