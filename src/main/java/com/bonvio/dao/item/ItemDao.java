@@ -24,6 +24,8 @@ public interface ItemDao {
 
     public void updateItem(Item item);
 
+    public void removeRecipe (Item recipe);
+
     public List<String> getCategoriesStrings();
 
     public Item getItemByName (String itemName);

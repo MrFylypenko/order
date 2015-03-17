@@ -10,7 +10,6 @@ import java.util.List;
  */
 public interface ItemService {
 
-
     public List<Item> getAllItems();
 
     public List<Item> getItemsByExpression(String expression);
@@ -21,17 +20,20 @@ public interface ItemService {
 
     public void updateItem(Item item);
 
+    public void updateRecipe(Item recipe);
+
     public void removeItem(int id);
 
+    public void removeRecipe(int id);
+
     public void createItem(Item item);
+
+    public void createRecipe(Item recipe);
 
     public void addComponent(Component component, int idItem);
 
     public void updateComponent(Component component);
 
     public void removeComponent(int id);
-
-    public List<Component> getItemByExpression (String expression);
-
 
 }

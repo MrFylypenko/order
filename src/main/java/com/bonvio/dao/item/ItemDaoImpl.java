@@ -85,6 +85,11 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
+    public void removeRecipe(Item recipe) {
+        entityManager.remove(recipe);
+    }
+
+    @Override
     public List<String> getCategoriesStrings() {
         return entityManager.createNativeQuery("SELECT category FROM item GROUP BY category").getResultList();
     }

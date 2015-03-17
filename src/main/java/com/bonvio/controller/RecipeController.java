@@ -1,5 +1,7 @@
 package com.bonvio.controller;
 
+import com.bonvio.model.item.Item;
+import com.bonvio.service.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,44 +15,48 @@ import java.util.List;
 @RequestMapping (value = "recipe")
 public class RecipeController {
 
-   /* @Autowired
-    FormulaService formulaService;
+    @Autowired
+    ItemService itemService;
+
+
+    @RequestMapping(value = "/createrecipe", method = RequestMethod.POST)
+    @ResponseBody
+    public Item addRecipe(@RequestBody Item recipe) {
+        itemService.createRecipe(recipe);
+        return recipe;
+    }
 
     @RequestMapping(value = "/getallrecipes", method = RequestMethod.GET)
     @ResponseBody
-    public List<Recipe> getAllRecipes() {
-        return formulaService.getAllRecipes();
+    public List<Item> getAllRecipes() {
+        return itemService.getAllRecipes();
     }
 
-    @RequestMapping(value = "/updaterecipe", method = RequestMethod.GET)
+    @RequestMapping(value = "/getrecipesbyexpression/{expression}", method = RequestMethod.GET)
     @ResponseBody
-    public Recipe updateRecipe(@RequestBody Recipe recipe) {
-        formulaService.updateRecipe(recipe);
+    public List<Item> getRecipesByExpression(@PathVariable("expression") String expression){
+        return itemService.getRecipesByExpression(expression);
+    }
+
+    @RequestMapping(value = "/updateRecipe", method = RequestMethod.POST)
+    @ResponseBody
+    public Item updateRecipe(@RequestBody Item recipe) {
+        itemService.updateRecipe(recipe);
         return recipe;
     }
 
-    @RequestMapping(value = "/removerecipe/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/removerecipe/{id}", method = RequestMethod.POST)
     @ResponseBody
     public String removeRecipe(@PathVariable("id") int id) {
-        formulaService.removeRecipe(id);
+        itemService.removeRecipe(id);
         return "removed";
     }
 
-    @RequestMapping(value = "/createrecipe", method = RequestMethod.GET)
+    @RequestMapping(value = "/getitemsbyexpression/{expression}", method = RequestMethod.GET)
     @ResponseBody
-    public Recipe removeRecipe(@RequestBody Recipe recipe) {
-        formulaService.createRecipe(recipe);
-        return recipe;
+    public List<Item>getItemsByExpression(@PathVariable("expression") String expression){
+        return itemService.getItemsByExpression(expression);
     }
-
-    @RequestMapping(value = "/addcomponent/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public Recipe addComponent(@RequestBody Component component) {
-        //formulaService.createRecipe(recipe);
-        return null;
-    }
-*/
-
 
 
 }

@@ -37,54 +37,78 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getAllRecipes() {
-        return null;
+        List<Item> recipes = itemDao.getAllRecipes();
+        return recipes;
     }
 
     @Override
     public List<Item> getRecipesByExpression(String expression) {
-        return null;
+        return itemDao.getRecipesByExpression(expression);
     }
 
     @Override
     @Transactional
     public void updateItem(Item item) {
+        itemDao.updateItem(item);
+    }
 
-        Item found = itemDao.getItemById(item.getId());
+    @Override
+    @Transactional
+    public void updateRecipe(Item recipe) {
+        Item found = itemDao.getItemById(recipe.getId());
         for(int i = 0; i < found.getComponents().size(); i++){
             Component component = new Component();
             component.setId(found.getComponents().get(i).getId());
             componentDao.deleteComponent(component);
         }
 
-        for(int i = 0; i< item.getComponents().size(); i++){
+        for(int i = 0; i< recipe.getComponents().size(); i++){
 
-            item.getComponents().get(i).setParentItem(found);
+            recipe.getComponents().get(i).setParentItem(found);
 
             Component component = new Component();
-            component.setQuantity(item.getComponents().get(i).getQuantity());
-            component.setMeasure(item.getComponents().get(i).getMeasure());
+            component.setQuantity(recipe.getComponents().get(i).getQuantity());
+            component.setMeasure(recipe.getComponents().get(i).getMeasure());
             component.setParentItem(found);
-            component.setItem(item.getComponents().get(i).getItem());
+            component.setItem(recipe.getComponents().get(i).getItem());
 
             componentDao.saveComponent(component);
         }
-
-        //itemDao.updateItem(item);
     }
 
     @Override
-    public void removeItem(int id) {
-        System.out.println("метод removeItem не работает");
-        //TODO
+    @Transactional
+    public void removeItem (int id) {
+        Item item = itemDao.getItemById(id);
+        if (item.getType().equals("component")){
+            itemDao.removeRecipe(item);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void removeRecipe(int id) {
+        Item item = itemDao.getItemById(id);
+        if (item.getType().equals("recipe")){
+            itemDao.removeRecipe(item);
+        }
     }
 
     @Override
     @Transactional
     public void createItem(Item item) {
+        item.setType("component");
         itemDao.saveItem(item);
-        for(int i = 0; i< item.getComponents().size(); i++){
-            item.getComponents().get(i).setParentItem(item);
-            componentDao.saveComponent(item.getComponents().get(i));
+    }
+
+    @Override
+    @Transactional
+    public void createRecipe(Item recipe) {
+        recipe.setType("recipe");
+        itemDao.saveItem(recipe);
+        for(int i = 0; i< recipe.getComponents().size(); i++){
+            recipe.getComponents().get(i).setParentItem(recipe);
+            componentDao.saveComponent(recipe.getComponents().get(i));
         }
     }
 
@@ -110,12 +134,5 @@ public class ItemServiceImpl implements ItemService {
         Component component = new Component();
         component.setId(id);
         componentDao.deleteComponent(component);
-    }
-
-    @Override
-    public List<Component> getItemByExpression(String expression) {
-        //TODO  можно не искать компонент
-        System.out.println(" метод getItemByExpression не работает");
-        return null;
     }
 }
