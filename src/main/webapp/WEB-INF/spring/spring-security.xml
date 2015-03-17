@@ -19,7 +19,7 @@
         manager
 		
 		<intercept-url pattern="/taskdelete/*" access="hasRole('ROLE_USER')" />-->
-        <intercept-url pattern="/admin/*" access="isAuthenticated()" />
+        <!--<intercept-url pattern="/admin/*" access="isAuthenticated()" />-->
 
 		<anonymous username="guest" granted-authority="hasRole('ROLE_ANONYMOUS')" />
 
