@@ -133,6 +133,15 @@ public class SecurityController {
         return "1";
     }
 
+    @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateUser (@RequestBody User user) {
+        userService.updateUser(user);
+        return "1";
+    }
+
+
+
     @RequestMapping(value = "/getsettings", method = RequestMethod.GET)
     @ResponseBody
     public Settings getSettings () {

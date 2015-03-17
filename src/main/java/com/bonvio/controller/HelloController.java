@@ -39,6 +39,7 @@ public class HelloController {
         if(user.getRole().equals("Колеровщик")){
             return "redirect:/#/assistant";
         }
+
         if(user.getRole().equals("Менеджер")){
             return "redirect:/#/admin";
         }

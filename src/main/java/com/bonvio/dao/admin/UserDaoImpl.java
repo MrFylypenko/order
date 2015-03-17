@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 
         @SuppressWarnings("unchecked")
         //List<User> result = entityManager.createNamedQuery("selectAllUsers").getResultList();
-        List<User> result = entityManager.createNativeQuery("select * from users", User.class).getResultList();
+        List<User> result = entityManager.createNativeQuery("select * from users ", User.class).getResultList();
         //System.out.println("result = "+ result.size());
 
         return result;
@@ -78,11 +78,19 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void createUser(User user) {
 
+        System.out.println(user);
+
         entityManager.persist(user);
 
         for (UserRole userRole : user.getUserRoles()) {
-            userRole.setUser(user);
-            entityManager.persist(userRole);
+
+            UserRole userRole1 = new UserRole();
+            userRole1.setTitle(userRole.getTitle());
+            userRole1.setChecked(userRole.isChecked());
+            userRole1.setRole(userRole.getRole());
+            userRole1.setUser(user);
+
+            entityManager.persist(userRole1);
         }
 
     }
