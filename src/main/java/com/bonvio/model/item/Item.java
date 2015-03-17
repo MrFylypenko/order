@@ -21,7 +21,7 @@ public class Item {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     String category;
@@ -65,12 +65,15 @@ public class Item {
                 ", name='" + name + '\'' +
                 ", warehouse=" + warehouse +
                 ", laboratory=" + laboratory +
+                ", source='" + source + '\'' +
                 ", measure='" + measure + '\'' +
-                ", username='" + username + '\'' +
+                //", username='" + username + '\'' +
                 ", density=" + density +
                 ", type='" + type + '\'' +
                 ", quantity=" + quantity +
-                ", components=" + components +
+               // ", itemCommonOrders=" + itemCommonOrders +
+                //", components=" + components +
+                //", involving=" + involving +
                 '}';
     }
 

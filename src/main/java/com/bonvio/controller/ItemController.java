@@ -31,6 +31,7 @@ public class ItemController {
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
     @ResponseBody
     public Item additem(@RequestBody Item item) {
+        System.out.println(item);
         itemService.createItem(item);
         return item;
     }
@@ -38,6 +39,7 @@ public class ItemController {
     @RequestMapping(value = "/updateitem", method = RequestMethod.POST)
     @ResponseBody
     public Item updateItem(@RequestBody Item item) {
+
 
         //TODO обновлять вместе с содержимыми компонентами
         itemService.updateItem(item);

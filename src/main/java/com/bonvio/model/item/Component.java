@@ -20,7 +20,7 @@ public class Component {
     }
 
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO)
+    @GeneratedValue ( strategy = GenerationType.IDENTITY)
     private int id;
     private double quantity;
     private String measure;
@@ -36,13 +36,15 @@ public class Component {
 
     @Override
     public String toString() {
-        return "Component{" +
+        return "\nComponent{" +
                 "id=" + id +
                 ", quantity=" + quantity +
                 ", measure='" + measure + '\'' +
-                //", item=" + item +
+                ", parentItem=" + parentItem +
+                ", item=" + item +
                 '}';
     }
+
 
     public int getId() {
         return id;

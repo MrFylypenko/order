@@ -17,6 +17,7 @@ function recipeService(http) {
     };
 
     this.addRecipe = function (recipe) {
+        console.log('добавление рецепта');
         http.post('item/additem', recipe).error(function () {
             console.log('Ошибка обратобки запроса addRecipe');
         });
@@ -36,7 +37,7 @@ function recipeService(http) {
     };
 
     this.updateRecipe = function (recipeId, recipe) {
-        //console.log(recipeId, recipe);
+        console.log(recipe);
         http.post('item/updateitem' , recipe).error(function () {
             console.log('Ошибка обратобки запроса updateRecipe');
         });

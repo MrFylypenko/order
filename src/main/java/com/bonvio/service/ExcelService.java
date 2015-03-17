@@ -284,7 +284,7 @@ public class ExcelService {
                             itemCommonOrder.setMeasure(cell.getStringCellValue());
                             //itemCommonOrder.setQuantity(itemCommonOrder.getQuantity() + "  " + cell.getStringCellValue());
                             itemCommonOrder.setCategory("original");
-                            commonOrder.getItems().add(itemCommonOrder);
+                            commonOrder.getComponents().add(itemCommonOrder);
                             break;
                         }
                     }

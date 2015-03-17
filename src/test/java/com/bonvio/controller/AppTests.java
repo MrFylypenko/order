@@ -60,7 +60,7 @@ public class AppTests {
         itemCommonOrders.add(itemCommonOrder);
 
 
-        commonOrder.setItems(itemCommonOrders);
+        commonOrder.setComponents(itemCommonOrders);
 
         commonOrderService.saveCommonOrder(commonOrder);
 

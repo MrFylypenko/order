@@ -5,7 +5,9 @@
                 <li class="nohover">{{manager.name}} (Менеджер)</li>
             </ul>
             <ul data-float="right">
-                <li open-modal="recipeModal" ng-click="setSelectedRecipe(null)" style="cursor: pointer">Добавить рецепт</li>
+                <li open-modal="recipeModal" ng-click="setSelectedRecipe(null)" style="cursor: pointer">Добавить
+                    рецепт
+                </li>
                 <li ng-show="manager.recipe">
                     <a href="">Рецепты</a>
                 </li>
@@ -44,7 +46,8 @@
                 <td>
                     <a href=""
                        open-modal="confirmModal"
-                       ng-click="setConfirm('removeComponent(' + $index + ', ' + component.id + ', ' + recipeIndex + ')')">Удалить компонент</a>
+                       ng-click="setConfirm('removeComponent(' + $index + ', ' + component.id + ', ' + recipeIndex + ')')">Удалить
+                        компонент</a>
                 </td>
             </tr>
         </table>
@@ -78,20 +81,53 @@
                 </td>
             </tr>
             <tr>
-                <td class="no-padding">
-                    <input type="text" placeholder="Начните вводить имя компонента" list="component"
+                <td class="no-padding" ng-init="getComponents('б')">
+
+                    <input type="text"
+                           placeholder="Начните вводить имя компонента"
+                           ng-model="GGG"
+                           ng-keyup="getComponents(GGG)">
+                    <!--<datalist id="component">-->
+                    <select ng-model="selectedItem"
+                            ng-options="component as component.name for component in components"></select>
+                    <!--<pre>{{selectedItem | json}}</pre>-->
+                    <!--</datalist>-->
+
+                    <!--
+                                        <select ng-model="selectedItem1"
+                                                ng-init="getComponents('б')"
+                                                ng-options="components as component.name for component in components">{{component.name}}
+                                            &lt;!&ndash;&ndash;&gt;
+                    </select>
+                    <pre>1{{selectedItem | json}}</pre>-->
+
+                    <!--
+
+                                        <select ng-model="selectedItem" ng-options="item as item.name for item in items"></select>
+                                        <pre>{{selectedItem | json}}</pre>
+
+                                        <select ng-model="components[0]"
+                                                ng-init="getComponents('б')"
+                                                ng-options="components as component.name for component in components"
+                                                ng-change="setCurrentComponent(component)">{{component.name}}
+                                            &lt;!&ndash;<option ng-repeat="component in components">{{component.name}}</option>&ndash;&gt;
+                    </select>
+-->
+
+                    <!--<input type="text" placeholder="Начните вводить имя компонента" list="component"
                            class="no-margin no-border column"
                            ng-model="component.name" ng-keyup="getComponents(component.name)">
-                    <datalist id="component" ng-init="getComponents(component.name)">
-                        <option ng-repeat="component in components">{{component.name}}</option>
-                    </datalist>
+                    <datalist id="component"
+                              ng-init="getComponents(component.name)">
+                        <option ng-repeat="component in components" ng-init="setCurrentComponent('123')">{{component.name}}{{component.id}}</option>
+                    </datalist>-->
                 </td>
                 <td class="no-padding" width="120">
                     <input type="number" placeholder="Количество компонента" class="no-margin no-border column"
                            ng-model="component.quantity">
                 </td>
                 <td class="no-padding" width="20">
-                    <input type="button" value="+" ng-click="addComponent()"
+                    <input type="button" value="+" ng-click="addComponent(selectedItem)"
                            class="no-border no-margin" style="cursor: pointer">
                 </td>
             </tr>
@@ -103,7 +139,7 @@
     <footer ng-if="currentAction == 'create'">
         <input type="button" value="Добавить" close-modal="recipeModal"
                ng-disabled="selectedRecipe.name == undefined || selectedRecipe.name == ''"
-               ng-click="addRecipe()">
+               ng-click="addRecipe(selectedRecipe)">
     </footer>
 </section>
 
