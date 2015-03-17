@@ -86,8 +86,8 @@ function managerController(scope, storage, interval) {
     };
 
     scope.setDeffered = function (status) {
-        console.log('111111111111111111111');
         scope.order.deferred = status;
+        storage.setDifferedItem(scope.order);
     };
 
     scope.componentStatus = function (status) {

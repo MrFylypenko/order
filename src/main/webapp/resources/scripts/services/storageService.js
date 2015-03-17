@@ -45,10 +45,7 @@ function $storage(http) {
     //updategrouprole
 
     this.setUserGrant = function (roleGrant) {
-        console.log('---');
-        console.log(roleGrant);
-        console.log('---');
-        http.post('admin/updateuserrole', roleGrant).success(function (data) {
+        http.post('admin/updategrouprole', roleGrant).success(function (data) {
             console.log(data);
         });
     };
@@ -82,10 +79,9 @@ function $storage(http) {
     };
 
     this.setDifferedItem = function (item, callback) {
-
-        http.post('manager/updateitemcommonorder', item).success(callback);
-
         console.log(item);
+
+        http.post('manager/updatecommonorder', item).success(callback);
     };
 
 
