@@ -84,7 +84,7 @@ function managerController(scope, storage, interval) {
 
     scope.setDifferedItemOne = function(item) {
         delete item.index;
-        storage.setDifferedItemOne(scope.order.number, item);
+        storage.setDifferedItemOne(item);
     };
 
     scope.createOrder = function () {

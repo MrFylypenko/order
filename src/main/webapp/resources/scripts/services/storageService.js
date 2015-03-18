@@ -84,8 +84,8 @@ function $storage(http) {
         http.post('manager/updatecommonorder', item).success(callback);
     };
 
-    this.setDifferedItemOne = function (item, callback) {
-        http.post('manager/updateitemcommonorder', item).success(callback);
+    this.setDifferedItemOne = function (item) {
+        http.post('manager/updateitemcommonorder', item);
     };
 
 
