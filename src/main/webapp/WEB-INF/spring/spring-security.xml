@@ -11,15 +11,19 @@
 		<intercept-url pattern="/view/outgoing" access="isAuthenticated()" />
         <intercept-url pattern="/view/statistic" access="isAuthenticated()" />-->
 
-
         <!--<intercept-url pattern="/add" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/waybill" access="hasRole('ROLE_USER')" />
 
-
-        manager
-		
 		<intercept-url pattern="/taskdelete/*" access="hasRole('ROLE_USER')" />-->
-        <!--<intercept-url pattern="/admin/*" access="isAuthenticated()" />-->
+
+        <intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/assistant/*" access="hasRole('ROLE_ASSISTANT')" />
+        <intercept-url pattern="/storekeeper/*" access="hasRole('ROLE_STOREKEEPER')" />
+        <intercept-url pattern="/recipe/*" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/item/*" access="hasRole('ROLE_USER')" />
+
+        <!--ROLE_SUPERMANAGER-->
+
 
 		<anonymous username="guest" granted-authority="hasRole('ROLE_ANONYMOUS')" />
 
