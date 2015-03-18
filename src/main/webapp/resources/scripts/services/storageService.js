@@ -2,6 +2,92 @@ angular.module('app').service('$storage', $storage);
 
 $storage.$inject = ['$http'];
 function $storage(http) {
+    /* MANAGER */
+    this.manager = {};
+
+    // информация о менджере
+    this.manager.getInfo = function (callback) {
+        var manager = {
+            name: 'Игорь Петрович',
+            recipe: true,
+            density: true
+        };
+
+        callback(manager);
+    };
+
+    // получить все заказы
+    this.manager.getOrders = function (callback) {
+        http.get('manager/getallcommonorders').success(function (data) {
+            var orders = [], copy;
+
+            angular.forEach(data, function (order) {
+                if (order.hasDeferred) {
+                    copy = angular.copy(order);
+                    copy.deferred = !copy.deferred;
+                    orders.push(copy);
+                }
+
+                orders.push(order);
+            });
+
+            //console.log('данные с сервера по всем заказам');
+            //console.log(data);
+            //console.log('данные с клонированными объектами');
+            //console.log(orders);
+
+            callback(orders);
+        });
+    };
+
+    // получить компоненты заказы
+    this.manager.getComponentsByOrderId = function (orderId, deferred, callback) {
+        http.get('manager/getitemscommonordersbycommonorderid/' + orderId).success(function (data) {
+            var components = [], laboratory = [], warehouse = [];
+
+            angular.forEach(data, function (component) {
+                if (component.deferred == deferred) {
+                    components.push(component);
+
+                    if (component.category == 'laboratory') {
+                        laboratory.push(component);
+                    }
+
+                    if (component.category == 'warehouse') {
+                        warehouse.push(component);
+                    }
+                }
+            });
+
+            components.laboratory = laboratory;
+            components.warehouse = warehouse;
+
+            //console.log('данные с сервера текущему заказу');
+            //console.log(data);
+            //console.log('данные с фильтром отложенности');
+            //console.log(components);
+            //console.log('данные с фильтром отложенности по лаборатории');
+            //console.log(components.laboratory);
+            //console.log('данные с фильтром отложенности по складу');
+            //console.log(components.warehouse);
+
+            callback(components);
+        });
+    };
+
+    // обновить информацию о компоненте
+    this.manager.updateComponent = function (component) {
+        http.post('manager/updateitemcommonorder', component);
+    };
+
+    // обновить информацию о заказе
+    // TODO на сервере maybe изменить deferred у всех компонентов
+    this.manager.updateOrder = function (order) {
+        http.post('manager/updatecommonorder', order);
+    };
+
+
+
     /*
      ADMIN
      */
@@ -10,8 +96,6 @@ function $storage(http) {
             console.log('ошибка добавления ногово пользователя');
         });
     };
-
-
 
 
     this.getUsers = function (callback) {
@@ -70,9 +154,7 @@ function $storage(http) {
         http.get('manager/getallcommonorders').success(callback);
     };
 
-    this.getManagerInfo = function (callback) {
-        http.post('_data/manager/manager.json').success(callback);
-    };
+
 
     this.getManagerOrderById = function (orderId, callback) {
         http.get('manager/getitemscommonordersbycommonorderid/' + orderId).success(callback);

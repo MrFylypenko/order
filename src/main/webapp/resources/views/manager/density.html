@@ -1,4 +1,4 @@
-<section class="row">
+<section class="row" ng-init="getManagerInfo()">
     <section class="column">
         <nav class="main inverse">
             <ul>
@@ -7,7 +7,7 @@
             <ul data-float="right">
                 <li open-modal="factorEdit" ng-click="selectedDensity = {}" style="cursor: pointer">Добавить формулу</li>
                 <li ng-show="manager.recipe">
-                    <a href="">Рецепты</a>
+                    <a href="#/recipe">Рецепты</a>
                 </li>
                 <li ng-show="manager.density">
                     <a href="#/manager">Главное окно</a>
@@ -28,12 +28,17 @@
                 <th>Исходная еденица измерения</th>
                 <th>Коэффициент</th>
                 <th>Получаемая еденица измерения</th>
+                <th>Действия</th>
             </tr>
             <tr ng-repeat="item in density">
                 <td>{{item.name}}</td>
                 <td>{{item.source}}</td>
-                <td open-modal="factorEdit" ng-click="setSelectedDensity(item)">{{item.density}}</td>
+                <td>{{item.density}}</td>
                 <td>{{item.measure}}</td>
+                <td>
+                    <button ng-click="setSelectedDensity(item)"
+                            open-modal="factorEdit">Изменить</button>
+                </td>
             </tr>
         </table>
     </section>

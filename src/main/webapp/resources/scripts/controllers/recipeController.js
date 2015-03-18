@@ -1,8 +1,15 @@
 angular.module('app').controller('recipeController', recipeController);
 
-recipeController.$inject = ['$scope', '$recipe', '$interval'];
-function recipeController(scope, recipe, interval) {
-    scope.exp1 = 'a';
+recipeController.$inject = ['$scope', '$recipe', '$interval' , '$storage'];
+function recipeController(scope, recipe, interval, storage) {
+    // информация о менеджере
+    scope.getManagerInfo = function () {
+        storage.manager.getInfo(function (data) {
+            scope.manager = data;
+        });
+    };
+
+    scope.exp1 = '';
 
     /*interval(function () {
         scope.getRecipes = function (exp1) {

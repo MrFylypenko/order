@@ -1,4 +1,4 @@
-<section class="row">
+<section class="row" ng-init="getManagerInfo()">
     <section class="column">
         <nav class="main inverse">
             <ul>
@@ -8,8 +8,8 @@
                 <li open-modal="recipeModal" ng-click="setSelectedRecipe(null)" style="cursor: pointer">Добавить
                     рецепт
                 </li>
-                <li ng-show="manager.recipe">
-                    <a href="">Рецепты</a>
+                <li ng-show="manager.density">
+                    <a href="#/density">Формулы</a>
                 </li>
                 <li ng-show="manager.density">
                     <a href="#/manager">Главное окно</a>

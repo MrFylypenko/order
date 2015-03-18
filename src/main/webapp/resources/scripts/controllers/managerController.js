@@ -2,101 +2,72 @@ angular.module('app').controller('managerController', managerController);
 
 managerController.$inject = ['$scope', '$storage', '$interval'];
 function managerController(scope, storage, interval) {
-
-    scope.setSelectedOrder = function (index, order) {
-        scope.selectedOrder = order;
-        scope.selectedIndex = index;
-        scope.selectedOrderBackup = angular.copy(order);
-    };
-
-    scope.updatePriority = function () {
-        storage.setOrderPriority(scope.selectedOrder);
-    };
-    scope.cancelPriority = function () {
-        storage.getOrders(function (data) {
-            scope.orders = data;
-        });
-    };
-
     scope.orderByField = 'priority';
     scope.reverseSort = false;
-
-    /*interval(function () {
-        storage.getOrders(function (data) {
-            scope.orders = data;
-        });
-    }, 10000); // 10 sec*/
-
-    scope.manager = {};
-    scope.getManagerInfo = storage.getManagerInfo(function (data) {
-        scope.manager = data;
-    });
-
     scope.orders = [];
-    scope.quantityDefferedOrders = 0;
+    scope.order = [];
 
-    scope.getOrders = storage.getOrders(function (data) {
-        angular.forEach(data, function(order) {
-            scope.orders.push(order);
-            if (order.deferred) {
-                scope.quantityDefferedOrders++;
+    interval(function () {
+        // обновляем все заказы
+        scope.getOrders();
+        // консолеложим месагу
+        console.log('обновляшка');
+    }, 2000);
+
+    // информация о менеджере
+    scope.getManagerInfo = function () {
+        storage.manager.getInfo(function (data) {
+            scope.manager = data;
+        });
+    };
+
+    // все заказы
+    scope.getOrders = function () {
+        storage.manager.getOrders(function (data) {
+            scope.orders = data;
+            if (scope.order.id != undefined) {
+                scope.getComponentsByOrder(scope.order);
+            } else {
+                scope.getComponentsByOrder(scope.orders[0]);
             }
-            //console.log(scope.orders);
-        });
-        scope.getOrderById(0, scope.orders[0].id);
-    });
-
-    scope.order = {};
-    scope.getOrderById = function (index, orderId) {
-        scope.order = scope.orders[index];
-        //console.log(scope.order);
-        storage.getManagerOrderById(orderId, function (data) {
-            console.log(data);
-            scope.order.info = data;
         });
     };
 
-    scope.selectedItem = {};
-    scope.setSelectedItem = function (item, index) {
-        scope.selectedItem = item;
-        scope.selectedItem.deferred = true;
-    };
-
-    scope.setDifferedItem = function () {
-        scope.order.info.splice(scope.selectedItem.index, 1);
-        delete scope.selectedItem.index;
-        storage.setDifferedItem(scope.selectedItem, function () {
-
-            // БЫДЛОКОД НАЧАЛО
-            storage.getOrders(function (data) {
-                angular.forEach(data, function(order) {
-                    scope.orders.push(order);
-                    if (order.deffered) {
-                        scope.quantityDefferedOrders++;
-                    }
-                    console.log(scope.orders);
-                });
-                scope.getOrderById(0, scope.orders[0].id);
-            });
-            // БЫДЛОКОД КОНЕЦ
+    // текущий заказ
+    scope.getComponentsByOrder = function (order) {
+        scope.order = order;
+        storage.manager.getComponentsByOrderId(order.id, order.deferred, function (data) {
+            scope.order.components = data;
         });
     };
 
-    scope.setDifferedItemOne = function(item) {
-        delete item.index;
-        storage.setDifferedItemOne(item);
+    // текущий компонент
+    scope.selectedComponent = {};
+    scope.setSelectedComponent = function (component) {
+        scope.selectedComponent = component;
     };
 
-    scope.createOrder = function () {
-        console.log('БАНАНА ИЩЕЕЕЕЕ');
+    // изменить отложенность компонента
+    scope.setComponentDeferred = function () {
+        scope.selectedComponent.deferred = !scope.selectedComponent.deferred;
+        storage.manager.updateComponent(scope.selectedComponent);
     };
 
-    scope.setDeffered = function (status) {
-        scope.order.deferred = status;
-        storage.setDifferedItem(scope.order);
+    // изменить отложенность заказа
+    scope.setOrderDeferred = function () {
+        scope.order.deferred = !scope.order.deferred;
+        storage.manager.updateOrder(scope.order);
     };
 
-    scope.componentStatus = function (status) {
-        console.log(status);
+    // изменить приоритет заказа
+    scope.updatePriority = function(priority) {
+        scope.order.priority = priority;
+        storage.manager.updateOrder(scope.order);
+    };
+
+    // добавить комментарий к заказу
+    scope.setOrderComment = function () {
+        // TODO ЧТОБЫ НЕ ОШИБКА НА СЕРВЕРЕ ОТ ЛИШНЕГО ПОЛЯ
+        //storage.manager.updateOrder(scope.order);
     };
 }

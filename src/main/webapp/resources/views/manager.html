@@ -1,4 +1,4 @@
-<section class="row">
+<section class="row" ng-init="getManagerInfo()">
     <section class="column">
         <nav class="main inverse">
             <ul>
@@ -7,7 +7,7 @@
             <ul data-float="right">
                 <li open-modal="new-order" style="cursor: pointer">Новый заказ</li>
                 <li ng-show="manager.recipe">
-                    <a href="">Рецепты</a>
+                    <a href="#/recipe">Рецепты</a>
                 </li>
                 <li ng-show="manager.density">
                     <a href="#/density">Формулы</a>
@@ -27,7 +27,7 @@
                     <span ng-if="quantityDefferedOrders > 0" class="round warning">{{quantityDefferedOrders}}</span>
                 </li>
             </ul>
-            <section class="content">
+            <section class="content" ng-init="getOrders()">
                 <section data-tab="tab1" class="active" ng-include="'resources/views/manager/orders.html'"></section>
                 <section data-tab="tab2" ng-include="'resources/views/manager/orders.html'"></section>
             </section>

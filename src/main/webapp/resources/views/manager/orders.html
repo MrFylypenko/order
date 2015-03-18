@@ -1,5 +1,61 @@
 <table class="border hover horizontal">
     <tr>
+        <th ng-click="orderByField = 'priority'; reverseSort = !reverseSort">
+            <span ng-show="orderByField == 'priority'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th ng-click="orderByField = 'customer'; reverseSort = !reverseSort">
+            <b>Клиент</b>
+            <span ng-show="orderByField == 'customer'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th ng-click="orderByField = 'number'; reverseSort = !reverseSort">
+            <b>Заказ</b>
+            <span ng-show="orderByField == 'number'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th ng-click="orderByField = 'date'; reverseSort = !reverseSort">
+            <b>Дата</b>
+            <span ng-show="orderByField == 'date'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th>Статус</th>
+    </tr>
+    <tr ng-repeat="order in orders | orderBy:orderByField:reverseSort"
+        ng-class="order.status == 100 ? 'success' : 'warning'"
+        ng-click="getComponentsByOrder(order)"
+        ng-if="deferred == order.deferred">
+        <td ng-bind="order.priority" open-modal="priorityModal"></td>
+        <td ng-bind="order.customer"></td>
+        <td ng-bind="order.number"></td>
+        <td ng-bind="order.date"></td>
+        <td ng-bind="order.status + '%'"></td>
+    </tr>
+</table>
+
+<section data-modal="priorityModal" class="no-padding">
+    <header>Изменение приоритета для заказа №{{order.number}}</header>
+    <section ng-init="priority = 0">
+        <label>Текущий преоритет <b>{{order.priority}}</b></label>
+        <input type="number" placeholder="приоритет" ng-model="priority" class="column">
+    </section>
+    <footer>
+        <button ng-click="updatePriority(priority)" close-modal="priorityModal">Сохранить</button>
+        <button ng-click="priority = 0" close-modal="priorityModal">Отмена</button>
+    </footer>
+</section>
+
+
+<!--{{deferred}}-->
+
+
+<!--
+<table class="border hover horizontal">
+    <tr>
         <td style="width: 20px;"
             ng-click="orderByField='priority'; reverseSort = !reverseSort">
             P
@@ -40,7 +96,7 @@
                 <span style="cursor: pointer; pointer-events: none">{{order.priority}}</span>
             </td>
             <td style="width: 47%">
-                {{order.customer}}
+                {{order.customer}}-<b>{{order.hasDeferred}}</b>
             </td>
             <td style="width: 50px">{{order.number}}</td>
             <td>{{order.date}}</td>
@@ -58,4 +114,4 @@
         <button ng-click="updatePriority()" close-modal="priority">Сохранить</button>
         <button ng-click="cancelPriority()" close-modal="priority">Отмена</button>
     </footer>
-</section>
+</section>-->
