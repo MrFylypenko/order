@@ -271,9 +271,18 @@ public class CommonOrderServiceImpl implements CommonOrderService {
         //itemCommonOrder.setCommonOrder(commonOrder);
 
         ItemCommonOrder item = itemCommonOrderDao.getItemCommonOrderById(itemCommonOrder.getId());
-        itemCommonOrder.setCommonOrder(item.getCommonOrder());
 
-        itemCommonOrderDao.updateItemCommonOrder(itemCommonOrder);
+        item.setDeferred(itemCommonOrder.isDeferred());
+        item.setReady(itemCommonOrder.isReady());
+
+
+        itemCommonOrderDao.updateItemCommonOrder(item);
+
+        System.out.println("itemCommonOrder=" + itemCommonOrder + "item= "+ item);
+
+        /*itemCommonOrder.setCommonOrder(item.getCommonOrder());
+
+        itemCommonOrderDao.updateItemCommonOrder(itemCommonOrder);*/
 
        /* for(int i = 0; i < commonOrder.getItems().size(); i++ ){
             //TODO сделать пересчет параметров
