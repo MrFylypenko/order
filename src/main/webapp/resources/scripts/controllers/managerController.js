@@ -49,6 +49,7 @@ function managerController(scope, storage, interval) {
     scope.order = {};
     scope.getOrderById = function (index, orderId) {
         scope.order = scope.orders[index];
+        //console.log(scope.order);
         storage.getManagerOrderById(orderId, function (data) {
             console.log(data);
             scope.order.info = data;
@@ -83,7 +84,6 @@ function managerController(scope, storage, interval) {
 
     scope.setDifferedItemOne = function(item) {
         delete item.index;
-        console.log(item);
         storage.setDifferedItemOne(scope.order.number, item);
     };
 
