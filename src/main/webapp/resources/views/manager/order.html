@@ -1,6 +1,6 @@
 <header>
     <h2>Заказ №{{order.number}} от {{order.date}}</h2>
-    <button ng-if="order.deferred == false" open-modal="cancelOrder">Отложить</button>
+    <!--<button ng-if="order.deferred == false" open-modal="cancelOrder">Отложить</button>-->
     <button ng-if="order.deferred == true" open-modal="backOrder">Вернуть</button>
     <button open-modal="addingComment">Добавить комментарий</button>
     <progress value="{{order.status}}" max="100"></progress>

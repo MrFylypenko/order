@@ -67,7 +67,7 @@ function managerController(scope, storage, interval) {
 
     // добавить комментарий к заказу
     scope.setOrderComment = function () {
-        // TODO ЧТОБЫ НЕ ОШИБКА НА СЕРВЕРЕ ОТ ЛИШНЕГО ПОЛЯ
-        //storage.manager.updateOrder(scope.order);
+
+        storage.manager.updateOrder(scope.order);
     };
 }

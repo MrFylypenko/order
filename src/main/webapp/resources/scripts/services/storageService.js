@@ -7,6 +7,7 @@ function $storage(http) {
 
     // информация о менджере
     this.manager.getInfo = function (callback) {
+//        http.get('/getuser').success(callback);
         var manager = {
             name: 'Игорь Петрович',
             recipe: true,

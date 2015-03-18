@@ -27,6 +27,7 @@ public class CommonOrder {
     private boolean deferred;
     private boolean hasDeferred;
     private String comment;
+    private boolean closed;
 
     @OneToMany(mappedBy = "commonOrder")
     private List <ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
@@ -109,6 +110,13 @@ public class CommonOrder {
         this.hasDeferred = hasDeferred;
     }
 
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
 
     public String getComment() {
         return comment;
