@@ -35,7 +35,6 @@ public class CommonOrderDaoImpl implements CommonOrderDao{
     @Override
     public void updateCommonOrder(CommonOrder commonOrder) {
         entityManager.merge(commonOrder);
-
     }
 
     @Override
