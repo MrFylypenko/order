@@ -171,6 +171,17 @@ public class ExcelService {
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
                         if (cell.getStringCellValue().contains("Заказ")) {
                             commonOrder.setDate(cell.getStringCellValue());
+
+                            String [] strings = cell.getStringCellValue().split(" ");
+
+                            if(strings.length > 3) {
+                                try{
+                                    int number = Integer.parseInt(strings[3]);
+                                    commonOrder.setNumber(number);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
                             checkOrderDate++;
                             break;
                         }

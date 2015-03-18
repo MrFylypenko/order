@@ -26,6 +26,7 @@ public class CommonOrder {
     private int priority;
     private boolean deferred;
     private boolean hasDeferred;
+    private String comment;
 
     @OneToMany(mappedBy = "commonOrder")
     private List <ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
@@ -106,6 +107,15 @@ public class CommonOrder {
 
     public void setHasDeferred(boolean hasDeferred) {
         this.hasDeferred = hasDeferred;
+    }
+
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @JsonIgnore

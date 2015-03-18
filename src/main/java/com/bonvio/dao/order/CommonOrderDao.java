@@ -10,6 +10,7 @@ import java.util.List;
 public interface CommonOrderDao {
 
     public CommonOrder getCommonOrderById (int idCommonOrder);
+    public CommonOrder getCommonOrderByOrderNumber (int commonOrderNumber);
     public List<CommonOrder> getAllCommonOrders ();
     public void saveCommonOrder (CommonOrder commonOrder);
     public void updateCommonOrder (CommonOrder commonOrder);

@@ -47,9 +47,94 @@ public class CommonOrderServiceImpl implements CommonOrderService {
         return commonOrderDao.getAllCommonOrders();
     }
 
+
+    public void checkOrder(CommonOrder commonOrder) {
+
+        CommonOrder commonOrder1 = commonOrderDao.getCommonOrderByOrderNumber(commonOrder.getNumber());
+
+        if (commonOrder1 != null) {
+            List<ItemCommonOrder> itemCommonOrdersFromBase = new ArrayList<ItemCommonOrder>();
+
+            for (int i = 0; i < commonOrder1.getComponents().size(); i++) {
+                if (commonOrder1.getComponents().get(i).getCategory().equals("original")) {
+                    itemCommonOrdersFromBase.add(commonOrder1.getComponents().get(i));
+                }
+            }
+
+            //проверка изменилось ли количество в наименовании
+            for (int i = 0; i < commonOrder.getComponents().size(); i++) {
+                ItemCommonOrder newComponent = commonOrder.getComponents().get(i);
+
+                for (int k = 0; k < itemCommonOrdersFromBase.size(); k++) {
+                    ItemCommonOrder oldComponent = itemCommonOrdersFromBase.get(k);
+
+                    if (newComponent.getTitle().equals(oldComponent.getTitle())) {
+
+                        double newValue = newComponent.getQuantity();
+                        double oldValue = oldComponent.getQuantity();
+
+                        if (newValue == oldValue) {
+                            newComponent.setComment("Без изменений");
+                        }
+
+                        if (newValue > oldValue) {
+                            newComponent.setComment("Увеличено на " + (newValue - oldValue) + " ");
+                        }
+
+                        if (newValue < oldValue) {
+                            newComponent.setComment("Уменьшено на " + (oldValue - newValue) + " ");
+                        }
+                    }
+                }
+            }
+
+
+            //проверяет, если у компонента нет коментария(уменьшено или увелечено количество наименования),
+            // то это новое наименование, и устанавливается позиция добавлена
+            for (int i = 0; i < commonOrder.getComponents().size(); i++) {
+                ItemCommonOrder newComponent = commonOrder.getComponents().get(i);
+
+                if (newComponent.getComment() == null ) {
+                    newComponent.setComment("Позиция добавлена");
+                }
+            }
+
+
+            //перебираем старый заказ, если новая позиция не была добавлена, то добавляем ее с пометкой такая позиция была и сейчас удалена
+            for (int i = 0; i < commonOrder1.getComponents().size(); i++) {
+                ItemCommonOrder oldComponent = commonOrder1.getComponents().get(i);
+
+                boolean check = false;
+
+                for (int k = 0; k < commonOrder.getComponents().size(); k++) {
+                    ItemCommonOrder newComponent = commonOrder.getComponents().get(k);
+
+                    if (oldComponent.getTitle().equals(newComponent.getTitle())) {
+
+                        check = true;
+                    }
+                }
+
+                if (check == false) {
+                    //установить коментарий компонент удален и добавить его в новый заказ
+                    oldComponent.setComment("Позиция удалена");
+                    commonOrder.getComponents().add(oldComponent);
+                }
+
+            }
+            //commonOrderDao.deleteCommonOrder(commonOrder1);
+        }
+    }
+
+
     @Override
     @Transactional
     public void saveCommonOrder(CommonOrder commonOrder) {
+
+
+        //большая проверка на старый заказ
+        checkOrder (commonOrder);
+
 
         commonOrderDao.saveCommonOrder(commonOrder);
 
@@ -79,7 +164,7 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                     itemCommonOrder.setCode(commonOrder.getComponents().get(i).getCode());
                     itemCommonOrder.setQuantity(commonOrder.getComponents().get(i).getQuantity());
                     itemCommonOrder.setCategory("laboratory");
-                    itemCommonOrder.setComment("Рецепт не найден");
+                    itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + " Рецепт не найден");
                     itemCommonOrder.setCommonOrder(commonOrder);
                     itemCommonOrder.setTitle(commonOrder.getComponents().get(i).getTitle());
                     itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);
@@ -94,7 +179,7 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                     itemCommonOrder.setItem(item);
                     itemCommonOrder.setQuantity(commonOrder.getComponents().get(i).getQuantity());
                     itemCommonOrder.setCategory("laboratory");
-                    itemCommonOrder.setComment("На колеровку");
+                    itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + "На колеровку");
                     itemCommonOrder.setCommonOrder(commonOrder);
                     itemCommonOrder.setTitle(commonOrder.getComponents().get(i).getTitle());
                     itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);
@@ -123,13 +208,13 @@ public class CommonOrderServiceImpl implements CommonOrderService {
             if ((commonOrder.getComponents().get(i).getMeasure().contains("кг") | commonOrder.getComponents().get(i).getMeasure().contains("л"))
                     & commonOrder.getComponents().get(i).getTitle().contains("тара")) {
 
+
+
+                //выделение из названия наименования объема тары
                 double quantity = 0.0;
-
                 String title = commonOrder.getComponents().get(i).getTitle();
-
                 int start = title.indexOf("тара");
                 int end = title.indexOf(")", start);
-
                 String res = title.substring(start, end);
                 System.out.println(res);
 
@@ -149,6 +234,8 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                 }
                 quantity = new Double(newString);
 
+
+
                 double balance = commonOrder.getComponents().get(i).getQuantity() % quantity;
 
                 Item item = itemDao.getItemByName(commonOrder.getComponents().get(i).getTitle());
@@ -159,13 +246,13 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                     itemCommonOrder.setQuantity(commonOrder.getComponents().get(i).getQuantity());
                     itemCommonOrder.setCategory("warehouse");
                     itemCommonOrder.setTitle(commonOrder.getComponents().get(i).getTitle());
-                    itemCommonOrder.setComment("Отгрузить");
+                    itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + "Отгрузить");
                     itemCommonOrder.setCommonOrder(commonOrder);
 
                     if (item != null) {
                         itemCommonOrder.setItem(item);
                     } else {
-                        itemCommonOrder.setComment(itemCommonOrder.getComment() + " компонент не найден");
+                        itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + " компонент не найден");
                     }
 
                     itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);
@@ -177,13 +264,13 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                     itemCommonOrder.setQuantity(commonOrder.getComponents().get(i).getQuantity());
                     itemCommonOrder.setTitle(commonOrder.getComponents().get(i).getTitle());
                     itemCommonOrder.setCategory("laboratory");
-                    itemCommonOrder.setComment("отмерять " + (balance*1000) + " грамм");
+                    itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + " Отмерять " + (balance * 1000) + " грамм");
                     itemCommonOrder.setCommonOrder(commonOrder);
 
                     if (item != null) {
                         itemCommonOrder.setItem(item);
                     } else {
-                        itemCommonOrder.setComment(itemCommonOrder.getComment() + " компонент не найден");
+                        itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + " компонент не найден");
                     }
                     itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);
 
@@ -195,13 +282,13 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                         itemCommonOrder.setQuantity(commonOrder.getComponents().get(i).getQuantity());
                         itemCommonOrder.setCategory("warehouse");
                         itemCommonOrder.setTitle(commonOrder.getComponents().get(i).getTitle());
-                        itemCommonOrder.setComment("отгрузить " + (commonOrder.getComponents().get(i).getQuantity() - balance)*1000);
+                        itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + " отгрузить " + (commonOrder.getComponents().get(i).getQuantity() - balance) * 1000);
                         itemCommonOrder.setCommonOrder(commonOrder);
 
                         if (item != null) {
                             itemCommonOrder.setItem(item);
                         } else {
-                            itemCommonOrder.setComment(itemCommonOrder.getComment() + " компонент не найден");
+                            itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + " компонент не найден");
                         }
                         itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);
 
@@ -219,14 +306,14 @@ public class CommonOrderServiceImpl implements CommonOrderService {
             itemCommonOrder.setCode(commonOrder.getComponents().get(i).getCode());
             itemCommonOrder.setQuantity(commonOrder.getComponents().get(i).getQuantity());
             itemCommonOrder.setCategory("warehouse");
-            itemCommonOrder.setComment("");
+            itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + "");
             itemCommonOrder.setTitle(commonOrder.getComponents().get(i).getTitle());
             itemCommonOrder.setCommonOrder(commonOrder);
 
             if (item != null) {
                 itemCommonOrder.setItem(item);
             } else {
-                itemCommonOrder.setComment(itemCommonOrder.getComment() + " компонент не найден");
+                itemCommonOrder.setComment(commonOrder.getComponents().get(i).getComment() + " компонент не найден");
             }
 
             itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);
@@ -275,10 +362,9 @@ public class CommonOrderServiceImpl implements CommonOrderService {
         item.setDeferred(itemCommonOrder.isDeferred());
         item.setReady(itemCommonOrder.isReady());
 
-
         itemCommonOrderDao.updateItemCommonOrder(item);
 
-        System.out.println("itemCommonOrder=" + itemCommonOrder + "item= "+ item);
+        System.out.println("itemCommonOrder=" + itemCommonOrder + "item= " + item);
 
         /*itemCommonOrder.setCommonOrder(item.getCommonOrder());
 

@@ -96,13 +96,15 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item getItemByName(String itemName) {
-        List<Item> items = new ArrayList<Item>();
-        items.addAll(entityManager.createNativeQuery("select * from item where name =:itemName and type = 'component'", Item.class).setParameter("itemName", itemName).getResultList());
 
-        if(items.size()>0){
-            return items.get(0);
+        if(itemName == null) {
+            List<Item> items = new ArrayList<Item>();
+            items.addAll(entityManager.createNativeQuery("select * from item where name =:itemName and type = 'component'", Item.class).setParameter("itemName", itemName).getResultList());
+
+            if (items.size() > 0) {
+                return items.get(0);
+            }
         }
-
         return null;
     }
 
