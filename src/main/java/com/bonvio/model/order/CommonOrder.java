@@ -25,6 +25,7 @@ public class CommonOrder {
     private int status;
     private int priority;
     private boolean deferred;
+    private boolean hasDeferred;
 
     @OneToMany(mappedBy = "commonOrder")
     private List <ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
@@ -99,6 +100,13 @@ public class CommonOrder {
         this.deferred = deferred;
     }
 
+    public boolean isHasDeferred() {
+        return hasDeferred;
+    }
+
+    public void setHasDeferred(boolean hasDeferred) {
+        this.hasDeferred = hasDeferred;
+    }
 
     @JsonIgnore
     @JsonManagedReference

@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
@@ -31,13 +32,26 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 public class AppTests {
 
+    /*@Autowired
+    CommonOrderService commonOrderService;*/
+
     @Autowired
     CommonOrderService commonOrderService;
 
     @Test
+    @Transactional
     public void simple() throws Exception {
 
-        CommonOrder commonOrder = new CommonOrder();
+
+        ItemCommonOrder itemCommonOrder = commonOrderService.getItemCommonOrderById(68);
+
+        System.out.println(itemCommonOrder);
+
+        itemCommonOrder.setDeferred(true);
+
+
+
+       /* CommonOrder commonOrder = new CommonOrder();
         commonOrder.setCustomer("Test some object");
 
         ItemCommonOrder itemCommonOrder = new ItemCommonOrder();
@@ -50,12 +64,12 @@ public class AppTests {
         List<ItemCommonOrder> itemCommonOrders2 = new ArrayList<ItemCommonOrder>();
         itemCommonOrders2.add(itemCommonOrder1);
 
-        itemCommonOrder.setComponents(itemCommonOrders2);
+        itemCommonOrder.setComponents(itemCommonOrders2);*/
 
         //itemCommonOrder.setItemCommonOrder(itemCommonOrder1);
 
 
-
+/*
         List<ItemCommonOrder> itemCommonOrders = new ArrayList<ItemCommonOrder>();
         itemCommonOrders.add(itemCommonOrder);
 
@@ -64,7 +78,7 @@ public class AppTests {
 
         commonOrderService.saveCommonOrder(commonOrder);
 
-        System.out.println(commonOrder);
+        System.out.println(commonOrder);*/
 
 
     }
