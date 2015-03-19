@@ -38,7 +38,7 @@ public class CommonOrderDaoImpl implements CommonOrderDao {
 
     @Override
     public List<CommonOrder> getAllCommonOrders() {
-        return entityManager.createNativeQuery("select * from commonorder", CommonOrder.class).getResultList();
+        return entityManager.createNativeQuery("select * from commonorder where closed <> true", CommonOrder.class).getResultList();
     }
 
     @Override

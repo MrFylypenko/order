@@ -25,13 +25,13 @@ public class Test3 {
     public static void main(String[] args) throws IOException {
 
         ExcelService test = new ExcelService ();
-        List<RecipeTemplate> recipeTemplates = test.getRecipeTemplate("C:\\test\\Рецептуры эмали ПУ - 4.xls");
+        List<RecipeTemplate> recipeTemplates = test.getRecipeTemplate("C:\\testfolder\\Рецептуры эмали ПУ - 4.xls");
         System.out.println(recipeTemplates.size());
 
-        /*for (int i = 0; i< 10; i++){
+        for (int i = 0; i< 10; i++){
             System.out.println(recipeTemplates.get(i));
 
-        }*/
+        }
 
 
 

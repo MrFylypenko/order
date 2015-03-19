@@ -19,7 +19,7 @@ public class CommonOrder {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int id;
-    private String customer;
+    private String customer = new String();
     private String date;
     private int number;
     private int status;

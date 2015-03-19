@@ -364,6 +364,18 @@ public class CommonOrderServiceImpl implements CommonOrderService {
 
         itemCommonOrderDao.updateItemCommonOrder(item);
 
+
+        CommonOrder commonOrder = item.getCommonOrder();
+        boolean checkOrder = false;
+        for(int i = 0; i < commonOrder.getComponents().size(); i++){
+            if(commonOrder.getComponents().get(i).isDeferred()){
+                checkOrder = true;
+            }
+        }
+        commonOrder.setDeferred(checkOrder);
+
+        commonOrderDao.updateCommonOrder(commonOrder);
+
         System.out.println("itemCommonOrder=" + itemCommonOrder + "item= " + item);
 
         /*itemCommonOrder.setCommonOrder(item.getCommonOrder());

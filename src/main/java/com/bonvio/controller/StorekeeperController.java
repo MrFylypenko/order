@@ -66,7 +66,7 @@ public class StorekeeperController {
     @RequestMapping(value = "/updateitemcommonorder", method = RequestMethod.POST)
     @ResponseBody
     public String updateItemCommonOrder(@RequestBody ItemCommonOrder itemCommonOrder) {
-        System.out.println("itemCommonOrder=" + itemCommonOrder);
+
         commonOrderService.updateItemCommonOrder(itemCommonOrder, 1);
         return "1";
     }

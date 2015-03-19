@@ -20,14 +20,14 @@ public class ItemCommonOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String code;
-    private String title;
+    private String code = new String();
+    private String title = new String();
     private double quantity;
-    private String category;
-    private String comment;
+    private String category = new String();
+    private String comment = new String();
     private boolean ready;
     private boolean deferred;
-    private String measure;
+    private String measure = new String();
 
     @ManyToOne
     private CommonOrder commonOrder;

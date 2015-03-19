@@ -5,6 +5,7 @@ import com.bonvio.model.admin.Settings;
 import com.bonvio.model.admin.User;
 import com.bonvio.model.classes.RecipeComponentTemplate;
 import com.bonvio.model.classes.RecipeTemplate;
+import com.bonvio.model.item.Item;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
 import com.bonvio.service.admin.SettingsService;
@@ -56,7 +57,7 @@ public class ExcelService {
 
                     Settings settings = settingsDao.getSettings();
 
-                    System.out.println("settings.isUploadDefault()" + settings.isUploadDefault());
+                    //System.out.println("settings.isUploadDefault()" + settings.isUploadDefault());
 
                     if (settings.isUploadDefault()) {
 
@@ -69,8 +70,15 @@ public class ExcelService {
                         }
 
                         for (String stringFile : userFileNames) {
+                            CommonOrder commonOrder = new CommonOrder();
 
-                            CommonOrder commonOrder = commonOrder(stringFile);
+                            try {
+                                commonOrder = commonOrder(stringFile);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                System.out.println("Не удалось распарсить файл");
+                            }
+
                             if (commonOrder.getCustomer().length() > 0)
 
                                 commonOrderService.saveCommonOrder(commonOrder);
@@ -172,13 +180,13 @@ public class ExcelService {
                         if (cell.getStringCellValue().contains("Заказ")) {
                             commonOrder.setDate(cell.getStringCellValue());
 
-                            String [] strings = cell.getStringCellValue().split(" ");
+                            String[] strings = cell.getStringCellValue().split(" ");
 
-                            if(strings.length > 3) {
-                                try{
+                            if (strings.length > 3) {
+                                try {
                                     int number = Integer.parseInt(strings[3]);
                                     commonOrder.setNumber(number);
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -347,10 +355,7 @@ public class ExcelService {
 
     public List<RecipeTemplate> getRecipeTemplate(String inputFileName) {
 
-
-
         List<RecipeTemplate> recipeTemplates = new ArrayList<RecipeTemplate>();
-
 
         FileInputStream file = null;
 
@@ -396,19 +401,16 @@ public class ExcelService {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
 
-                    System.out.print(" indexCell=" + indexCell + " " + cell.getCellType() );
-
+                    System.out.print(" indexCell=" + indexCell + " CellType=" + cell.getCellType() + "  ");
 
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
-                         System.out.print("cellString={" + cell.getStringCellValue() + "} ");
+                        System.out.print("cellString={" + cell.getStringCellValue() + "} ");
 
                         if (indexCell == indexName) {
                             name = cell.getStringCellValue();
                         }
                         if (indexCell == indexPercent) {
                             percent = cell.getStringCellValue();
-
-
                         }
                     }
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
@@ -422,23 +424,23 @@ public class ExcelService {
                 }
 
 
-                System.out.println( );
+                System.out.println();
 
-                if (percent.length() > 1 & name.length() > 1){
+                if (percent.length() > 1 & name.length() > 1) {
                     recipeTemplate = new RecipeTemplate();
                     recipeTemplate.setName(name);
                     recipeTemplate.setPercent(percent);
                     recipeTemplate.setQuantity(quantity);
                 }
 
-                if (percent.length() == 0 & name.length() > 1){
+                if (percent.length() == 0 & name.length() > 1) {
                     recipeComponentTemplate = new RecipeComponentTemplate();
                     recipeComponentTemplate.setName(name);
                     recipeComponentTemplate.setQuantity(quantity);
                     recipeTemplate.getComponents().add(recipeComponentTemplate);
                 }
 
-                if (percent.length() == 0 & name.length() == 0){
+                if (percent.length() == 0 & name.length() == 0) {
                     recipeTemplates.add(recipeTemplate);
                 }
 
@@ -460,5 +462,157 @@ public class ExcelService {
         return recipeTemplates;
     }
 
+
+    public List<Item> getRecipes(String inputFileName) {
+
+        List<Item> recipeTemplates = new ArrayList<Item>();
+
+
+        List<Item> items = new ArrayList<Item>();
+
+
+        FileInputStream file = null;
+
+        try {
+
+            System.out.println(" recipeTemplate inputFileName = " + inputFileName);
+
+            File inputFile = new File(inputFileName);
+
+            file = new FileInputStream(inputFile);
+
+
+            HSSFWorkbook workbook = new HSSFWorkbook(file);
+
+            HSSFSheet sheet = workbook.getSheetAt(0);
+
+            Iterator<Row> rowIterator = sheet.rowIterator();
+
+            // получение списка рецептов
+
+
+            RecipeTemplate recipeTemplate = new RecipeTemplate();
+
+            RecipeComponentTemplate recipeComponentTemplate = new RecipeComponentTemplate();
+
+            while (rowIterator.hasNext()) {
+
+
+                //System.out.println("выполняется метод2");
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+
+
+                String recipe = new String();
+                //items
+
+                Item item = new Item();
+
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    String name = null;
+                    double quantity = 0.0;
+
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                        name = cell.getStringCellValue();
+                    }
+
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+                        quantity = cell.getNumericCellValue();
+                    }
+
+                    if(quantity == 1.0){
+                        item = new Item();
+                        item.setName(name);
+                        item.setQuantity(quantity);
+                        items.add(item);
+                    }
+
+                    if(quantity != 1.0){
+                        item = new Item();
+                        item.setName(name);
+                        item.setQuantity(quantity);
+                        items.add(item);
+                    }
+
+
+
+                }
+
+
+                int indexName = 1;
+                int indexPercent = 2;
+                int indexQuantity = 3;
+
+                String name = new String();
+                String percent = new String();
+                double quantity = 0;
+
+
+                int indexCell = 0;
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    System.out.print(" indexCell=" + indexCell + " CellType=" + cell.getCellType() + "  ");
+
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                        System.out.print("cellString={" + cell.getStringCellValue() + "} ");
+
+                        if (indexCell == indexName) {
+                            name = cell.getStringCellValue();
+                        }
+                        if (indexCell == indexPercent) {
+                            percent = cell.getStringCellValue();
+                        }
+                    }
+                    if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+                        System.out.println("cellNum={" + cell.getNumericCellValue() + "}");
+                        if (indexCell == indexQuantity) {
+                            quantity = cell.getNumericCellValue();
+                        }
+                    }
+                    indexCell++;
+
+                }
+
+
+                System.out.println();
+
+                if (percent.length() > 1 & name.length() > 1) {
+                    recipeTemplate = new RecipeTemplate();
+                    recipeTemplate.setName(name);
+                    recipeTemplate.setPercent(percent);
+                    recipeTemplate.setQuantity(quantity);
+                }
+
+                if (percent.length() == 0 & name.length() > 1) {
+                    recipeComponentTemplate = new RecipeComponentTemplate();
+                    recipeComponentTemplate.setName(name);
+                    recipeComponentTemplate.setQuantity(quantity);
+                    recipeTemplate.getComponents().add(recipeComponentTemplate);
+                }
+
+                if (percent.length() == 0 & name.length() == 0) {
+                    //recipeTemplates.add(recipeTemplate);
+                }
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                file.close();
+            } catch (Exception e) {
+                System.out.println("не удалось закрыть файловый поток");
+                e.printStackTrace();
+            }
+        }
+
+
+        return recipeTemplates;
+    }
 
 }
