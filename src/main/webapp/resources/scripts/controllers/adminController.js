@@ -18,8 +18,6 @@ function adminController(scope, storage, interval) {
     scope.getUsers = function() {
         storage.getUsers(function (data) {
             scope.users = data;
-            scope.setUser(0);
-
         });
     };
 
@@ -33,6 +31,7 @@ function adminController(scope, storage, interval) {
      * установка выбранного пользователя
      */
     scope.setUser = function (userId) {
+        userId = userId == undefined ? 0 : userId;
         scope.user = scope.users[userId];
     };
 
