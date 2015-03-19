@@ -2,77 +2,64 @@ angular.module('app').controller('assistantController', assistantController);
 
 assistantController.$inject = ['$scope', '$storage', '$interval'];
 function assistantController(scope, storage, interval) {
-    interval(function () {
-        storage.getAssistantOrders(function (data) {
-            scope.orders = data;
-        });
-    }, 10000);
-
-    scope.assistant = {};
-    scope.getAssistantInfo = storage.getAssistantInfo(function (data) {
-        scope.assistant = data;
-    });
-
+    scope.orderByField = 'priority';
+    scope.reverseSort = false;
     scope.orders = [];
-    scope.getAssistantOrders = storage.getAssistantOrders(function (data) {
-        scope.orders = data;
-        //scope.getAssistantOrderById(0, 1234);
-    });
+    scope.order = [];
 
-    scope.order = {};
-    scope.readyItemCount = 0;
-    scope.noComponentCount = 0;
-    scope.getAssistantOrderById = function (index, orderId) {
-        scope.order = scope.orders[index];
-        storage.getAssistantOrderById(orderId, function (data) {
-            scope.order.info = [];
-            angular.forEach(data, function(info) {
-                if (info.ready == true) {
-                    scope.readyItemCount++;
-                }
+    interval(function () {
+        // обновляем все заказы
+        scope.getOrders();
+        // консолеложим месагу
+        console.log('обновляшка');
+    }, 2000);
 
-                if (info.type != 'component') {
-                    scope.noComponentCount++;
-                    info.index = scope.noComponentCount;
-                }
-
-                scope.order.info.push(info);
-            });
+    // информация о клабаротаристе
+    scope.getInfo = function () {
+        storage.assistant.getInfo(function (data) {
+            scope.assistant = data;
         });
     };
 
-    scope.closeOrder = function () {
-        storage.setOrderStatus(scope.order.number);
-    };
+    // все заказы
+    scope.getOrders = function () {
+        storage.assistant.getOrders(function (data) {
+            scope.orders = data;
 
-    scope.selectedItem = {};
-    scope.setSelectedItem = function (item) {
-        scope.selectedItem = item;
-        scope.selectedItem.number = scope.order.number;
-    };
-
-    scope.reasonStatus = '';
-    scope.setItemStatus = function(status, reason) {
-        scope.selectedItem.ready = status;
-        scope.selectedItem.reason = reason;
-
-        if (status) {
-            scope.readyItemCount++;
-        } else if (status == undefined) {
-            scope.readyItemCount--;
-        }
-
-        console.log(scope.noComponentCount);
-        console.log(scope.readyItemCount);
-        scope.order.status = parseInt(scope.readyItemCount / scope.noComponentCount * 100);
-        storage.setItemStatus(scope.selectedItem);
-    };
-
-    scope.ordersByItem = [];
-    scope.getOrdersByItem = function (item) {
-        scope.selectedItem = item;
-        storage.getOrdersByItem(item.code, function (data) {
-            scope.ordersByItem = data;
+            if (scope.order.id != undefined) {
+                scope.getComponentsByOrder(scope.order);
+            } else {
+                scope.getComponentsByOrder(scope.orders[0]);
+            }
         });
+    };
+
+    // компоненты текущего заказа
+    scope.getComponentsByOrder = function (order) {
+        scope.order = order;
+        storage.assistant.getComponentsByOrderId(order.id, function (data, readyCount) {
+            scope.order.components = data;
+            scope.readyComponentCount = readyCount;
+        });
+    };
+
+    // выбрать компонент
+    scope.selectedComponent = {};
+    scope.setSelectedComponent = function (component) {
+        scope.selectedComponent = component;
+    };
+
+    // изменить статус компонента
+    scope.setComponentStatus = function (status, reason) {
+        scope.selectedComponent.ready = status;
+        scope.selectedComponent.reason = reason;
+
+        if (status) scope.readyComponentCount++;
+        else if (status == undefined) scope.readyComponentCount--;
+
+        scope.order.status = parseInt(scope.readyComponentCount / scope.order.components.laboratory.length * 100);
+
+        storage.assistant.updateComponent(scope.selectedComponent);
+        storage.assistant.updateOrder(scope.order);
     };
 }

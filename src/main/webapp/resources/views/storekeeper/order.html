@@ -1,47 +1,62 @@
-<hgroup>
-    <h2>Заказ клиента №{{order.number}} от {{order.date}}
-        <button>Печать</button>
-        <button ng-hide="order.status != 100" class="success" ng-click="closeOrder()">Выдать</button>
-    </h2>
+<header>
+    <h2>Заказ №{{order.number}} от {{order.date}}</h2>
+    <button disabled>Печать</button>
+    <button ng-hide="order.status != 100" class="success" ng-click="setOrderStatus(order)">Выдать</button>
     <progress value="{{order.status}}" max="100"></progress>
     <h4>Заказ выполнен на {{order.status}}%</h4>
-    <span><small>Время создания заказа {{order.time}}</small></span>
-</hgroup>
+</header>
 
-<h3>Склад</h3>
-<table class="border horizontal hover">
+<table class="border horizontal hover" ng-show="order.components.laboratory.length > 0">
+    <caption>
+        <h3>Лаборатория</h3>
+    </caption>
     <tr>
-        <th>№</th>
+        <th>Код</th>
+        <th>Товар (услуга/работа)</th>
+        <th>Количество</th>
+        <th>Комментарий</th>
+    </tr>
+    <tr ng-repeat="component in order.components.laboratory"
+        ng-class="component.ready ? 'success' : 'warning'">
+        <td ng-bind="component.code"></td>
+        <td ng-bind="component.title"></td>
+        <td ng-bind="component.quantity"></td>
+        <td ng-bind="component.comment"></td>
+    </tr>
+</table>
+
+<table class="border horizontal hover" ng-show="order.components.warehouse.length > 0">
+    <caption>
+        <h3>Склад</h3>
+    </caption>
+    <tr>
         <th>Код</th>
         <th>Товар (услуга/работа)</th>
         <th>Количество</th>
         <th>Комментарий</th>
         <th>Статус</th>
     </tr>
-    <tr ng-repeat="item in order.info"
-        ng-class="item.ready ? 'success' : item.ready != undefined ? 'danger' : 'warning'">
-        <td>{{$index + 1}}</td>
-        <td>{{item.code}}</td>
-        <td>{{item.title}}</td>
-        <td>{{item.quantity}}</td>
-        <td>{{item.comment}}</td>
+    <tr ng-repeat="component in order.components.warehouse"
+        ng-class="component.ready ? 'success' : component.ready != undefined ? 'danger' : 'warning'">
+        <td ng-bind="component.code"></td>
+        <td ng-bind="component.title"></td>
+        <td ng-bind="component.quantity"></td>
+        <td ng-bind="component.comment"></td>
         <td>
-            <button open-modal="changeStatus" ng-click="setSelectedItem(item)">Изменить</button>
+            <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">Изменить</button>
         </td>
     </tr>
 </table>
-
-<section class="panel" ng-if="order.info.description">
-    <section>
-        <p>{{order.info.description}}</p>
-    </section>
+<section class="panel" ng-if="order.comment">
+    <header>Комментарий к заказу</header>
+    <section>{{order.comment}}</section>
 </section>
 
 <section data-modal="changeStatus">
     <header>
         Вы действительно хотети изменить статус позиции в заказе №{{order.number}}?
     </header>
-    <section ng-show="selectedItem.ready">
+    <section ng-show="selectedComponent.ready">
         <form name="statusChange" novalidate>
                <textarea placeholder="Причина изменения статуса на не готовый"
                          ng-model="reasonStatus"
@@ -52,18 +67,18 @@
     <footer>
         <button close-modal="changeStatus">ЗАКРЫТЬ</button>
         <button close-modal="changeStatus"
-                ng-hide="selectedItem.ready" class="success"
-                ng-click="setItemStatus(true, '')">
+                ng-hide="selectedComponent.ready" class="success"
+                ng-click="setComponentStatus(true, '')">
             НАЙДЕНО
         </button>
         <button close-modal="changeStatus"
-                ng-hide="selectedItem.ready != undefined" class="danger"
-                ng-click="setItemStatus(false, '')">
+                ng-hide="selectedComponent.ready != undefined" class="danger"
+                ng-click="setComponentStatus(false, '')">
             НЕ НАЙДЕНО
         </button>
         <button close-modal="changeStatus"
-                ng-hide="!selectedItem.ready" class="warning"
-                ng-click="setItemStatus(undefined, reasonStatus)"
+                ng-hide="!selectedComponent.ready" class="warning"
+                ng-click="setComponentStatus(undefined, reasonStatus)"
                 ng-disabled="statusChange.$invalid">
             ОК
         </button>

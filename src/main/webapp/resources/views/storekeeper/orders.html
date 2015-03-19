@@ -1,3 +1,44 @@
+<table class="border hover horizontal">
+    <tr>
+        <th ng-click="orderByField = 'priority'; reverseSort = !reverseSort">
+            <span ng-show="orderByField == 'priority'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th ng-click="orderByField = 'customer'; reverseSort = !reverseSort">
+            <b>Клиент</b>
+            <span ng-show="orderByField == 'customer'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th ng-click="orderByField = 'number'; reverseSort = !reverseSort">
+            <b>Заказ</b>
+            <span ng-show="orderByField == 'number'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th ng-click="orderByField = 'date'; reverseSort = !reverseSort">
+            <b>Дата</b>
+            <span ng-show="orderByField == 'date'">
+                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
+            </span>
+        </th>
+        <th>Статус</th>
+    </tr>
+    <tr ng-repeat="order in orders | orderBy:orderByField:reverseSort"
+        ng-click="getComponentsByOrder(order)"
+        ng-class="order.status == 100 ? 'success' : 'warning'">
+        <td ng-bind="order.priority"></td>
+        <td ng-bind="order.customer"></td>
+        <td ng-bind="order.number"></td>
+        <td ng-bind="order.date"></td>
+        <td ng-bind="order.status + '%'"></td>
+    </tr>
+</table>
+
+
+
+<!--
 <table class="border horizontal hover" ng-init="getStorekeeperOrders()">
     <tr>
         <th ng-click="orderByField='customer'; reverseSort = !reverseSort">
@@ -25,7 +66,7 @@
 					</span>
         </th>
     </tr>
-    <tr ng-repeat="order in orders | orderBy:orderByField:reverseSort | filter: query"
+    <tr ng-repeat="order in orders | orderBy:orderByField:reverseSort"
         ng-click="getStorekeeperOrderById($index, order.id)"
         ng-class="order.status == 100 ? 'success' : order.status <= 25 ? 'danger' : 'warning'">
         <td>{{order.customer}}</td>
@@ -33,4 +74,4 @@
         <td>{{order.date}} {{order.time}}</td>
         <td>{{order.status}}%</td>
     </tr>
-</table>
+</table>-->

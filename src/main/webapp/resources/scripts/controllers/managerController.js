@@ -15,7 +15,7 @@ function managerController(scope, storage, interval) {
     }, 2000);
 
     // информация о менеджере
-    scope.getManagerInfo = function () {
+    scope.getInfo = function () {
         storage.manager.getInfo(function (data) {
             scope.manager = data;
         });
@@ -67,7 +67,6 @@ function managerController(scope, storage, interval) {
 
     // добавить комментарий к заказу
     scope.setOrderComment = function () {
-
         storage.manager.updateOrder(scope.order);
     };
 }

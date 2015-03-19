@@ -1,16 +1,16 @@
-<section class="row">
+<section class="row" ng-init="getInfo()">
     <section class="column">
         <nav class="main inverse">
             <ul>
                 <li class="nohover">{{assistant.name}} (Колеровщик)</li>
             </ul>
             <ul data-float="right">
-                <li><a href="/#logout">Выход</a></li>
+                <li><a href="/logout">Выход</a></li>
             </ul>
         </nav>
     </section>
 </section>
-<section class="row">
+<section class="row" ng-init="getOrders()">
     <section class="column laptop-4">
         <section ng-include="'resources/views/assistant/orders.html'"></section>
     </section>

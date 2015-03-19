@@ -2,7 +2,9 @@ angular.module('app').service('$storage', $storage);
 
 $storage.$inject = ['$http'];
 function $storage(http) {
-    /* MANAGER */
+    ///////////////////////////////////////////////////
+    // MANAGER
+    ///////////////////////////////////////////////////
     this.manager = {};
 
     // информация о менджере
@@ -88,6 +90,121 @@ function $storage(http) {
     };
 
 
+    ///////////////////////////////////////////////////
+    // STOREKEEPER
+    ///////////////////////////////////////////////////
+    this.storekeeper = {};
+    // получить информацию
+    this.storekeeper.getInfo = function (callback) {
+        //        http.get('/getuser').success(callback);
+        var storekeeper = {
+            name: 'Игорь Петрович'
+        };
+
+        callback(storekeeper);
+    };
+    // получить все заказы
+    this.storekeeper.getOrders = function (callback) {
+        http.get('storekeeper/getallcommonorders').success(callback);
+    };
+    // получить компоненты заказа
+    this.storekeeper.getComponentsByOrderId = function (orderId, callback) {
+        http.get('storekeeper/getItemsCommonOrdersByCommonOrderId/' + orderId).success(function (data) {
+            var components = [], laboratory = [], warehouse = [], readyCount = 0;
+
+            angular.forEach(data, function (component) {
+                if (component.deferred == false) {
+                    components.push(component);
+
+                    if (component.category == 'laboratory') {
+                        laboratory.push(component);
+                    }
+
+                    if (component.category == 'warehouse') {
+                        warehouse.push(component);
+                    }
+
+                    if (component.ready) {
+                        readyCount++;
+                    }
+                }
+            });
+
+            components.laboratory = laboratory;
+            components.warehouse = warehouse;
+
+            callback(components, readyCount);
+        });
+    };
+    // обновить позицию заказа
+    this.storekeeper.updateComponent = function (component) {
+        console.log(component);
+    };
+    // обновить заказ
+    this.storekeeper.updateOrder = function (order) {
+        console.log(order);
+    };
+
+
+    ///////////////////////////////////////////////////
+    // ASSISTANT
+    ///////////////////////////////////////////////////
+    this.assistant = {};
+    // получить информацию
+    this.assistant.getInfo = function (callback) {
+//        http.get('/getuser').success(callback);
+        var assistant = {
+            name: 'Игорь Петрович'
+        };
+
+        callback(assistant);
+    };
+    // получить все заказы
+    this.assistant.getOrders = function (callback) {
+        http.get('storekeeper/getallcommonorders').success(callback);
+    };
+    // получить компоненты заказа
+    this.assistant.getComponentsByOrderId = function (orderId, callback) {
+        http.get('storekeeper/getItemsCommonOrdersByCommonOrderId/' + orderId).success(function (data) {
+            var components = [], laboratory = [], warehouse = [], readyCount = 0;
+
+            angular.forEach(data, function (component) {
+                if (component.deferred == false) {
+                    components.push(component);
+
+                    if (component.category == 'laboratory') {
+                        laboratory.push(component);
+                    }
+
+                    if (component.category == 'warehouse') {
+                        warehouse.push(component);
+                    }
+
+                    if (component.ready) {
+                        readyCount++;
+                    }
+                }
+            });
+
+            components.laboratory = laboratory;
+            //components.warehouse = warehouse;
+            components.warehouse = {};
+
+            callback(components, readyCount);
+        });
+    };
+    // обновить позицию заказа
+    this.assistant.updateComponent = function (component) {
+        console.log(component);
+    };
+    // обновить заказ
+    this.assistant.updateOrder = function (order) {
+        console.log(order);
+    };
+
+
+
+
 
     /*
      ADMIN
@@ -148,33 +265,34 @@ function $storage(http) {
         });
     };
 
+
     /*
      MANAGER
      */
-    this.getOrders = function (callback) {
-        http.get('manager/getallcommonorders').success(callback);
-    };
+    /*this.getOrders = function (callback) {
+     http.get('manager/getallcommonorders').success(callback);
+     };
 
 
 
-    this.getManagerOrderById = function (orderId, callback) {
-        http.get('manager/getitemscommonordersbycommonorderid/' + orderId).success(callback);
-    };
+     this.getManagerOrderById = function (orderId, callback) {
+     http.get('manager/getitemscommonordersbycommonorderid/' + orderId).success(callback);
+     };
 
-    this.setDifferedItem = function (item, callback) {
-        item.info = null;
-        delete item.info;
-        http.post('manager/updatecommonorder', item).success(callback);
-    };
+     this.setDifferedItem = function (item, callback) {
+     item.info = null;
+     delete item.info;
+     http.post('manager/updatecommonorder', item).success(callback);
+     };
 
-    this.setDifferedItemOne = function (item) {
-        http.post('manager/updateitemcommonorder', item);
-    };
+     this.setDifferedItemOne = function (item) {
+     http.post('manager/updateitemcommonorder', item);
+     };
 
 
-    this.setOrderPriority = function (order) {
-        console.log(order);
-    };
+     this.setOrderPriority = function (order) {
+     console.log(order);
+     };*/
 
     /*
      STOREKEEPER
@@ -183,12 +301,12 @@ function $storage(http) {
         http.get('getuser').success(callback);
     };
 
-    this.getStorekeeperOrders = function (callback) {
-        http.get('storekeeper/getallcommonorders').success(callback);
-    };
-    this.getStorekeeperOrderById = function (orderId, callback) {
-        http.get('storekeeper/getItemsCommonOrdersByCommonOrderId/' + orderId).success(callback);
-    };
+    //this.getStorekeeperOrders = function (callback) {
+    //    http.get('storekeeper/getallcommonorders').success(callback);
+    //};
+    //this.getStorekeeperOrderById = function (orderId, callback) {
+    //    http.get('storekeeper/getItemsCommonOrdersByCommonOrderId/' + orderId).success(callback);
+    //};
 
     this.setItemStatus = function (item) {
         console.log(item);

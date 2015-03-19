@@ -2,60 +2,70 @@ angular.module('app').controller('storekeeperController', storekeeperController)
 
 storekeeperController.$inject = ['$scope', '$storage', '$interval'];
 function storekeeperController(scope, storage, interval) {
-    interval(function () {
-        storage.getStorekeeperOrders(function (data) {
-            scope.orders = data;
-        });
-    }, 10000);
-
-    scope.storekeeper = {};
-    scope.getStorekeeperInfo = storage.getStorekeeperInfo(function (data) {
-        scope.storekeeper = data;
-    });
-
+    scope.orderByField = 'priority';
+    scope.reverseSort = false;
     scope.orders = [];
-    scope.getStorekeeperOrders = storage.getStorekeeperOrders(function (data) {
-        scope.orders = data;
-        scope.getStorekeeperOrderById(0, 1234);
-    });
+    scope.order = [];
 
-    scope.order = {};
-    scope.readyItemCount = 0;
-    scope.getStorekeeperOrderById = function (index, orderId) {
-        scope.order = scope.orders[index];
-        storage.getStorekeeperOrderById(orderId, function (data) {
-            scope.order.info = [];
-            angular.forEach(data, function(info) {
-                scope.order.info.push(info);
-                if (info.ready == true) {
-                    scope.readyItemCount++;
-                }
-            });
+    interval(function () {
+        // обновляем все заказы
+        scope.getOrders();
+        // консолеложим месагу
+        console.log('обновляшка');
+    }, 2000);
+
+    // информация о складовщике
+    scope.getInfo = function () {
+        storage.storekeeper.getInfo(function (data) {
+            scope.storekeeper = data;
         });
     };
 
-    scope.closeOrder = function () {
-        storage.setOrderStatus(scope.order.number);
+    // все заказы
+    scope.getOrders = function () {
+        storage.storekeeper.getOrders(function (data) {
+            scope.orders = data;
+
+            if (scope.order.id != undefined) {
+                scope.getComponentsByOrder(scope.order);
+            } else {
+                scope.getComponentsByOrder(scope.orders[0]);
+            }
+        });
     };
 
-    scope.selectedItem = {};
-    scope.setSelectedItem = function (item) {
-        scope.selectedItem = item;
-        scope.selectedItem.number = scope.order.number;
+    // компоненты текущего заказа
+    scope.getComponentsByOrder = function (order) {
+        scope.order = order;
+        storage.storekeeper.getComponentsByOrderId(order.id, function (data, readyCount) {
+            scope.order.components = data;
+            scope.readyComponentCount = readyCount;
+        });
     };
 
-    scope.reasonStatus = '';
-    scope.setItemStatus = function(status, reason) {
-        scope.selectedItem.ready = status;
-        scope.selectedItem.reason = reason;
+    // выбрать компонент
+    scope.selectedComponent = {};
+    scope.setSelectedComponent = function (component) {
+        scope.selectedComponent = component;
+    };
 
-        if (status) {
-            scope.readyItemCount++;
-        } else if (status == undefined) {
-            scope.readyItemCount--;
-        }
+    // изменить статус готовности заказа
+    scope.setOrderStatus = function (order) {
+        order.closed = true;
+        storage.storekeeper.updateOrder(order);
+    };
 
-        scope.order.status = parseInt(scope.readyItemCount / scope.order.info.length * 100);
-        storage.setItemStatus(scope.selectedItem);
+    // изменить статус компонента
+    scope.setComponentStatus = function (status, reason) {
+        scope.selectedComponent.ready = status;
+        scope.selectedComponent.reason = reason;
+
+        if (status) scope.readyComponentCount++;
+        else if (status == undefined) scope.readyComponentCount--;
+
+        scope.order.status = parseInt(scope.readyComponentCount / scope.order.components.warehouse.length * 100);
+
+        storage.storekeeper.updateComponent(scope.selectedComponent);
+        storage.storekeeper.updateOrder(scope.order);
     };
 }

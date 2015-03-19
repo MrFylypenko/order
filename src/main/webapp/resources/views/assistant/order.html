@@ -1,3 +1,96 @@
+<header>
+    <h2>Заказ №{{order.number}} от {{order.date}}</h2>
+    <progress value="{{order.status}}" max="100"></progress>
+    <h4>Заказ выполнен на {{order.status}}%</h4>
+</header>
+
+<table class="border horizontal hover" ng-show="order.components.laboratory.length > 0">
+    <caption>
+        <h3>Лаборатория</h3>
+    </caption>
+    <tr>
+        <th>Код</th>
+        <th>Товар (услуга/работа)</th>
+        <th>Количество</th>
+        <th>Комментарий</th>
+        <th>Статус</th>
+    </tr>
+    <tr ng-repeat="component in order.components.laboratory"
+        ng-class="component.ready ? 'success' : 'warning'">
+        <td ng-bind="component.code"></td>
+        <td ng-bind="component.title"></td>
+        <td ng-bind="component.quantity"></td>
+        <td ng-bind="component.comment"></td>
+        <td>
+            <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">
+                <span ng-show="component.ready == undefined">Изменить</span>
+                <span ng-show="component.ready">Готово</span>
+                <span ng-show="component.ready == false">Не&nbsp;готово</span>
+            </button>
+        </td>
+    </tr>
+</table>
+
+<table class="border horizontal hover" ng-show="order.components.warehouse.length > 0">
+    <caption>
+        <h3>Склад</h3>
+    </caption>
+    <tr>
+        <th>Код</th>
+        <th>Товар (услуга/работа)</th>
+        <th>Количество</th>
+        <th>Комментарий</th>
+    </tr>
+    <tr ng-repeat="component in order.components.warehouse"
+        ng-class="component.ready ? 'success' : component.ready != undefined ? 'danger' : 'warning'">
+        <td ng-bind="component.code"></td>
+        <td ng-bind="component.title"></td>
+        <td ng-bind="component.quantity"></td>
+        <td ng-bind="component.comment"></td>
+    </tr>
+</table>
+<section class="panel" ng-if="order.comment">
+    <header>Комментарий к заказу</header>
+    <section>{{order.comment}}</section>
+</section>
+
+<section data-modal="changeStatus">
+    <header>
+        Вы действительно хотети изменить статус позиции в заказе №{{order.number}}?
+    </header>
+    <section ng-show="selectedComponent.ready">
+        <form name="statusChange" novalidate>
+               <textarea placeholder="Причина изменения статуса на не готовый"
+                         ng-model="reasonStatus"
+                         required
+                         style="width: 100%"></textarea>
+        </form>
+    </section>
+    <footer>
+        <button close-modal="changeStatus">ЗАКРЫТЬ</button>
+        <button close-modal="changeStatus"
+                ng-hide="selectedComponent.ready" class="success"
+                ng-click="setComponentStatus(true, '')">
+            НАЙДЕНО
+        </button>
+        <button close-modal="changeStatus"
+                ng-hide="selectedComponent.ready != undefined" class="danger"
+                ng-click="setComponentStatus(false, '')">
+            НЕ НАЙДЕНО
+        </button>
+        <button close-modal="changeStatus"
+                ng-hide="!selectedComponent.ready" class="warning"
+                ng-click="setComponentStatus(undefined, reasonStatus)"
+                ng-disabled="statusChange.$invalid">
+            ОК
+        </button>
+    </footer>
+</section>
+
+
+
+
+<!--
 <hgroup>
     <h2>Заказ клиента №{{order.number}} от {{order.date}}
         <button>Печать</button>
@@ -113,4 +206,4 @@
     <footer>
         <button close-modal="showOrdersByComponent">ЗАКРЫТЬ</button>
     </footer>
-</section>
+</section>-->
