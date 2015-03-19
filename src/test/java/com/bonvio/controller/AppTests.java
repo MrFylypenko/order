@@ -1,7 +1,8 @@
 package com.bonvio.controller;
 
-import com.bonvio.model.order.CommonOrder;
-import com.bonvio.model.order.ItemCommonOrder;
+import com.bonvio.model.item.Item;
+
+import com.bonvio.service.item.ItemService;
 import com.bonvio.service.order.CommonOrderService;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,16 +41,86 @@ public class AppTests {
     @Autowired
     CommonOrderService commonOrderService;
 
+
+    @Autowired
+    ItemService itemService;
+
+
     @Test
-    @Transactional
     public void simple() throws Exception {
 
+        Locale.setDefault(Locale.ENGLISH);
 
-        ItemCommonOrder itemCommonOrder = commonOrderService.getItemCommonOrderById(68);
+        try {
+
+            File fileDir = new File("c:\\items.tnt");
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(fileDir)));  //, "UTF8"
+            String str = null;
+
+            int i = 0;
+            List<Item> items = new ArrayList<Item>();
+
+            System.out.println("hello fileDir");
+
+            while ((str = in.readLine()) != null) {
+                String[] array = str.split(";");  //str.split("\\|");
+                Item item = new Item();
+                item.setCategory(array[0]);
+                item.setName(array[1]);
+
+                double warehouse = Double.parseDouble(array[3].replace(",", "."));
+
+                item.setWarehouse(warehouse);
+                item.setMeasure(array[2]);
+
+                items.add(item);
+                //itemDao.addItem(item);
+
+                System.out.println(item);
+
+                itemService.createItem(item);
+
+
+                i++;
+            }
+
+
+
+
+
+            System.out.println("Всего items="+ items.size());
+            in.close();
+
+            System.out.println("i=" + i);
+
+            System.out.println("Готово");
+
+        } catch (UnsupportedEncodingException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+       /* ItemCommonOrder itemCommonOrder = commonOrderService.getItemCommonOrderById(68);
 
         System.out.println(itemCommonOrder);
 
-        itemCommonOrder.setDeferred(true);
+        itemCommonOrder.setDeferred(true);*/
 
 
 

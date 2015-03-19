@@ -36,4 +36,6 @@ public interface ItemService {
 
     public void removeComponent(int id);
 
+    public Item getItemByName(String itemName);
+
 }

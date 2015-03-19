@@ -11,6 +11,7 @@ import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
 import com.bonvio.service.admin.SettingsService;
 import com.bonvio.service.admin.UserService;
+import com.bonvio.service.item.ItemService;
 import com.bonvio.service.order.CommonOrderService;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -37,6 +38,10 @@ public class ExcelService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ItemService itemService;
+
 
     @Autowired
     CommonOrderService commonOrderService;
@@ -73,16 +78,44 @@ public class ExcelService {
                         for (String stringFile : userFileNames) {
                             CommonOrder commonOrder = new CommonOrder();
 
-                            try {
-                                commonOrder = commonOrder(stringFile);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                System.out.println("Не удалось распарсить файл");
+
+                            if (stringFile.contains("recipe")) {
+
+                                List<Item> items = getRecipes(stringFile);
+
+                                for (int i = 0; i < items.size(); i++) {
+                                    Item item = items.get(i);
+
+                                    //перебираем компоненты, если нет нового итема, то сохраняем его, иначе найденный присваиваем компоненту
+                                    for (int k = 0; k < item.getComponents().size(); k++) {
+
+                                        Component component = item.getComponents().get(k);
+
+                                        Item item1 = itemService.getItemByName(component.getItem().getName());
+
+                                        if (item1 == null) {
+                                            Item item2 = component.getItem();
+                                            itemService.createItem(item2);
+                                            component.setItem(item2);
+                                        } else {
+                                            component.setItem(item1);
+                                        }
+                                    }
+                                    itemService.createRecipe(item);
+                                }
+
+
+                            } else { // work with orders
+                                try {
+                                    commonOrder = commonOrder(stringFile);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    System.out.println("Не удалось распарсить файл");
+                                }
+
+                                if (commonOrder.getCustomer().length() > 0)
+                                    commonOrderService.saveCommonOrder(commonOrder);
                             }
-
-                            if (commonOrder.getCustomer().length() > 0)
-
-                                commonOrderService.saveCommonOrder(commonOrder);
                         }
 
                         System.out.println("делаю запрос № " + k++);
@@ -466,156 +499,74 @@ public class ExcelService {
 
     public List<Item> getRecipes(String inputFileName) {
 
-        List<Item> recipeTemplates = new ArrayList<Item>();
-
-
         List<Item> items = new ArrayList<Item>();
-
 
         FileInputStream file = null;
 
         try {
 
             System.out.println(" recipeTemplate inputFileName = " + inputFileName);
-
             File inputFile = new File(inputFileName);
-
             file = new FileInputStream(inputFile);
 
 
             HSSFWorkbook workbook = new HSSFWorkbook(file);
-
             HSSFSheet sheet = workbook.getSheetAt(0);
-
             Iterator<Row> rowIterator = sheet.rowIterator();
 
-            // получение списка рецептов
-
-
-            RecipeTemplate recipeTemplate = new RecipeTemplate();
-
-            RecipeComponentTemplate recipeComponentTemplate = new RecipeComponentTemplate();
-
+            // получение списка рецептов из файла
 
             Item item = new Item();
 
             while (rowIterator.hasNext()) {
 
-
-                //System.out.println("выполняется метод2");
                 Row row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
 
-
-                String recipe = new String();
-                //items
-
-
+                String name = new String();
+                double quantity = 0.0;
 
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
 
-                    String name = new String();
-                    double quantity = 0.0;
-
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
                         name = cell.getStringCellValue();
-                        if(name.length() == 0){
-                            break;
-                        }
-                        
                     }
 
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
                         quantity = cell.getNumericCellValue();
                     }
-
-
-                    if(quantity == 1.0){
-                        item = new Item();
-                        item.setName(name);
-                        item.setQuantity(quantity);
-                        item.setType("recipe");
-                        items.add(item);
-                    }
-
-                    if(quantity != 1.0){
-                        Item item2 = new Item();
-                        item2.setName(name);
-                        item2.setQuantity(quantity);
-                        item2.setType("component");
-                        Component component = new Component();
-                        component.setItem(item2);
-                        component.setParentItem(item);
-                        component.setQuantity(quantity);
-                        item.getComponents().add(component);
-                    }
-
                 }
 
-                /*int indexName = 1;
-                int indexPercent = 2;
-                int indexQuantity = 3;
-
-                String name = new String();
-                String percent = new String();
-                double quantity = 0;*/
-
-
-              /*  int indexCell = 0;
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-
-                    System.out.print(" indexCell=" + indexCell + " CellType=" + cell.getCellType() + "  ");
-
-                    if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
-                        System.out.print("cellString={" + cell.getStringCellValue() + "} ");
-
-                        if (indexCell == indexName) {
-                            name = cell.getStringCellValue();
-                        }
-                        if (indexCell == indexPercent) {
-                            percent = cell.getStringCellValue();
-                        }
-                    }
-                    if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
-                        System.out.println("cellNum={" + cell.getNumericCellValue() + "}");
-                        if (indexCell == indexQuantity) {
-                            quantity = cell.getNumericCellValue();
-                        }
-                    }
-                    indexCell++;
-                }*/
-
-
-              /*  System.out.println();
-
-                if (percent.length() > 1 & name.length() > 1) {
-                    recipeTemplate = new RecipeTemplate();
-                    recipeTemplate.setName(name);
-                    recipeTemplate.setPercent(percent);
-                    recipeTemplate.setQuantity(quantity);
+                if (name.length() == 0) {
+                    continue;
                 }
 
-                if (percent.length() == 0 & name.length() > 1) {
-                    recipeComponentTemplate = new RecipeComponentTemplate();
-                    recipeComponentTemplate.setName(name);
-                    recipeComponentTemplate.setQuantity(quantity);
-                    recipeTemplate.getComponents().add(recipeComponentTemplate);
+                if (quantity == 1.0) {
+                    item = new Item();
+                    item.setName(name);
+                    item.setQuantity(quantity);
+                    item.setType("recipe");
+                    items.add(item);
                 }
 
-                if (percent.length() == 0 & name.length() == 0) {
-                    //recipeTemplates.add(recipeTemplate);
-                }*/
-
+                if (quantity != 1.0) {
+                    Item item2 = new Item();
+                    item2.setName(name);
+                    item2.setQuantity(quantity);
+                    item2.setType("component");
+                    Component component = new Component();
+                    component.setItem(item2);
+                    component.setParentItem(item);
+                    component.setQuantity(quantity);
+                    item.getComponents().add(component);
+                }
             }
 
 
-
-            for(int i = 0; i < 50; i++){
-                System.out.println(items.get(i));
+            if (inputFile.delete()) {
+                System.out.println(inputFile.getName() + " is deleted!");
             }
-
 
 
         } catch (Exception e) {
@@ -627,6 +578,10 @@ public class ExcelService {
                 System.out.println("не удалось закрыть файловый поток");
                 e.printStackTrace();
             }
+        }
+
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(items.get(i));
         }
 
 

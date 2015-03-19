@@ -40,12 +40,7 @@
     </session-config>
 
 
-
     <!-- Фильтр для перекодировки в utf8 -->
-
-
-
-
     <filter>
         <filter-name>charsetFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

@@ -7,7 +7,7 @@
 	<!-- Security -->
 	<http auto-config="true" use-expressions="true">
 
-        <!--<intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/assistant/*" access="hasRole('ROLE_ASSISTANT')" />
         <intercept-url pattern="/storekeeper/*" access="hasRole('ROLE_STOREKEEPER')" />
         <intercept-url pattern="/recipe/*" access="hasRole('ROLE_SUPERMANAGER')" />
@@ -17,7 +17,7 @@
 
         <intercept-url pattern="/" access="isAuthenticated()" />
 
-		<anonymous username="guest" granted-authority="hasRole('ROLE_ANONYMOUS')" />-->
+		<anonymous username="guest" granted-authority="hasRole('ROLE_ANONYMOUS')" />
 
 
 
