@@ -52,7 +52,7 @@ function assistantController(scope, storage, interval) {
     // изменить статус компонента
     scope.setComponentStatus = function (status, reason) {
         scope.selectedComponent.ready = status;
-        scope.selectedComponent.reason = reason;
+        scope.selectedComponent.reason = reason == '' ? null : reason;
 
         if (status) scope.readyComponentCount++;
         else if (status == undefined) scope.readyComponentCount--;

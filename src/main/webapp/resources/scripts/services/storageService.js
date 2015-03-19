@@ -46,7 +46,7 @@ function $storage(http) {
     // получить компоненты заказы
     this.manager.getComponentsByOrderId = function (orderId, deferred, callback) {
         http.get('manager/getitemscommonordersbycommonorderid/' + orderId).success(function (data) {
-            var components = [], laboratory = [], warehouse = [];
+            var components = [], laboratory = [], warehouse = [], reasonPosition = [];
 
             angular.forEach(data, function (component) {
                 if (component.deferred == deferred) {
@@ -59,11 +59,16 @@ function $storage(http) {
                     if (component.category == 'warehouse') {
                         warehouse.push(component);
                     }
+
+                    if (component.reason != null) {
+                        reasonPosition.push(component);
+                    }
                 }
             });
 
             components.laboratory = laboratory;
             components.warehouse = warehouse;
+            components.reasonPosition = reasonPosition;
 
             //console.log('данные с сервера текущему заказу');
             //console.log(data);

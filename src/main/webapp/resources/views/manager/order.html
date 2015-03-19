@@ -1,4 +1,4 @@
-<header>
+<header xmlns="http://www.w3.org/1999/html">
     <h2>Заказ №{{order.number}} от {{order.date}}</h2>
     <!--<button ng-if="order.deferred == false" open-modal="cancelOrder">Отложить</button>-->
     <button ng-if="order.deferred == true" open-modal="backOrder">Вернуть</button>
@@ -24,11 +24,11 @@
         <td ng-bind="component.title"></td>
         <td ng-bind="component.quantity"></td>
         <td ng-bind="component.comment"></td>
-        <td ng-if="component.ready && !order.deferred">Готово</td>
-        <td ng-if="order.deferred == false">
+        <td ng-if="component.ready && !order.deferred" style="text-align: center">Готово</td>
+        <td ng-if="!component.ready && !order.deferred">
             <button open-modal="cancelItem" ng-click="setSelectedComponent(component)">Отложить</button>
         </td>
-        <td ng-if="order.deferred == true"></td>
+        <td ng-if="order.deferred"></td>
     </tr>
 </table>
 
@@ -49,8 +49,8 @@
         <td ng-bind="component.title"></td>
         <td ng-bind="component.quantity"></td>
         <td ng-bind="component.comment"></td>
-        <td ng-if="component.ready && !order.deferred">Готово</td>
-        <td ng-if="order.deferred == false">
+        <td ng-if="component.ready && !order.deferred" style="text-align: center">Готово</td>
+        <td ng-if="!component.ready && !order.deferred">
             <button open-modal="cancelItem" ng-click="setSelectedComponent(component)">Отложить</button>
         </td>
         <td ng-if="order.deferred == true"></td>
@@ -60,6 +60,20 @@
     <header>Комментарий к заказу</header>
     <section>{{order.comment}}</section>
 </section>
+
+<table ng-show="order.components.reasonPosition.length > 0">
+    <caption>
+        <h3>Найденные но отмененные позиции</h3>
+    </caption>
+    <tr>
+        <th>Позиция</th>
+        <th>Причина</th>
+    </tr>
+    <tr ng-repeat="component in order.components.reasonPosition">
+        <td ng-bind="component.code + ' ' + component.quantity"></td>
+        <td ng-bind="component.reason"></td>
+    </tr>
+</table>
 
 <section data-modal="cancelOrder" class="danger">
     <header>
