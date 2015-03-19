@@ -9,14 +9,25 @@ function $storage(http) {
 
     // информация о менджере
     this.manager.getInfo = function (callback) {
-//        http.get('/getuser').success(callback);
+        http.get('/getuser').success(function (data) {
+            var manager = {};
+
+            if (data.userRoles[0].role == 'SUPER_MANAGER') {
+                manager.recipe = true;
+                manager.density = true;
+            }
+
+            manager.name = data.firstName + ' ' + data.lastName;
+            callback(manager);
+        });
+/*
         var manager = {
             name: 'Игорь Петрович',
             recipe: true,
             density: true
-        };
+        };*/
 
-        callback(manager);
+
     };
 
     // получить все заказы
@@ -94,19 +105,21 @@ function $storage(http) {
         http.post('manager/returnfull', order);
     };
 
-
     ///////////////////////////////////////////////////
     // STOREKEEPER
     ///////////////////////////////////////////////////
     this.storekeeper = {};
     // получить информацию
     this.storekeeper.getInfo = function (callback) {
-        //        http.get('/getuser').success(callback);
-        var storekeeper = {
-            name: 'Игорь Петрович'
-        };
+        http.get('/getuser').success(function (data) {
+            var storekeeper = {};
+            storekeeper.name = data.firstName + ' ' + data.lastName;
 
-        callback(storekeeper);
+            callback(storekeeper);
+        });
+        /*var storekeeper = {
+            name: 'Игорь Петрович'
+        };*/
     };
     // получить все заказы
     this.storekeeper.getOrders = function (callback) {
@@ -159,12 +172,18 @@ function $storage(http) {
     this.assistant = {};
     // получить информацию
     this.assistant.getInfo = function (callback) {
-//        http.get('/getuser').success(callback);
-        var assistant = {
-            name: 'Игорь Петрович'
-        };
+        http.get('/getuser').success(function (data) {
+            var assistant = {};
+            assistant.name = data.firstName + ' ' + data.lastName;
 
-        callback(assistant);
+            callback(assistant);
+        });
+////        http.get('/getuser').success(callback);
+//        var assistant = {
+//            name: 'Игорь Петрович'
+//        };
+//
+//        callback(assistant);
     };
     // получить все заказы
     this.assistant.getOrders = function (callback) {
