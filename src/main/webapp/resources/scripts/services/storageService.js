@@ -72,7 +72,7 @@ function $storage(http) {
                     }
 
                     if (component.reason != null) {
-                        reasonPosition.push(component);
+                        if (component.reason != "") reasonPosition.push(component);
                     }
                 }
             });
