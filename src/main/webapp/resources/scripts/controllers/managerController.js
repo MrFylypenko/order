@@ -55,8 +55,9 @@ function managerController(scope, storage, interval) {
 
     // изменить отложенность заказа
     scope.setOrderDeferred = function () {
+        scope.getComponentsByOrder(scope.orders[0]);
 //        scope.order.deferred = !scope.order.deferred;
-        console.log(scope.order);
+//        console.log(scope.order);
         storage.manager.updateOrder(scope.order);
     };
 
