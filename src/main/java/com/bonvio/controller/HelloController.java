@@ -30,7 +30,7 @@ public class HelloController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         User user = userService.findByUserName( authentication.getName());
-        if(user.getRole().equals("Админ")){
+        if(user.getRole().equals("Администратор")){
             return "redirect:/#/admin";
         }
         if(user.getRole().equals("Кладовщик")){
@@ -41,7 +41,11 @@ public class HelloController {
         }
 
         if(user.getRole().equals("Менеджер")){
-            return "redirect:/#/admin";
+            return "redirect:/#/manager";
+        }
+
+        if(user.getRole().equals("Ответственный менеджер")){
+            return "redirect:/#/manager";
         }
 
         return "redirect:/";

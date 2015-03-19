@@ -28,6 +28,8 @@ public class UserServiceImpl implements UserService {
 	@Override
     @Transactional
 	public void addUser(User user) {
+
+        user.setPassword(userDao.encode(user.getPassword()));
 		userDao.addUser(user);
 	}
 
@@ -44,6 +46,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(User user) {
+
+        User user1 = userDao.findByUserName(user.getUsername());
+        if (!user1.getPassword().equals(user.getPassword())){
+            user.setPassword(userDao.encode(user.getPassword()));
+        }
+
         userDao.updateUser(user);
     }
 
@@ -64,6 +72,8 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
 
 
+        user.setPassword(userDao.encode(user.getPassword()));
+        userDao.addUser(user);
 
 
         userDao.createUser(user);

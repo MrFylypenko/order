@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 
         @SuppressWarnings("unchecked")
         //List<User> result = entityManager.createNamedQuery("selectAllUsers").getResultList();
-        List<User> result = entityManager.createNativeQuery("select * from users ", User.class).getResultList();
+        List<User> result = entityManager.createNativeQuery("select * from users where username <> 'admin' ", User.class).getResultList();
         //System.out.println("result = "+ result.size());
 
         return result;

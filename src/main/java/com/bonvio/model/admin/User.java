@@ -40,7 +40,7 @@ public class User {
 
     /*
     * обязательно необходимо проверить MyUserDetailsService метод private List<GrantedAuthority> buildUserAuthority
-    * в нем выбираются UserRole с установленным флагом checked:true для сессии, и выберуться не все роли
+    * в нем выбираются UserRole с установленным флагом checked:true для сессии, и выберутся не все роли
     * */
     private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 
