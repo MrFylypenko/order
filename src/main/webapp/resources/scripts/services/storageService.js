@@ -91,7 +91,7 @@ function $storage(http) {
     // обновить информацию о заказе
     // TODO на сервере maybe изменить deferred у всех компонентов
     this.manager.updateOrder = function (order) {
-        http.post('manager/updatecommonorder', order);
+        http.post('manager/returnfull', order);
     };
 
 
@@ -208,7 +208,7 @@ function $storage(http) {
     // обновить заказ
     this.assistant.updateOrder = function (order) {
         http.post('assistant/updatecommonorder', order);
-//        console.log(order);
+        console.log(order.status);
     };
 
 

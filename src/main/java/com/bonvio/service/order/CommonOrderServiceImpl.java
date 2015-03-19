@@ -361,6 +361,7 @@ public class CommonOrderServiceImpl implements CommonOrderService {
 
         item.setDeferred(itemCommonOrder.isDeferred());
         item.setReady(itemCommonOrder.isReady());
+        item.setReason(itemCommonOrder.getReason());
 
         itemCommonOrderDao.updateItemCommonOrder(item);
 
@@ -372,7 +373,7 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                 checkOrder = true;
             }
         }
-        commonOrder.setDeferred(checkOrder);
+        commonOrder.setHasDeferred(checkOrder);
 
         commonOrderDao.updateCommonOrder(commonOrder);
 
@@ -386,6 +387,21 @@ public class CommonOrderServiceImpl implements CommonOrderService {
             //TODO сделать пересчет параметров
         }*/
 
+
+    }
+
+    @Override
+    @Transactional
+    public void returnFull(CommonOrder commonOrder) {
+        CommonOrder commonOrder1 = commonOrderDao.getCommonOrderById(commonOrder.getId());
+
+
+        for(int i = 0; i <commonOrder1.getComponents().size(); i++ ){
+            commonOrder1.getComponents().get(i).setDeferred(false);
+        }
+
+        commonOrder1.setHasDeferred(false);
+        commonOrder1.setDeferred(false);
 
     }
 }

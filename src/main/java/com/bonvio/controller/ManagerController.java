@@ -72,4 +72,13 @@ public class ManagerController {
        return "1";
    }
 
+    @RequestMapping(value = "/returnfull", method = RequestMethod.POST)
+    @ResponseBody
+    public String returnfull(@RequestBody CommonOrder itemCommonOrder) {
+
+        commonOrderService.returnFull(itemCommonOrder);
+        return "1";
+    }
+
+
 }
