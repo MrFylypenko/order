@@ -1,6 +1,7 @@
 package com.bonvio.controller;
 
 import com.bonvio.model.classes.RecipeTemplate;
+import com.bonvio.model.item.Item;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.service.ExcelService;
 import com.bonvio.service.order.CommonOrderService;
@@ -25,7 +26,7 @@ public class Test3 {
     public static void main(String[] args) throws IOException {
 
         ExcelService test = new ExcelService ();
-        List<RecipeTemplate> recipeTemplates = test.getRecipeTemplate("C:\\testfolder\\Рецептуры эмали ПУ - 4.xls");
+        List<Item> recipeTemplates = test.getRecipes("C:\\testfolder\\test2\\Рецептуры эмали ПУ - 4.xls");
         System.out.println(recipeTemplates.size());
 
         for (int i = 0; i< 10; i++){

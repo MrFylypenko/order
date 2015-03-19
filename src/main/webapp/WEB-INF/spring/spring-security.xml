@@ -13,7 +13,7 @@
         <intercept-url pattern="/recipe/*" access="hasRole('ROLE_SUPERMANAGER')" />
         <intercept-url pattern="/item/*" access="hasRole('ROLE_SUPERMANAGER')" />
 
-        <intercept-url pattern="/manager/*" access="hasAnyRole('ROLE_USER', 'ROLE_SUPERMANAGER')" />
+        <intercept-url pattern="/manager/*" access="hasAnyRole('ROLE_MANAGER', 'ROLE_SUPERMANAGER')" />
 
         <intercept-url pattern="/" access="isAuthenticated()" />
 

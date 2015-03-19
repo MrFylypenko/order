@@ -40,7 +40,7 @@ public class Component {
                 "id=" + id +
                 ", quantity=" + quantity +
                 ", measure='" + measure + '\'' +
-                ", parentItem=" + parentItem +
+                //", parentItem=" + parentItem +
                 ", item=" + item +
                 '}';
     }

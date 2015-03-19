@@ -72,7 +72,7 @@ public class Item {
                 ", type='" + type + '\'' +
                 ", quantity=" + quantity +
                // ", itemCommonOrders=" + itemCommonOrders +
-                //", components=" + components +
+                ", components=" + components +
                 //", involving=" + involving +
                 '}';
     }

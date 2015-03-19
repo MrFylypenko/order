@@ -5,6 +5,7 @@ import com.bonvio.model.admin.Settings;
 import com.bonvio.model.admin.User;
 import com.bonvio.model.classes.RecipeComponentTemplate;
 import com.bonvio.model.classes.RecipeTemplate;
+import com.bonvio.model.item.Component;
 import com.bonvio.model.item.Item;
 import com.bonvio.model.order.CommonOrder;
 import com.bonvio.model.order.ItemCommonOrder;
@@ -495,6 +496,9 @@ public class ExcelService {
 
             RecipeComponentTemplate recipeComponentTemplate = new RecipeComponentTemplate();
 
+
+            Item item = new Item();
+
             while (rowIterator.hasNext()) {
 
 
@@ -506,51 +510,59 @@ public class ExcelService {
                 String recipe = new String();
                 //items
 
-                Item item = new Item();
+
 
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
 
-                    String name = null;
+                    String name = new String();
                     double quantity = 0.0;
 
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
                         name = cell.getStringCellValue();
+                        if(name.length() == 0){
+                            break;
+                        }
+                        
                     }
 
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
                         quantity = cell.getNumericCellValue();
                     }
 
+
                     if(quantity == 1.0){
                         item = new Item();
                         item.setName(name);
                         item.setQuantity(quantity);
+                        item.setType("recipe");
                         items.add(item);
                     }
 
                     if(quantity != 1.0){
-                        item = new Item();
-                        item.setName(name);
-                        item.setQuantity(quantity);
-                        items.add(item);
+                        Item item2 = new Item();
+                        item2.setName(name);
+                        item2.setQuantity(quantity);
+                        item2.setType("component");
+                        Component component = new Component();
+                        component.setItem(item2);
+                        component.setParentItem(item);
+                        component.setQuantity(quantity);
+                        item.getComponents().add(component);
                     }
-
-
 
                 }
 
-
-                int indexName = 1;
+                /*int indexName = 1;
                 int indexPercent = 2;
                 int indexQuantity = 3;
 
                 String name = new String();
                 String percent = new String();
-                double quantity = 0;
+                double quantity = 0;*/
 
 
-                int indexCell = 0;
+              /*  int indexCell = 0;
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
 
@@ -573,11 +585,10 @@ public class ExcelService {
                         }
                     }
                     indexCell++;
+                }*/
 
-                }
 
-
-                System.out.println();
+              /*  System.out.println();
 
                 if (percent.length() > 1 & name.length() > 1) {
                     recipeTemplate = new RecipeTemplate();
@@ -595,9 +606,16 @@ public class ExcelService {
 
                 if (percent.length() == 0 & name.length() == 0) {
                     //recipeTemplates.add(recipeTemplate);
-                }
+                }*/
 
             }
+
+
+
+            for(int i = 0; i < 50; i++){
+                System.out.println(items.get(i));
+            }
+
 
 
         } catch (Exception e) {
@@ -612,7 +630,7 @@ public class ExcelService {
         }
 
 
-        return recipeTemplates;
+        return items;
     }
 
 }
