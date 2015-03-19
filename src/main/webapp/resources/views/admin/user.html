@@ -9,9 +9,7 @@
 <a ng-click="setUserRole(user.role)">Сбросить права</a>
 <hr>
 <label>
-    Домашняя директория:<br>
-    <input type="text" placeholder="Путь" ng-model="user.path" ng-value="user.path" ng-keyup="setUserPath($event)"
-           ng-blur="setUserPath($event)">
+    Домашняя директория: {{user.path}}<br>
 </label>
 <br>
 <label ng-repeat="userGrant in user.userRoles">

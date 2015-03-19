@@ -1,7 +1,10 @@
 angular.module("app").controller("adminController", adminController);
 
-adminController.$inject = ["$scope", "$storage", "$http"];
-function adminController(scope, storage, http) {
+adminController.$inject = ["$scope", "$storage", "$interval"];
+function adminController(scope, storage, interval) {
+    interval(function() {
+        scope.getUsers();
+    }, 2000);
     /**
      * массив объектов пользователей
      * @type {Array}
@@ -12,12 +15,13 @@ function adminController(scope, storage, http) {
     /**
      * получение всех пользователей
      */
-    scope.getUsers = storage.getUsers(function (data) {
-        scope.users = data;
-        console.log(scope.users.length);
-        scope.setUser(0);
+    scope.getUsers = function() {
+        storage.getUsers(function (data) {
+            scope.users = data;
+            scope.setUser(0);
 
-    });
+        });
+    };
 
     /**
      * выбранный пользователь
