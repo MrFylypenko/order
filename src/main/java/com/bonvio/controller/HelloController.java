@@ -57,9 +57,12 @@ public class HelloController {
     @ResponseBody
     public User getUser () {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User user = userService.findByUserName( authentication.getName());
 
         userService.getAllUsers().get(0);
-        return userService.getAllUsers().get(0);
+        return user;
     }
 
 

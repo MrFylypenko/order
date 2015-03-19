@@ -135,4 +135,9 @@ public class ItemServiceImpl implements ItemService {
         component.setId(id);
         componentDao.deleteComponent(component);
     }
+
+    @Override
+    public Item getItemByName(String itemName) {
+        return itemDao.getItemByName(itemName);
+    }
 }

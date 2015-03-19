@@ -29,10 +29,10 @@ public class Test3 {
         List<Item> recipeTemplates = test.getRecipes("C:\\testfolder\\test2\\Рецептуры эмали ПУ - 4.xls");
         System.out.println(recipeTemplates.size());
 
-        for (int i = 0; i< 10; i++){
+       /* for (int i = 0; i< 10; i++){
             System.out.println(recipeTemplates.get(i));
 
-        }
+        }*/
 
 
 
