@@ -51,7 +51,7 @@ public class StorekeeperController {
         return commonOrderService.getItemCommonOrderById(id);
     }
 
-    @RequestMapping(value = "/getItemsCommonOrdersByCommonOrderId/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getitemscommonordersbycommonorderid/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<ItemCommonOrder> getItemsCommonOrdersByCommonOrderId(@PathVariable("id") int id) {
         return commonOrderService.getItemsCommonOrdersByCommonOrderId(id);

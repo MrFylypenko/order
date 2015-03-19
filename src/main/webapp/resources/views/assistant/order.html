@@ -21,12 +21,14 @@
         <td ng-bind="component.title"></td>
         <td ng-bind="component.quantity"></td>
         <td ng-bind="component.comment"></td>
-        <td>
-            <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">
-                <span ng-show="component.ready == undefined">Изменить</span>
-                <span ng-show="component.ready">Готово</span>
-                <span ng-show="component.ready == false">Не&nbsp;готово</span>
-            </button>
+        <td ng-show="component.ready == undefined">
+            <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">Изменить</button>
+        </td>
+        <td ng-show="component.ready">
+            <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">Готово</button>
+        </td>
+        <td ng-show="component.ready == false">
+            <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">Не&nbsp;готово</button>
         </td>
     </tr>
 </table>

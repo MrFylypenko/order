@@ -28,6 +28,7 @@ public class ItemCommonOrder {
     private boolean ready;
     private boolean deferred;
     private String measure = new String();
+    private String reason = new String ();
 
     @ManyToOne
     private CommonOrder commonOrder;
@@ -148,6 +149,14 @@ public class ItemCommonOrder {
 
     public void setMeasure(String measure) {
         this.measure = measure;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     @JsonIgnore

@@ -109,7 +109,7 @@ function $storage(http) {
     };
     // получить компоненты заказа
     this.storekeeper.getComponentsByOrderId = function (orderId, callback) {
-        http.get('storekeeper/getItemsCommonOrdersByCommonOrderId/' + orderId).success(function (data) {
+        http.get('storekeeper/getitemscommonordersbycommonorderid/' + orderId).success(function (data) {
             var components = [], laboratory = [], warehouse = [], readyCount = 0;
 
             angular.forEach(data, function (component) {
@@ -138,11 +138,13 @@ function $storage(http) {
     };
     // обновить позицию заказа
     this.storekeeper.updateComponent = function (component) {
-        console.log(component);
+        http.post('storekeeper/updateitemcommonorder', component);
+//        console.log(component);
     };
     // обновить заказ
     this.storekeeper.updateOrder = function (order) {
-        console.log(order);
+        http.post('storekeeper/updatecommonorder', order);
+//        console.log(order);
     };
 
 
@@ -161,11 +163,11 @@ function $storage(http) {
     };
     // получить все заказы
     this.assistant.getOrders = function (callback) {
-        http.get('storekeeper/getallcommonorders').success(callback);
+        http.get('assistant/getallcommonorders').success(callback);
     };
     // получить компоненты заказа
     this.assistant.getComponentsByOrderId = function (orderId, callback) {
-        http.get('storekeeper/getItemsCommonOrdersByCommonOrderId/' + orderId).success(function (data) {
+        http.get('assistant/getitemscommonordersbycommonorderid/' + orderId).success(function (data) {
             var components = [], laboratory = [], warehouse = [], readyCount = 0;
 
             angular.forEach(data, function (component) {
@@ -195,11 +197,13 @@ function $storage(http) {
     };
     // обновить позицию заказа
     this.assistant.updateComponent = function (component) {
-        console.log(component);
+        http.post('assistant/updateitemcommonorder', component);
+//        console.log(component);
     };
     // обновить заказ
     this.assistant.updateOrder = function (order) {
-        console.log(order);
+        http.post('assistant/updatecommonorder', order);
+//        console.log(order);
     };
 
 
