@@ -3,7 +3,6 @@
     <progress value="{{order.status}}" max="100"></progress>
     <h4>Заказ выполнен на {{order.status}}%</h4>
 </header>
-
 <table class="border horizontal hover" ng-show="order.components.laboratory.length > 0">
     <caption>
         <h3>Лаборатория</h3>
@@ -15,7 +14,7 @@
         <th>Комментарий</th>
         <th>Статус</th>
     </tr>
-    <tr ng-repeat="component in order.components.laboratory"
+    <tr ng-repeat-start="component in order.components.laboratory"
         ng-class="component.ready ? 'success' : 'warning'">
         <td ng-bind="component.code"></td>
         <td ng-bind="component.title"></td>
@@ -30,6 +29,13 @@
         <td ng-show="component.ready == false">
             <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">Не&nbsp;готово</button>
         </td>
+    </tr>
+    <tr ng-repeat-end="" ng-repeat="item in component.components">
+        <td></td>
+        <td><i style="font-size: 12px">{{item.item.name}}</i></td>
+        <td><i style="font-size: 12px">{{item.quantity}}</i></td>
+        <td><i style="font-size: 12px">{{item.comment}}</i></td>
+        <td></td>
     </tr>
 </table>
 
