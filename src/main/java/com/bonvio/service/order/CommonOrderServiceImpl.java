@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,7 +183,9 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                     itemCommonOrder.setTitle(commonOrder.getComponents().get(i).getTitle());
                     itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder);
 
-                    double quantity = commonOrder.getComponents().get(i).getQuantity() * 1000 / item.getQuantity();
+                    //double quantity = commonOrder.getComponents().get(i).getQuantity() * 1000 / item.getQuantity();
+                    //System.out.println("quantity" + quantity);
+                    BigDecimal quantityBigDecimal = BigDecimal.valueOf(commonOrder.getComponents().get(i).getQuantity()).multiply(BigDecimal.valueOf(1000)).divide(BigDecimal.valueOf(item.getQuantity()));
 
                     for (int k = 0; k < item.getComponents().size(); k++) {
 
@@ -190,7 +193,10 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                         Item itemComponent = component.getItem();
                         ItemCommonOrder itemCommonOrder2 = new ItemCommonOrder();
                         itemCommonOrder2.setItem(itemComponent);
-                        itemCommonOrder2.setQuantity(itemComponent.getQuantity() * quantity);
+
+                        //itemCommonOrder2.setQuantity(component.getQuantity() * quantity);
+                        itemCommonOrder2.setQuantity(BigDecimal.valueOf(component.getQuantity()).multiply(quantityBigDecimal).doubleValue());
+
                         itemCommonOrder2.setCategory("component");
                         itemCommonOrder2.setMeasure("г");
                         itemCommonOrder2.setComment("ингридиент");
@@ -344,9 +350,14 @@ public class CommonOrderServiceImpl implements CommonOrderService {
     @Transactional
     public List<ItemCommonOrder> getItemsCommonOrdersByCommonOrderId(int idCommonOrder) {
 
-        List<ItemCommonOrder> itemCommonOrders = commonOrderDao.getCommonOrderById(idCommonOrder).getComponents();
-        System.out.println("itemCommonOrders.size = " + itemCommonOrders.size());
-        return itemCommonOrders;
+        try {
+            List<ItemCommonOrder> itemCommonOrders = commonOrderDao.getCommonOrderById(idCommonOrder).getComponents();
+            System.out.println("itemCommonOrders.size = " + itemCommonOrders.size());
+            return itemCommonOrders;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

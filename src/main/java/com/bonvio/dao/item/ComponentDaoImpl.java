@@ -41,6 +41,6 @@ public class ComponentDaoImpl implements ComponentDao{
     public void deleteComponent(Component component) {
         Component component1 = entityManager.find(Component.class, component.getId());
         entityManager.remove(component1);
-        entityManager.flush();
+        //entityManager.flush();
     }
 }

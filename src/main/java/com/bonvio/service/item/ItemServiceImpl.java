@@ -140,4 +140,9 @@ public class ItemServiceImpl implements ItemService {
     public Item getItemByName(String itemName) {
         return itemDao.getItemByName(itemName);
     }
+
+    @Override
+    public Item getRecipeByName(String recipeName) {
+        return itemDao.getRecipeByName(recipeName);
+    }
 }

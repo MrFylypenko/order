@@ -25,6 +25,8 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -535,6 +537,7 @@ public class ExcelService {
 
                     if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
                         quantity = cell.getNumericCellValue();
+                        quantity= new BigDecimal(quantity).setScale(5, RoundingMode.HALF_UP).doubleValue();
                     }
                 }
 
@@ -543,18 +546,32 @@ public class ExcelService {
                 }
 
                 if (quantity == 1.0) {
-                    item = new Item();
-                    item.setName(name);
-                    item.setQuantity(quantity);
-                    item.setType("recipe");
+
+                    Item found = itemService.getRecipeByName(name);
+
+                    if(found == null) {
+                        item = new Item();
+                        item.setName(name);
+                        item.setQuantity(quantity);
+                        item.setType("recipe");
+                    } else {
+                        item = found;
+                    }
                     items.add(item);
                 }
 
                 if (quantity != 1.0) {
-                    Item item2 = new Item();
-                    item2.setName(name);
-                    item2.setQuantity(quantity);
-                    item2.setType("component");
+
+                    Item found = itemService.getItemByName(name);
+                    Item item2;
+                    if(found == null) {
+                        item2 = new Item();
+                        item2.setName(name);
+                        item2.setQuantity(quantity);
+                        item2.setType("component");
+                    }else {
+                        item2 = found;
+                    }
                     Component component = new Component();
                     component.setItem(item2);
                     component.setParentItem(item);
@@ -562,7 +579,6 @@ public class ExcelService {
                     item.getComponents().add(component);
                 }
             }
-
 
             if (inputFile.delete()) {
                 System.out.println(inputFile.getName() + " is deleted!");

@@ -38,4 +38,6 @@ public interface ItemService {
 
     public Item getItemByName(String itemName);
 
+    public Item getRecipeByName (String recipeName);
+
 }
