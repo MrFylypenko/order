@@ -106,7 +106,7 @@ function $storage(http) {
     };
 
     this.manager.updateOrderComment = function (order) {
-        http.post('manager/updatecommonorder', order);
+        http.post('manager/updatecomment', order);
     };
 
     ///////////////////////////////////////////////////

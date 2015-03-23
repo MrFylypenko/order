@@ -6,6 +6,7 @@ function managerController(scope, storage, interval) {
     scope.reverseSort = false;
     scope.orders = [];
     scope.order = [];
+    scope.selectedOrder = [];
 
     interval(function () {
         // обновляем все заказы
@@ -54,11 +55,9 @@ function managerController(scope, storage, interval) {
     };
 
     // изменить отложенность заказа
-    scope.setOrderDeferred = function () {
+    scope.setOrderDeferred = function (order) {
         scope.getComponentsByOrder(scope.orders[0]);
-//        scope.order.deferred = !scope.order.deferred;
-//        console.log(scope.order);
-        storage.manager.updateOrder(scope.order);
+        storage.manager.updateOrder(order);
     };
 
     // изменить приоритет заказа

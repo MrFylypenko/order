@@ -100,11 +100,11 @@
 
 <section data-modal="backOrder" class="danger">
     <header>
-        Вы действительно хотите вернуть заказ №{{order.number}} ?
+        Вы действительно хотите вернуть заказ №{{order.number}}?
     </header>
     <footer>
         <button close-modal="backOrder">Отмена</button>
-        <button close-modal="backOrder" ng-click="setOrderDeferred()">ХОРОШО</button>
+        <button close-modal="backOrder" ng-click="setOrderDeferred(order)">ХОРОШО</button>
     </footer>
 </section>
 
