@@ -80,5 +80,13 @@ public class ManagerController {
         return "1";
     }
 
+    @RequestMapping(value = "/updatecomment", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateComment(@RequestBody CommonOrder itemCommonOrder) {
+        commonOrderService.updateComment(itemCommonOrder);
+        return "1";
+    }
+
+
 
 }

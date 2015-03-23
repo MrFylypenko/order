@@ -19,6 +19,7 @@ public interface CommonOrderService {
     public List<ItemCommonOrder> getItemsCommonOrdersByCommonOrderId (int idItemCommonOrder);
     public void updateItemCommonOrder (ItemCommonOrder itemCommonOrder , int idCommonOrder);
     public void returnFull (CommonOrder commonOrder);
+    public void updateComment(CommonOrder commonOrder);
 
 
 }

@@ -402,6 +402,14 @@ public class CommonOrderServiceImpl implements CommonOrderService {
 
         commonOrder1.setHasDeferred(false);
         commonOrder1.setDeferred(false);
+    }
+
+    @Override
+    @Transactional
+    public void updateComment(CommonOrder commonOrder) {
+        CommonOrder commonOrder1 = commonOrderDao.getCommonOrderById(commonOrder.getId());
+        commonOrder1.setComment(commonOrder.getComment());
+
 
     }
 }
