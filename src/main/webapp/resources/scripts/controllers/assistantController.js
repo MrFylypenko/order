@@ -57,7 +57,8 @@ function assistantController(scope, storage, interval) {
         if (status) scope.readyComponentCount++;
         else if (status == undefined) scope.readyComponentCount--;
 
-        scope.order.status = parseInt(scope.readyComponentCount / (scope.order.components.length - 2) * 100);
+        scope.order.status = parseInt(scope.readyComponentCount / (scope.order.components.allCount) * 100);
+        console.log(scope.order.components.allCount);
 
         storage.assistant.updateComponent(scope.selectedComponent);
         storage.assistant.updateOrder(scope.order);

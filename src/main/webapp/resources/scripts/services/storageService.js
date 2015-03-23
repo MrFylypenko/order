@@ -132,17 +132,19 @@ function $storage(http) {
     // получить компоненты заказа
     this.storekeeper.getComponentsByOrderId = function (orderId, callback) {
         http.get('storekeeper/getitemscommonordersbycommonorderid/' + orderId).success(function (data) {
-            var components = [], laboratory = [], warehouse = [], readyCount = 0;
+            var components = [], laboratory = [], warehouse = [], readyCount = 0, allCount = 0;
 
             angular.forEach(data, function (component) {
                 if (component.deferred == false) {
                     components.push(component);
 
                     if (component.category == 'laboratory') {
+                        allCount++;
                         laboratory.push(component);
                     }
 
                     if (component.category == 'warehouse') {
+                        allCount++;
                         warehouse.push(component);
                     }
 
@@ -154,6 +156,7 @@ function $storage(http) {
 
             components.laboratory = laboratory;
             components.warehouse = warehouse;
+            components.allCount = allCount;
 
             callback(components, readyCount);
         });
@@ -196,17 +199,19 @@ function $storage(http) {
     // получить компоненты заказа
     this.assistant.getComponentsByOrderId = function (orderId, callback) {
         http.get('assistant/getitemscommonordersbycommonorderid/' + orderId).success(function (data) {
-            var components = [], laboratory = [], warehouse = [], readyCount = 0;
+            var components = [], laboratory = [], warehouse = [], readyCount = 0, allCount = 0;
 
             angular.forEach(data, function (component) {
                 if (component.deferred == false) {
                     components.push(component);
 
                     if (component.category == 'laboratory') {
+                        allCount++;
                         laboratory.push(component);
                     }
 
                     if (component.category == 'warehouse') {
+                        allCount++;
                         warehouse.push(component);
                     }
 
@@ -217,8 +222,9 @@ function $storage(http) {
             });
 
             components.laboratory = laboratory;
-            //components.warehouse = warehouse;
             components.warehouse = {};
+            //components.warehouse = warehouse;
+            components.allCount = allCount;
 
             callback(components, readyCount);
         });
