@@ -1,5 +1,5 @@
 <header>
-    <h2>Заказ №{{order.number}} от {{order.date}}</h2>
+    <h2>{{order.date}}</h2>
     <button disabled>Печать</button>
     <button ng-hide="order.status != 100" class="success" ng-click="setOrderStatus(order)">Выдать</button>
     <progress value="{{order.status}}" max="100"></progress>

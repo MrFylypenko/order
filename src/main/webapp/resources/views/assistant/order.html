@@ -1,5 +1,5 @@
 <header>
-    <h2>Заказ №{{order.number}} от {{order.date}}</h2>
+    <h2>{{order.date}}</h2>
     <progress value="{{order.status}}" max="100"></progress>
     <h4>Заказ выполнен на {{order.status}}%</h4>
 </header>
@@ -30,12 +30,13 @@
             <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">Не&nbsp;готово</button>
         </td>
     </tr>
-    <tr ng-repeat-end="" ng-repeat="item in component.components">
-        <td></td>
+    <tr ng-repeat-end="" ng-repeat="item in component.components"
+        ng-class="component.ready ? 'success' : 'warning'">
+        <td>#</td>
         <td><i style="font-size: 12px">{{item.item.name}}</i></td>
         <td><i style="font-size: 12px">{{item.quantity}}</i></td>
         <td><i style="font-size: 12px">{{item.comment}}</i></td>
-        <td></td>
+        <td>#</td>
     </tr>
 </table>
 

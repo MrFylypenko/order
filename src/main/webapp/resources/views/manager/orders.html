@@ -11,14 +11,8 @@
                 <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
             </span>
         </th>
-        <th ng-click="orderByField = 'number'; reverseSort = !reverseSort">
-            <b>Заказ</b>
-            <span ng-show="orderByField == 'number'">
-                <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
-            </span>
-        </th>
         <th ng-click="orderByField = 'date'; reverseSort = !reverseSort">
-            <b>Дата</b>
+            <b>Заказ</b>
             <span ng-show="orderByField == 'date'">
                 <i class="fa" ng-class="reverseSort ? 'fa-sort-down' : 'fa-sort-up'"></i>
             </span>
@@ -31,7 +25,6 @@
         ng-if="deferred == order.deferred">
         <td ng-bind="order.priority" open-modal="priorityModal"></td>
         <td ng-bind="order.customer"></td>
-        <td ng-bind="order.number"></td>
         <td ng-bind="order.date"></td>
         <td ng-bind="order.status + '%'"></td>
     </tr>
