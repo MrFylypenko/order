@@ -204,6 +204,7 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                         itemCommonOrder2.setItemCommonOrder(itemCommonOrder);
                         itemCommonOrderDao.saveItemCommonOrder(itemCommonOrder2);
                     }
+                    continue;
                 }
 
             }

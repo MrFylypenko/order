@@ -34,7 +34,7 @@ public class HelloController {
             return "redirect:/#/admin";
         }
         if(user.getRole().equals("Кладовщик")){
-            return "redirect:/#/admin";
+            return "redirect:/#/storekeeper";
         }
         if(user.getRole().equals("Колеровщик")){
             return "redirect:/#/assistant";
