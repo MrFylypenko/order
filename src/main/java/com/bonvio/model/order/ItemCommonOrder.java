@@ -3,6 +3,7 @@ package com.bonvio.model.order;
 import com.bonvio.model.item.Item;
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class ItemCommonOrder {
     private List<ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
 
 
+    @JsonBackReference
     public ItemCommonOrder getItemCommonOrder() {
         return itemCommonOrder;
     }
@@ -51,6 +53,7 @@ public class ItemCommonOrder {
         this.itemCommonOrder = itemCommonOrder;
     }
 
+    @JsonManagedReference
     public List<ItemCommonOrder> getComponents() {
         return components;
     }
@@ -169,6 +172,7 @@ public class ItemCommonOrder {
         this.commonOrder = commonOrder;
     }
 
+    @JsonBackReference
     public Item getItem() {
         return item;
     }

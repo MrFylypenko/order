@@ -140,8 +140,6 @@ public class CommonOrderServiceImpl implements CommonOrderService {
 
         System.out.println(commonOrder.getComponents().size());
 
-        List<CommonOrder> commonOrders = new ArrayList<CommonOrder>();
-
 
         for (int i = 0; i < commonOrder.getComponents().size(); i++) {
             commonOrder.getComponents().get(i).setCommonOrder(commonOrder);
@@ -157,7 +155,7 @@ public class CommonOrderServiceImpl implements CommonOrderService {
                     ) {
 
 
-                Item item = itemDao.getItemByName(commonOrder.getComponents().get(i).getTitle());
+                Item item = itemDao.getRecipeByName(commonOrder.getComponents().get(i).getTitle());
 
                 if (item == null) {
                     ItemCommonOrder itemCommonOrder = new ItemCommonOrder();
