@@ -16,10 +16,10 @@
     </tr>
     <tr ng-repeat-start="component in order.components.laboratory"
         ng-class="component.ready ? 'success' : 'warning'">
-        <td ng-bind="component.code"></td>
-        <td ng-bind="component.title"></td>
-        <td ng-bind="component.quantity"></td>
-        <td ng-bind="component.comment"></td>
+        <td><b>{{component.code}}</b></td>
+        <td><b>{{component.title}}</b></td>
+        <td><b>{{component.quantity}}</b></td>
+        <td><b>{{component.comment}}</b></td>
         <td ng-show="component.ready == undefined">
             <button open-modal="changeStatus" ng-click="setSelectedComponent(component)">Изменить</button>
         </td>
