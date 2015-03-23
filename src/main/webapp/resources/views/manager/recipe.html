@@ -2,7 +2,7 @@
     <section class="column">
         <nav class="main inverse">
             <ul>
-                <li class="nohover">{{manager.name}} (Менеджер)</li>
+                <li class="nohover">{{manager.name}} ({{manager.role}})</li>
             </ul>
             <ul data-float="right">
                 <li open-modal="recipeModal" ng-click="setSelectedRecipe(null)" style="cursor: pointer">Добавить
@@ -87,40 +87,8 @@
                            placeholder="Начните вводить имя компонента"
                            ng-model="GGG"
                            ng-keyup="getComponents(GGG)">
-                    <!--<datalist id="component">-->
                     <select ng-model="selectedItem"
                             ng-options="component as component.name for component in components"></select>
-                    <!--<pre>{{selectedItem | json}}</pre>-->
-                    <!--</datalist>-->
-
-                    <!--
-                                        <select ng-model="selectedItem1"
-                                                ng-init="getComponents('б')"
-                                                ng-options="components as component.name for component in components">{{component.name}}
-                                            &lt;!&ndash;&ndash;&gt;
-                    </select>
-                    <pre>1{{selectedItem | json}}</pre>-->
-
-                    <!--
-
-                                        <select ng-model="selectedItem" ng-options="item as item.name for item in items"></select>
-                                        <pre>{{selectedItem | json}}</pre>
-
-                                        <select ng-model="components[0]"
-                                                ng-init="getComponents('б')"
-                                                ng-options="components as component.name for component in components"
-                                                ng-change="setCurrentComponent(component)">{{component.name}}
-                                            &lt;!&ndash;<option ng-repeat="component in components">{{component.name}}</option>&ndash;&gt;
-                    </select>
--->
-
-                    <!--<input type="text" placeholder="Начните вводить имя компонента" list="component"
-                           class="no-margin no-border column"
-                           ng-model="component.name" ng-keyup="getComponents(component.name)">
-                    <datalist id="component"
-                              ng-init="getComponents(component.name)">
-                        <option ng-repeat="component in components" ng-init="setCurrentComponent('123')">{{component.name}}{{component.id}}</option>
-                    </datalist>-->
                 </td>
                 <td class="no-padding" width="120">
                     <input type="number" placeholder="Количество компонента" class="no-margin no-border column"
@@ -134,9 +102,11 @@
         </table>
     </section>
     <footer ng-if="currentAction == 'update'">
+        <input type="button" close-modal="recipeModal" value="Закрыть">
         <input type="button" value="Сохранить" close-modal="recipeModal" ng-click="updateRecipe()">
     </footer>
     <footer ng-if="currentAction == 'create'">
+        <input type="button" close-modal="recipeModal" value="Закрыть">
         <input type="button" value="Добавить" close-modal="recipeModal"
                ng-disabled="selectedRecipe.name == undefined || selectedRecipe.name == ''"
                ng-click="addRecipe(selectedRecipe)">
@@ -144,7 +114,7 @@
 </section>
 
 <section data-modal="confirmModal">
-    <header>Подтвердите действия?</header>
+    <header>Подтвердите действия ?</header>
     <footer>
         <input type="button" value="Да" ng-click="runConfirm()" close-modal="confirmModal">
         <input type="button" value="Нет" close-modal="confirmModal">

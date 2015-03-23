@@ -69,6 +69,6 @@ function managerController(scope, storage, interval) {
 
     // добавить комментарий к заказу
     scope.setOrderComment = function () {
-        storage.manager.updateOrder(scope.order);
+        storage.manager.updateOrderComment(scope.order);
     };
 }

@@ -9,15 +9,16 @@ function $storage(http) {
 
     // информация о менджере
     this.manager.getInfo = function (callback) {
-        http.get('/getuser').success(function (data) {
+        http.get('getuser').success(function (data) {
             var manager = {};
 
-            if (data.userRoles[0].role == 'SUPER_MANAGER') {
+            if (data.userRoles[0].role == 'ROLE_SUPERMANAGER') {
                 manager.recipe = true;
                 manager.density = true;
             }
 
             manager.name = data.firstName + ' ' + data.lastName;
+            manager.role = data.userRoles[0].title;
             callback(manager);
         });
 /*
@@ -100,9 +101,12 @@ function $storage(http) {
     };
 
     // обновить информацию о заказе
-    // TODO на сервере maybe изменить deferred у всех компонентов
     this.manager.updateOrder = function (order) {
         http.post('manager/returnfull', order);
+    };
+
+    this.manager.updateOrderComment = function (order) {
+        http.post('manager/updatecommonorder', order);
     };
 
     ///////////////////////////////////////////////////
@@ -111,7 +115,7 @@ function $storage(http) {
     this.storekeeper = {};
     // получить информацию
     this.storekeeper.getInfo = function (callback) {
-        http.get('/getuser').success(function (data) {
+        http.get('getuser').success(function (data) {
             var storekeeper = {};
             storekeeper.name = data.firstName + ' ' + data.lastName;
 
@@ -172,7 +176,7 @@ function $storage(http) {
     this.assistant = {};
     // получить информацию
     this.assistant.getInfo = function (callback) {
-        http.get('/getuser').success(function (data) {
+        http.get('getuser').success(function (data) {
             var assistant = {};
             assistant.name = data.firstName + ' ' + data.lastName;
 
