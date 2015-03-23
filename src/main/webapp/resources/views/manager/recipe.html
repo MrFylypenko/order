@@ -5,16 +5,14 @@
                 <li class="nohover">{{manager.name}} ({{manager.role}})</li>
             </ul>
             <ul data-float="right">
-                <li open-modal="recipeModal" ng-click="setSelectedRecipe(null)" style="cursor: pointer">Добавить
-                    рецепт
-                </li>
+                <li open-modal="recipeModal" ng-click="setSelectedRecipe(null)" style="cursor: pointer">Добавить рецепт </li>
                 <li ng-show="manager.density">
                     <a href="#/density">Формулы</a>
                 </li>
                 <li ng-show="manager.density">
                     <a href="#/manager">Главное окно</a>
                 </li>
-                <li><a href="/#logout">Выход</a></li>
+                <li><a href="/logout">Выход</a></li>
             </ul>
         </nav>
     </section>
@@ -26,8 +24,11 @@
 
         <table ng-show="exp1" ng-init="getRecipes(exp1)" class="hover border horizontal">
             <tr ng-repeat-start="recipe in recipes" class="success" ng-init="recipeIndex = $index">
-                <td colspan="2">
+                <td>
                     <b>{{recipe.name}}</b>
+                </td>
+                <td>
+                    <i>{{recipe.quantity}}г</i>
                 </td>
                 <td>
                     <a href="" open-modal="recipeModal" ng-click="setSelectedRecipe(recipe)">Редактировать рецепт</a> |

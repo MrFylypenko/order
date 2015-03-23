@@ -80,8 +80,8 @@
         Вы действительно хотите отложить заказ №{{order.number}} ?
     </header>
     <footer>
-        <button close-modal="cancelOrder">Отмена</button>
-        <button close-modal="cancelOrder" ng-click="setOrderDeferred()">ХОРОШО</button>
+        <button close-modal="cancelOrder">Нет</button>
+        <button close-modal="cancelOrder" ng-click="setOrderDeferred()">Да</button>
     </footer>
 </section>
 
@@ -93,8 +93,8 @@
         <textarea class="column" placeholder="Текст комменатрия" ng-model="order.comment"></textarea>
     </section>
     <footer>
-        <button close-modal="addingComment">Отмена</button>
-        <button close-modal="addingComment" ng-click="setOrderComment()">ХОРОШО</button>
+        <button close-modal="addingComment">Нет</button>
+        <button close-modal="addingComment" ng-click="setOrderComment()">Да</button>
     </footer>
 </section>
 
@@ -103,8 +103,8 @@
         Вы действительно хотите вернуть заказ №{{order.number}}?
     </header>
     <footer>
-        <button close-modal="backOrder">Отмена</button>
-        <button close-modal="backOrder" ng-click="setOrderDeferred(order)">ХОРОШО</button>
+        <button close-modal="backOrder">Нет</button>
+        <button close-modal="backOrder" ng-click="setOrderDeferred(order)">Да</button>
     </footer>
 </section>
 
@@ -113,7 +113,7 @@
         Вы действительно хотите отложить позицию заказа с кодом {{selectedComponent.code}} ?
     </header>
     <footer>
-        <button close-modal="cancelItem">Отмена</button>
-        <button close-modal="cancelItem" ng-click="setComponentDeferred()">ХОРОШО</button>
+        <button close-modal="cancelItem">Нет</button>
+        <button close-modal="cancelItem" ng-click="setComponentDeferred()">Да</button>
     </footer>
 </section>
