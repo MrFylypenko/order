@@ -44,7 +44,7 @@ public class ItemCommonOrder {
     private List<ItemCommonOrder> components = new ArrayList<ItemCommonOrder>();
 
 
-    @JsonBackReference
+    @JsonIgnore
     public ItemCommonOrder getItemCommonOrder() {
         return itemCommonOrder;
     }
@@ -53,7 +53,7 @@ public class ItemCommonOrder {
         this.itemCommonOrder = itemCommonOrder;
     }
 
-    @JsonManagedReference
+
     public List<ItemCommonOrder> getComponents() {
         return components;
     }
@@ -172,7 +172,6 @@ public class ItemCommonOrder {
         this.commonOrder = commonOrder;
     }
 
-    @JsonBackReference
     public Item getItem() {
         return item;
     }

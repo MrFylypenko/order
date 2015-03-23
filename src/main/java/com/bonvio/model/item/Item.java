@@ -184,7 +184,6 @@ public class Item {
     }
 
     @JsonIgnore
-    @JsonManagedReference
     public List<ItemCommonOrder> getItemCommonOrders() {
         return itemCommonOrders;
     }
